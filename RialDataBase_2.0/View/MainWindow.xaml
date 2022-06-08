@@ -43,7 +43,7 @@
                     </Grid.RowDefinitions>
 
                     <GroupBox Grid.Row="0"                                                               
-                              Width="550"
+                              Width="465"
                               HorizontalAlignment="Left">
                         <GroupBox.Header>
                             <StackPanel Orientation="Horizontal">
