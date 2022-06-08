@@ -138,5 +138,9 @@ namespace RialDataBase_2._0.Model
       
         }
         
+        public VinWindow()
+        {
+
+        }
     }
 }
