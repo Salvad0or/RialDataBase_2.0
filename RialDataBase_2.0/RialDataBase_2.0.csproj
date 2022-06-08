@@ -12,4 +12,9 @@
     <Folder Include="View\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FontAwesome5" Version="2.1.11" />
+    <PackageReference Include="MaterialDesignThemes" Version="4.5.0" />
+  </ItemGroup>
+
 </Project>

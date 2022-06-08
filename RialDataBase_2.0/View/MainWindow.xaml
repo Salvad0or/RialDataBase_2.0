@@ -5,13 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RialDataBase_2._0"
         xmlns:vm="clr-namespace:RialDataBase_2._0.ViewModel"
+        xmlns:fa5="http://schemas.fontawesome.com/icons/" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="470" Width="800">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
     <DockPanel>
-        
+
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
             </MenuItem>
@@ -20,12 +21,168 @@
         </Menu>
 
         <TabControl Margin="3">
-            <TabItem Header="Тестовый таб">
-                <DataGrid ItemsSource="{Binding Clients}">
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <fa5:ImageAwesome Icon="Regular_AddressCard" Height="15"/>
+                        <TextBlock Text="Добавление нового клиента"
+                                   Margin="5 0"/>
+                    </StackPanel>
+                </TabItem.Header>
 
-                </DataGrid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="36*"/>
+                        <RowDefinition Height="155*"/>
+                        <RowDefinition/>
+
+                    </Grid.RowDefinitions>
+
+                    <GroupBox Grid.Row="0"                                                               
+                              Width="550"
+                              HorizontalAlignment="Left">
+                        <GroupBox.Header>
+                            <StackPanel Orientation="Horizontal">
+
+                                <fa5:ImageAwesome Icon="Solid_PeopleArrows" 
+                                                  Height="15"
+                                                  Margin="0 0 5 0"/>
+                                <TextBlock Text="Данные о клиенте" 
+                                           FontWeight="Bold"/>
+                            </StackPanel>
+                        </GroupBox.Header>
+
+                        
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel.Resources>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="FontSize" Value="20"/>
+                                </Style>
+                                <Style TargetType="TextBox">
+                                    <Setter Property="FontSize" Value="20"/>
+                                </Style>
+                            </StackPanel.Resources>
+                            
+                            <TextBlock Text="Имя:" VerticalAlignment ="Center"/>
+                            <TextBox Margin="5 5 0 0" Width="150" Height="32"/>
+                            <TextBlock Margin ="10 0" Text="Номер:" VerticalAlignment ="Center"/>
+                            <TextBox Margin="-5 5 0 0" Width="150" Height="32"/>
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Grid.Row="1"     
+                              Margin =" 0 5">
+                        <GroupBox.Header>
+                            <StackPanel Orientation="Horizontal">
+                                <fa5:ImageAwesome Icon="Solid_car" 
+                                                          Height="15"
+                                                          Margin =" 0 0 5 0"/>
+                                <TextBlock Text="Данные об автомобиле"
+                                           FontWeight="Bold"/>
+                            </StackPanel>
+                            
+
+                        </GroupBox.Header>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="62*"/>
+                                <ColumnDefinition Width="201*"/>
+                                <ColumnDefinition Width="513*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0"
+                                        Margin="0,5,0,5" Grid.ColumnSpan="2">
+                                <TextBlock Text="Марка автомобиля:"/>
+                                <TextBox/>
+                                <TextBlock Text="VIN:"/>
+                                <TextBox/>
+                                <TextBlock Text="Масло"/>
+                                <TextBox/>
+                                <TextBlock Text="Сумма покупки: "/>
+                                <TextBox/>
+
+                                <StackPanel>
+                                    <StackPanel.Resources>
+                                        <ResourceDictionary>
+                                            <ResourceDictionary.MergedDictionaries>
+                                                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Lime" />
+                                                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                                            </ResourceDictionary.MergedDictionaries>
+                                        </ResourceDictionary>
+                                    </StackPanel.Resources>
+
+                                    <Button Margin="0 15"
+                                            Content="Добавить клиента"/>
+
+                                </StackPanel>
+
+
+
+                            </StackPanel>
+
+                            <GroupBox 
+                                      Grid.Column="2"
+                                      Margin="5,0,5,0">
+
+                                <GroupBox.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <fa5:ImageAwesome Icon="Solid_CarBattery"
+                                                          Width="15"
+                                                          Focusable="True"
+                                                          Margin="0 0 2 0"/>
+                                        <TextBlock Text="Расходники"></TextBlock>
+                                    </StackPanel>
+                                </GroupBox.Header>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="278*"/>
+                                        <ColumnDefinition Width="213*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel>
+                                        <TextBlock Text="Масляный фильтр"/>
+                                        <TextBox/>
+                                        <TextBlock Text="Воздушный фильтр"/>
+                                        <TextBox/>
+                                        <TextBlock Text="Салонный фильтр"/>
+                                        <TextBox/>
+                                        <TextBlock Text="Свечи"/>
+                                        <TextBox/>
+                                        <TextBlock Text="Колодки передние"/>
+                                        <TextBox/>
+                                        <TextBlock Text="Колодки задние"/>
+                                        <TextBox/>
+                                        <TextBlock Text="Топливный фильтр"/>
+                                        <TextBox/>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" Margin="15 0">
+                                        <TextBlock Text="Комментарий"/>
+                                        <TextBox Height="150" TextWrapping="Wrap"
+                                                 HorizontalScrollBarVisibility="Visible"/>
+                                    </StackPanel>
+
+                                </Grid>
+
+
+                            </GroupBox>
+
+
+
+
+                        </Grid>
+
+                    </GroupBox>
+
+
+                </Grid>
+
             </TabItem>
         </TabControl>
-        
+
     </DockPanel>
 </Window>

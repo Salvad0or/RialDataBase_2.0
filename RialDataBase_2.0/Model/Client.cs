@@ -84,7 +84,7 @@ namespace RialDataBase_2._0.Model
             get { return _phone; }
             set { _phone = value; }
         }
-        public string Names
+        public string Name
         {
             get { return _name; }
             set { _name = value; }
@@ -115,5 +115,28 @@ namespace RialDataBase_2._0.Model
             get { return _salonFilter; }
             set { _salonFilter = value; }
         }
+
+        public VinWindow(string _vin, string _name, string _phone, string _car, string _oil,string _oilFilter, string _airFilter,
+                        string _salonFilter, int _cashBack, string _ngk, string _padsfront, string _padsrear, string _fuelfilter,
+                        string _comment, string _date)
+        {
+            Vin = _vin;
+            Name = _name;
+            Phone = _phone;
+            Car = _car;
+            Oil = _oil;
+            OilFilter = _oilFilter;
+            AirFilter = _airFilter;
+            SalonFilter = _salonFilter;
+            CashBack = _cashBack;
+            Ngk = _ngk;
+            Padsfront = _padsfront;
+            Padsrear = _padsrear;
+            Fuelfilter = _fuelfilter;
+            Comment = _comment;
+            Date = _date;
+      
+        }
+        
     }
 }
