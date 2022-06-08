@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace RialDataBase_2._0.Model
 {
-    internal class Client
+    public class VinWindow
     {
         #region private поля
         private string _vin;
         private string _name;
-        private ulong _phone;
+        private string _phone;
         private string _car;
         private string _oil;
         private string _oilFilter;
@@ -32,7 +32,6 @@ namespace RialDataBase_2._0.Model
             get { return _date; }
             set { _date = value; }
         }
-
 
         public string Comment
         {
@@ -80,7 +79,7 @@ namespace RialDataBase_2._0.Model
             get { return _vin; }
             set { _vin = value; }
         }
-        public ulong Phone
+        public string Phone
         {
             get { return _phone; }
             set { _phone = value; }

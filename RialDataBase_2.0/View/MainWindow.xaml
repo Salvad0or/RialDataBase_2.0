@@ -4,9 +4,28 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RialDataBase_2._0"
+        xmlns:vm="clr-namespace:RialDataBase_2._0.ViewModel"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        <Button></Button>
-    </Grid>
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+    <DockPanel>
+        
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="Файл">
+            </MenuItem>
+            <MenuItem Header="О программе">
+            </MenuItem>
+        </Menu>
+
+        <TabControl Margin="3">
+            <TabItem Header="Тестовый таб">
+                <DataGrid ItemsSource="{Binding Clients}">
+
+                </DataGrid>
+            </TabItem>
+        </TabControl>
+        
+    </DockPanel>
 </Window>
