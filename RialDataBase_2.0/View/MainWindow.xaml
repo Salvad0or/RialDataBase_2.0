@@ -68,9 +68,16 @@
                             </StackPanel.Resources>
                             
                             <TextBlock Text="Имя:" VerticalAlignment ="Center"/>
-                            <TextBox Margin="5 5 0 0" Width="150" Height="32"/>
+                            <TextBox Margin="5 5 0 0"
+                                     Width="150" 
+                                     Height="32"
+                                     Text="{Binding Name}"/>
+
                             <TextBlock Margin ="10 0" Text="Номер:" VerticalAlignment ="Center"/>
-                            <TextBox Margin="-5 5 0 0" Width="150" Height="32"/>
+                            <TextBox Margin="-5 5 0 0" 
+                                     Width="150" 
+                                     Height="32"
+                                     Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}"/>
                         </StackPanel>
                     </GroupBox>
 
@@ -97,13 +104,16 @@
                             <StackPanel Grid.Column="0"
                                         Margin="0,5,0,5" Grid.ColumnSpan="2">
                                 <TextBlock Text="Марка автомобиля:"/>
-                                <TextBox/>
+                                <TextBox Text="{Binding Car}"/>
+                                
                                 <TextBlock Text="VIN:"/>
-                                <TextBox/>
+                                <TextBox Text="{Binding Vin}"/>
+                                
                                 <TextBlock Text="Масло"/>
-                                <TextBox/>
+                                <TextBox Text="{Binding Oil}"/>
+                                
                                 <TextBlock Text="Сумма покупки: "/>
-                                <TextBox/>
+                                <TextBox Text="{Binding CashBack}"/>
 
                                 <StackPanel>
                                     <StackPanel.Resources>
@@ -116,7 +126,8 @@
                                     </StackPanel.Resources>
 
                                     <Button Margin="0 15"
-                                            Content="Добавить клиента"/>
+                                            Content="Добавить клиента"
+                                            Command="{Binding AddClientCommand}"/>
 
                                 </StackPanel>
 
@@ -144,26 +155,38 @@
                                         <ColumnDefinition Width="213*"/>
                                     </Grid.ColumnDefinitions>
                                     <StackPanel>
+                                        
                                         <TextBlock Text="Масляный фильтр"/>
-                                        <TextBox/>
+                                        <TextBox Text="{Binding OilFilter}"/>
+                                        
                                         <TextBlock Text="Воздушный фильтр"/>
-                                        <TextBox/>
+                                        <TextBox Text="{Binding AirFilter}"/>
+                                        
                                         <TextBlock Text="Салонный фильтр"/>
-                                        <TextBox/>
+                                        <TextBox Text="{Binding SalonFilter}"/>
+                                        
                                         <TextBlock Text="Свечи"/>
-                                        <TextBox/>
+                                        <TextBox Text="{Binding Ngk}"/>
+                                        
                                         <TextBlock Text="Колодки передние"/>
-                                        <TextBox/>
+                                        <TextBox Text="{Binding Padsfront}"/>
+                                        
                                         <TextBlock Text="Колодки задние"/>
-                                        <TextBox/>
+                                        <TextBox Text="{Binding Padsrear}"/>
+                                        
                                         <TextBlock Text="Топливный фильтр"/>
-                                        <TextBox/>
+                                        <TextBox Text="{Binding Fuelfilter}"/>
+                                        
                                     </StackPanel>
 
                                     <StackPanel Grid.Column="1" Margin="15 0">
                                         <TextBlock Text="Комментарий"/>
+                                        
                                         <TextBox Height="150" TextWrapping="Wrap"
-                                                 HorizontalScrollBarVisibility="Visible"/>
+                                                 HorizontalScrollBarVisibility="Visible"
+                                                 Text="{Binding Comment}"/>
+
+                                        
                                     </StackPanel>
 
                                 </Grid>
@@ -182,6 +205,45 @@
                 </Grid>
 
             </TabItem>
+
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <fa5:ImageAwesome Icon="Solid_Book" Height="15"/>
+                        <TextBlock Text ="База данных всех клиентов"
+                                   Margin="5 0"/>
+                    </StackPanel>
+                </TabItem.Header>
+
+                <DataGrid ItemsSource="{Binding Clients}"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          HorizontalGridLinesBrush="Transparent"
+                          VerticalGridLinesBrush="LightGray"
+                          AlternatingRowBackground="LightGray"
+                          CanUserAddRows="False">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Дата" Binding="{Binding Date}" Width="90"/>
+                        <DataGridTextColumn Header="Имя" Binding="{Binding Name}" Width="80"/>
+                        <DataGridTextColumn IsReadOnly="False" Header="Телефон" Binding="{Binding Phone}" Width="90"/>
+                        <DataGridTextColumn Header="Авто" Binding="{Binding Car}" Width="85"/>
+                        <DataGridTextColumn Header="Масло" Binding="{Binding Oil}" Width="90"/>
+                        <DataGridTextColumn Header="Масл." Binding="{Binding OilFilter}" Width="50"/>
+                        <DataGridTextColumn Header="Возд." Binding="{Binding AirFilter}" Width="50"/>
+                        <DataGridTextColumn Header="Салон." Binding="{Binding SalonFilter}" Width="50" />
+                        <DataGridTextColumn Header="Свечи" Binding="{Binding Ngk}" Width="50"/>
+                        <DataGridTextColumn Header="КолодкиПер." Binding="{Binding Padsfront}" Width="82"/>
+                        <DataGridTextColumn Header="КолодкиЗад." Binding="{Binding Padsrear}" Width="80"/>
+                        <DataGridTextColumn Header="Топливный" Binding="{Binding Fuelfilter}" Width="* "/>
+                        
+                    </DataGrid.Columns>
+                </DataGrid>
+                
+                
+                
+            </TabItem>
+            
+            
         </TabControl>
 
     </DockPanel>

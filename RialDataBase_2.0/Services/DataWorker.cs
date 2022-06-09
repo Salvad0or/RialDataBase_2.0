@@ -14,17 +14,35 @@ namespace RialDataBase_2._0.Services
     {
         private static readonly string path = $"{Environment.CurrentDirectory}\\Data.xml";
 
+        static XmlSerializer xmlSerializer;
+
        public static ObservableCollection<VinWindow> LoadData()
         {
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ObservableCollection<VinWindow>));
+            
             ObservableCollection<VinWindow> client = new ObservableCollection<VinWindow>();
 
             using (StreamReader sr = new StreamReader(path))
             {
-                client = xmlSerializer.Deserialize(sr) as ObservableCollection<VinWindow>;   
+                client = (xmlSerializer.Deserialize(sr) as ObservableCollection<VinWindow>);   
             }
 
             return client;
+        }
+
+
+        public static void SavesData(ObservableCollection<VinWindow> Clients)
+
+        {
+            using (StreamWriter sr = new StreamWriter(path))
+            {
+                xmlSerializer.Serialize(sr, Clients);
+            }
+
+        }
+
+        static DataWorker()
+        {
+           xmlSerializer = new XmlSerializer(typeof(ObservableCollection<VinWindow>));
         }
     }
 }

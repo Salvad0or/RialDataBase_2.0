@@ -126,6 +126,7 @@ namespace RialDataBase_2._0.ViewModel
                 if (Equals(_cashBack, value)) return;
                 _cashBack = value;
                 OnPropertyChanged();
+                
 
             }
         }
@@ -143,7 +144,17 @@ namespace RialDataBase_2._0.ViewModel
         }
         public string Phone
         {
-            get { return _phone; }
+            get
+
+            {
+                if (String.IsNullOrEmpty(_phone))
+                {
+                    return "";
+                }
+                else
+                    return _phone;
+            
+            }
             set
             {
                 if (Equals(_phone, value)) return;
@@ -225,7 +236,12 @@ namespace RialDataBase_2._0.ViewModel
         #region Основные свойства
         public ObservableCollection<VinWindow> Clients
         {
-            get => _clients;
+            get 
+                
+            {
+                return _clients;
+            }
+             
             set
             {
                 if (Equals(_clients, value)) return;
@@ -241,17 +257,38 @@ namespace RialDataBase_2._0.ViewModel
 
         #region
 
-        public ICommand testCommand { get; }
+        public ICommand AddClientCommand { get; }
 
         public bool CanTestCommandExecuted(object p)
         {
-            return true;
+            if (Phone.Length >= 11) return true;
+            return false;
+            
         }
 
 
         public void OnTestCommandExecuted(object p)
         {
-            MessageBox.Show("123");
+            Clients.Add(new VinWindow
+            {
+
+                Vin = Vin,
+                Name = Name,
+                Phone = Phone,
+                Car = Car,
+                Oil = Oil,
+                OilFilter = OilFilter,
+                AirFilter = AirFilter,
+                SalonFilter = SalonFilter,
+                CashBack = CashBack,
+                Ngk = Ngk,
+                Padsfront = Padsfront,
+                Padsrear = Padsrear,
+                Fuelfilter = Fuelfilter,
+                Comment = Comment,
+                Date = DateTime.Now.ToShortDateString()
+
+            }) ;
         }
 
         #endregion тестовая команда
@@ -261,10 +298,34 @@ namespace RialDataBase_2._0.ViewModel
         #region Конструктор
         public MainWindowViewModel()
         {
-            testCommand = new LambaCommand(OnTestCommandExecuted, CanTestCommandExecuted);
+           
+            AddClientCommand = new LambaCommand(OnTestCommandExecuted, CanTestCommandExecuted);
 
             Clients = DataWorker.LoadData();
+  
+            Clients.CollectionChanged += Clients_CollectionChanged;
+            
+        }
 
+        private void Clients_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
+                    DataWorker.SavesData(Clients);
+                    break;
+
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
+                    break;
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Replace:
+                    break;
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Move:
+                    break;
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Reset:
+                    break;
+                default:
+                    break;
+            }
         }
 
         #endregion

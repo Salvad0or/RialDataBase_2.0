@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RialDataBase_2._0.Model
 {
-    public class VinWindow
+    public class VinWindow 
     {
         #region private поля
         private string _vin;
@@ -142,5 +142,7 @@ namespace RialDataBase_2._0.Model
         {
 
         }
+
+        
     }
 }

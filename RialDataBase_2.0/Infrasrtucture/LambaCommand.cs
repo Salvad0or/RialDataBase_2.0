@@ -13,7 +13,7 @@ namespace RialDataBase_2._0.Infrasrtucture
         private Action <object> _execute { get; set; }
         private Func <object,bool> _canExecute { get; set; }
 
-        public override bool CanExecute(object? parameter) => true;
+        public override bool CanExecute(object? parameter) => _canExecute?.Invoke(parameter) ?? true;
 
         public override void Execute(object? parameter) => _execute(parameter);
 
