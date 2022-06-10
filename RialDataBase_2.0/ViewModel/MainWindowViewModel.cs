@@ -35,6 +35,7 @@ namespace RialDataBase_2._0.ViewModel
         private string _fuelfilter;
         private string _comment;
         private string _date;
+        private string _exception;
         private ObservableCollection<VinWindow> _clients;
 
         #endregion
@@ -231,6 +232,20 @@ namespace RialDataBase_2._0.ViewModel
             }
         }
 
+        public string Exception 
+        {  
+            get => _exception;
+
+            set
+            {
+                if (Equals(_exception, value)) return;
+
+                _exception = value;
+
+                OnPropertyChanged();                          
+            }           
+        }
+
         #endregion
 
         #region Основные свойства
@@ -261,7 +276,21 @@ namespace RialDataBase_2._0.ViewModel
 
         public bool CanTestCommandExecuted(object p)
         {
-            if (Phone.Length >= 11) return true;
+
+            for (int i = 0; i < Clients.Count; i++)
+            {
+                if (Equals(Phone, Clients[i].Phone))
+                {
+                    Exception = "Такой клиент\nприсутствует в базе";
+                    return false;                      
+                }
+            }
+
+            if (Phone.Length >= 11)
+            {
+                Exception = String.Empty;
+                return true;
+            }
             return false;
             
         }
@@ -302,7 +331,7 @@ namespace RialDataBase_2._0.ViewModel
             AddClientCommand = new LambaCommand(OnTestCommandExecuted, CanTestCommandExecuted);
 
             Clients = DataWorker.LoadData();
-  
+
             Clients.CollectionChanged += Clients_CollectionChanged;
             
         }

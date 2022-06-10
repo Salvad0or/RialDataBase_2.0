@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RialDataBase_2._0.Model
 {
-    public class VinWindow 
+    public class VinWindow
     {
         #region private поля
         private string _vin;
@@ -24,6 +25,7 @@ namespace RialDataBase_2._0.Model
         private string _fuelfilter;
         private string _comment;
         private string _date;
+        
 
         #endregion
 
