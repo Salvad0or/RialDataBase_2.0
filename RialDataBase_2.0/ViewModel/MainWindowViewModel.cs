@@ -252,12 +252,74 @@ namespace RialDataBase_2._0.ViewModel
 
         private VinWindow _clientAfterSearch;
 
+        private string _phoneSearch;
+
+        private int _addCashBack;
+        public bool Flag { get; set; }
+
+        private int _spendCashBack;
+        public int SpendCashBack
+        {
+            get => _spendCashBack;
+
+            set
+            {
+                if (Equals(_spendCashBack, value)) return;
+
+                _spendCashBack = value;
+
+                OnPropertyChanged();
+                
+            }
+        }
+
+        public int AddCashBack
+        {
+            get
+            {
+                return _addCashBack;
+            }
+            set 
+            {
+                if (Equals(_addCashBack, value)) return;
+                _addCashBack = value;
+                OnPropertyChanged();
+                
+            }
+        }
+
+
+
+
         public VinWindow ClientAfterSearh
         {
             get { return _clientAfterSearch; }
-            set { _clientAfterSearch = value; }
+            set 
+            {
+                if (Equals(_clientAfterSearch, value)) return;
+                _clientAfterSearch = value;
+                OnPropertyChanged();          
+            }
         }
+        public string PhoneSearch
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(_phoneSearch))
+                {
+                    return "";
+                }
+                else
+                    return _phoneSearch;
+            }
+            set
+            {
+                if (Equals(_phoneSearch, value)) return;
 
+                _phoneSearch = value;
+                OnPropertyChanged();         
+            }
+        }
 
         #endregion
 
@@ -283,7 +345,7 @@ namespace RialDataBase_2._0.ViewModel
 
         #region Команды
 
-        #region
+        #region Команда добавления клиента
 
         public ICommand AddClientCommand { get; }
 
@@ -294,16 +356,17 @@ namespace RialDataBase_2._0.ViewModel
             {
                 if (Equals(Phone, Clients[i].Phone))
                 {
-                    Exception = "Такой клиент\nприсутствует в базе";
-                    return false;                      
+                    Exception = "Такой клиент\nприсутствует в базе";        
+                    return false;
                 }
             }
 
             if (Phone.Length >= 11)
             {
-                Exception = String.Empty;
+                Exception = String.Empty;      
                 return true;
             }
+
             return false;
             
         }
@@ -313,7 +376,6 @@ namespace RialDataBase_2._0.ViewModel
         {
             Clients.Add(new VinWindow
             {
-
                 Vin = Vin,
                 Name = Name,
                 Phone = Phone,
@@ -322,32 +384,150 @@ namespace RialDataBase_2._0.ViewModel
                 OilFilter = OilFilter,
                 AirFilter = AirFilter,
                 SalonFilter = SalonFilter,
-                CashBack = CashBack,
+                CashBack = CashBack / 100,
                 Ngk = Ngk,
                 Padsfront = Padsfront,
                 Padsrear = Padsrear,
                 Fuelfilter = Fuelfilter,
                 Comment = Comment,
-                Date = DateTime.Now.ToShortDateString()
-
+                Date = DateTime.Now.ToShortDateString()    
             }) ;
+
+            MessageBox.Show($"Клиент {Name} успешно добавлен");
+            ClearWindow();
+
+
+
         }
 
-        #endregion тестовая команда
+        #endregion
+
+        #region Команда поиска клиента
+
+        public ICommand SearchClientCommand { get; }
+        public bool CanSearchClientExecutrd(object p)
+
+        {
+            if (PhoneSearch.Length < 11)
+                return false;
+  
+            return true;
+
+        }
+        public void OnSearchClientExecute(object p) 
+        {
+            ClientAfterSearh = Clients.FirstOrDefault(x => x.Phone == PhoneSearch);
+
+            if (ClientAfterSearh == null)
+            {
+                MessageBox.Show("Клиент не найден, попробуйте еще раз");
+                Flag = false;
+                return;
+            }
+            Flag = true;
+           
+        }
+
+
 
         #endregion
+        #endregion
+
+        #region Команда добавления кешбека
+
+        public ICommand AddCashBackCommand { get; }
+
+        public bool CanAddCasbackExecuted(object p)
+        {
+            if (PhoneSearch.Length >= 11 && Flag)
+                return true;
+
+            return false;
+        }
+
+        public void OnAddCashBackExecuted(object p)
+        {
+            int index = Clients.IndexOf(ClientAfterSearh);
+
+            Clients[index].CashBack += AddCashBack / 100;
+
+            DataWorker.SavesData(Clients);
+
+            MessageBox.Show($"Клиенту {ClientAfterSearh.Name} был добавлен кешбек\nВ размере {AddCashBack / 100} рублей\n" +
+                            $"Накопленная сумма составляет {Clients[index].CashBack}");
+
+            ClientAfterSearh = default;
+            AddCashBack = default;
+            PhoneSearch = default;
+            Flag = false;
+
+        }
+
+
+
+        #endregion
+
+        #region Команда списывания кешбека
+
+        public ICommand SpendСashback { get; }
+
+        public bool CanSpendCashBackExecuted(object p)
+        {
+            if (PhoneSearch.Length >= 11 && Flag)
+                return true; 
+            
+            return false;
+        }
+
+        public void OnSpendCashBackExecute(object p) 
+
+        {
+            int index = Clients.IndexOf(ClientAfterSearh);
+
+            bool canSpand = Clients[index].CashBack - SpendCashBack >= 0;
+
+            if (!canSpand)
+            {
+                MessageBox.Show($"У клиента {ClientAfterSearh.Name} недостаточно средств\n" +
+                    $"Баланс - {ClientAfterSearh.CashBack}\n" +
+                    $"Вы хотите списать сумму - {SpendCashBack}");
+                return;
+            }
+
+            Clients[index].CashBack -= Math.Abs(SpendCashBack);
+
+            DataWorker.SavesData(Clients);
+
+            MessageBox.Show($"Кешбек клиента {ClientAfterSearh.Name} успешно списан\nНа балансе осталось {Clients[index].CashBack}");
+
+            ClientAfterSearh = default;
+            SpendCashBack = default;
+            PhoneSearch = default;
+            Flag = false;
+        }
+
+
+
+        #endregion  
 
         #region Конструктор
         public MainWindowViewModel()
         {
            
             AddClientCommand = new LambaCommand(OnTestCommandExecuted, CanTestCommandExecuted);
+            SearchClientCommand = new LambaCommand(OnSearchClientExecute, CanSearchClientExecutrd);
+            AddCashBackCommand = new LambaCommand(OnAddCashBackExecuted, CanAddCasbackExecuted);
+            SpendСashback = new LambaCommand(OnSpendCashBackExecute, CanSpendCashBackExecuted);
 
             Clients = DataWorker.LoadData();
 
             Clients.CollectionChanged += Clients_CollectionChanged;
             
         }
+        #endregion
+
+
+        #region Вспомогательные методы
 
         private void Clients_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
@@ -358,6 +538,7 @@ namespace RialDataBase_2._0.ViewModel
                     break;
 
                 case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
+                    DataWorker.SavesData(Clients);
                     break;
                 case System.Collections.Specialized.NotifyCollectionChangedAction.Replace:
                     break;
@@ -370,6 +551,27 @@ namespace RialDataBase_2._0.ViewModel
             }
         }
 
+        public void ClearWindow()
+        {
+            Vin = default;
+            Name = default;
+            Phone = default;
+            Car = default;
+            Oil = default;
+            OilFilter = default;
+            AirFilter = default;
+            SalonFilter = default;
+            CashBack = default;
+            Ngk = default;
+            Padsfront = default;
+            Padsrear = default;
+            Fuelfilter = default;
+            Comment = default;
+            Date = default;
+        }
+
         #endregion
+
+
     }
 }

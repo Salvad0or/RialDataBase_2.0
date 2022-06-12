@@ -16,6 +16,10 @@
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
             </MenuItem>
+            <MenuItem Header="Редактирование">
+                <MenuItem Header="Настройки кешбека"></MenuItem>
+
+            </MenuItem>
             <MenuItem Header="О программе">
             </MenuItem>
         </Menu>
@@ -242,6 +246,7 @@
                         <DataGridTextColumn IsReadOnly="True" Header="Свечи" Binding="{Binding Ngk}" Width="50"/>
                         <DataGridTextColumn IsReadOnly="True" Header="КолодкиПер." Binding="{Binding Padsfront}" Width="82"/>
                         <DataGridTextColumn IsReadOnly="True" Header="КолодкиЗад." Binding="{Binding Padsrear}" Width="80"/>
+                        <DataGridTextColumn IsReadOnly="True" Header="Кешбек" Binding="{Binding CashBack}" Width="80"/>
                         <DataGridTextColumn IsReadOnly="True" Header="Топливный" Binding="{Binding Fuelfilter}" Width="* "/>
 
                     </DataGrid.Columns>
@@ -271,13 +276,15 @@
                             </StackPanel.Resources>
 
                             <TextBox Width="87"                        
-                                     FontSize="14"/>
+                                     FontSize="14"
+                                     Text="{Binding PhoneSearch, UpdateSourceTrigger=PropertyChanged}"/>
 
                             <Button Width="75" 
                                     Height="25"
                                     FontSize="10"
                                     Content="Поиск"
                                     Margin="15 0"
+                                    Command="{Binding SearchClientCommand}"
                                     
                                     />
 
@@ -299,16 +306,16 @@
                             <StackPanel Grid.Column="0"
                                         Margin="0,5,0,5" >
                                 <TextBlock Text="Марка автомобиля:"/>
-                                <TextBox Text="{Binding ClientAfterSearh.Car}"/>
+                                <TextBox Text="{Binding ClientAfterSearh.Car, UpdateSourceTrigger=PropertyChanged}"/>
 
                                 <TextBlock Text="VIN:"/>
-                                <TextBox Text="{Binding Vin}"/>
+                                <TextBox Text="{Binding ClientAfterSearh.Vin}"/>
 
                                 <TextBlock Text="Масло"/>
-                                <TextBox Text="{Binding Oil}"/>
+                                <TextBox Text="{Binding ClientAfterSearh.Oil}"/>
 
                                 <TextBlock Text="Кешбек"/>
-                                <TextBox Text="{Binding CashBack}"/>
+                                <TextBox Text="{Binding ClientAfterSearh.CashBack}"/>
 
                                 <GroupBox Height="166"
                                           Header="Работа с кешбеком"
@@ -333,8 +340,11 @@
                                         <GroupBox Header="Добавить" Grid.Column="0"
                                                   Margin="0 0 15 0">
                                             <StackPanel>
-                                                <TextBox/>
-                                                <Button Content="Добавить" Margin="0 5"/>
+                                                <TextBox Text="{Binding AddCashBack, UpdateSourceTrigger=PropertyChanged}"/>
+                                                <Button Content="Добавить" 
+                                                        Margin="0 5"
+                                                        Command="{Binding AddCashBackCommand}"/>
+                                                
                                             </StackPanel>
 
 
@@ -343,8 +353,10 @@
                                         <GroupBox Header="Списать" Grid.Column="1"
                                                   Margin="0 0 15 0">
                                             <StackPanel Margin="0,0,0,-9" Width="134">
-                                                <TextBox/>
-                                                <Button Content="Списать" Margin="0 5"/>
+                                                <TextBox Text="{Binding SpendCashBack, UpdateSourceTrigger=PropertyChanged}"/>
+                                                <Button Content="Списать"
+                                                        Margin="0 5"
+                                                        Command="{Binding SpendСashback}"/>
 
                                             </StackPanel>
 
@@ -396,25 +408,25 @@
                                     <StackPanel>
 
                                         <TextBlock Text="Масляный фильтр"/>
-                                        <TextBox Text="{Binding OilFilter}"/>
+                                        <TextBox Text="{Binding ClientAfterSearh.OilFilter}"/>
 
                                         <TextBlock Text="Воздушный фильтр"/>
-                                        <TextBox Text="{Binding AirFilter}"/>
+                                        <TextBox Text="{Binding ClientAfterSearh.AirFilter}"/>
 
                                         <TextBlock Text="Салонный фильтр"/>
-                                        <TextBox Text="{Binding SalonFilter}"/>
+                                        <TextBox Text="{Binding ClientAfterSearh.SalonFilter}"/>
 
                                         <TextBlock Text="Свечи"/>
-                                        <TextBox Text="{Binding Ngk}"/>
+                                        <TextBox Text="{Binding ClientAfterSearh.Ngk}"/>
 
                                         <TextBlock Text="Колодки передние"/>
-                                        <TextBox Text="{Binding Padsfront}"/>
+                                        <TextBox Text="{Binding ClientAfterSearh.Padsfront}"/>
 
                                         <TextBlock Text="Колодки задние"/>
-                                        <TextBox Text="{Binding Padsrear}"/>
+                                        <TextBox Text="{Binding ClientAfterSearh.Padsrear}"/>
 
                                         <TextBlock Text="Топливный фильтр"/>
-                                        <TextBox Text="{Binding Fuelfilter}"/>
+                                        <TextBox Text="{Binding ClientAfterSearh.Fuelfilter}"/>
 
                                     </StackPanel>
 
@@ -423,7 +435,7 @@
 
                                         <TextBox Height="150" TextWrapping="Wrap"
                                                  HorizontalScrollBarVisibility="Visible"
-                                                 Text="{Binding Comment}"/>
+                                                 Text="{Binding ClientAfterSearh.Comment}"/>
 
 
                                     </StackPanel>
