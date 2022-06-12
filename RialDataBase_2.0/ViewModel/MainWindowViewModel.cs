@@ -15,7 +15,6 @@ namespace RialDataBase_2._0.ViewModel
 {
     internal class MainWindowViewModel : ViewModels
     {
-
         #region Поля
 
         #region private Поля
@@ -588,7 +587,7 @@ namespace RialDataBase_2._0.ViewModel
             Clients.Remove(EditClient);
 
             Clients.Add(EditClient);
-
+           
             DataWorker.SavesData(Clients);
 
             MessageBox.Show("Данные успешно изменены");
@@ -631,7 +630,6 @@ namespace RialDataBase_2._0.ViewModel
                 case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
                     DataWorker.SavesData(Clients);
                     break;
-
                 case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
                     DataWorker.SavesData(Clients);
                     break;
@@ -666,7 +664,6 @@ namespace RialDataBase_2._0.ViewModel
         }
 
         #endregion
-
 
     }
 }
