@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:RialDataBase_2._0.ViewModel"
         xmlns:fa5="http://schemas.fontawesome.com/icons/" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="MainWindow" Height="470" Width="800">
+        Title="MainWindow" Height="500" Width="800">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
@@ -55,8 +55,8 @@
                             </StackPanel>
                         </GroupBox.Header>
 
-                       
-                        
+
+
                         <StackPanel Orientation="Horizontal">
                             <StackPanel.Resources>
                                 <Style TargetType="TextBlock">
@@ -66,7 +66,7 @@
                                     <Setter Property="FontSize" Value="20"/>
                                 </Style>
                             </StackPanel.Resources>
-                            
+
                             <TextBlock Text="Имя:" VerticalAlignment ="Center"/>
                             <TextBox Margin="5 5 0 0"
                                      Width="150" 
@@ -100,7 +100,7 @@
                                 <TextBlock Text="Данные об автомобиле"
                                            FontWeight="Bold"/>
                             </StackPanel>
-                            
+
 
                         </GroupBox.Header>
                         <Grid>
@@ -114,13 +114,13 @@
                                         Margin="0,5,0,5" Grid.ColumnSpan="2">
                                 <TextBlock Text="Марка автомобиля:"/>
                                 <TextBox Text="{Binding Car}"/>
-                                
+
                                 <TextBlock Text="VIN:"/>
                                 <TextBox Text="{Binding Vin}"/>
-                                
+
                                 <TextBlock Text="Масло"/>
                                 <TextBox Text="{Binding Oil}"/>
-                                
+
                                 <TextBlock Text="Сумма покупки: "/>
                                 <TextBox Text="{Binding CashBack}"/>
 
@@ -164,38 +164,38 @@
                                         <ColumnDefinition Width="213*"/>
                                     </Grid.ColumnDefinitions>
                                     <StackPanel>
-                                        
+
                                         <TextBlock Text="Масляный фильтр"/>
                                         <TextBox Text="{Binding OilFilter}"/>
-                                        
+
                                         <TextBlock Text="Воздушный фильтр"/>
                                         <TextBox Text="{Binding AirFilter}"/>
-                                        
+
                                         <TextBlock Text="Салонный фильтр"/>
                                         <TextBox Text="{Binding SalonFilter}"/>
-                                        
+
                                         <TextBlock Text="Свечи"/>
                                         <TextBox Text="{Binding Ngk}"/>
-                                        
+
                                         <TextBlock Text="Колодки передние"/>
                                         <TextBox Text="{Binding Padsfront}"/>
-                                        
+
                                         <TextBlock Text="Колодки задние"/>
                                         <TextBox Text="{Binding Padsrear}"/>
-                                        
+
                                         <TextBlock Text="Топливный фильтр"/>
                                         <TextBox Text="{Binding Fuelfilter}"/>
-                                        
+
                                     </StackPanel>
 
                                     <StackPanel Grid.Column="1" Margin="15 0">
                                         <TextBlock Text="Комментарий"/>
-                                        
+
                                         <TextBox Height="150" TextWrapping="Wrap"
                                                  HorizontalScrollBarVisibility="Visible"
                                                  Text="{Binding Comment}"/>
 
-                                        
+
                                     </StackPanel>
 
                                 </Grid>
@@ -243,15 +243,203 @@
                         <DataGridTextColumn IsReadOnly="True" Header="КолодкиПер." Binding="{Binding Padsfront}" Width="82"/>
                         <DataGridTextColumn IsReadOnly="True" Header="КолодкиЗад." Binding="{Binding Padsrear}" Width="80"/>
                         <DataGridTextColumn IsReadOnly="True" Header="Топливный" Binding="{Binding Fuelfilter}" Width="* "/>
-                        
+
                     </DataGrid.Columns>
                 </DataGrid>
-                
-                
-                
+
+
+
             </TabItem>
-            
-            
+
+            <TabItem Header="Работа с клиентом">
+
+                <DockPanel >
+                    <GroupBox Header="Введите номер телефона" 
+                              DockPanel.Dock="Top"
+                              Width="252"
+                              Height="60"
+                              FontSize="20"
+                              HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel.Resources>
+                                <ResourceDictionary>
+                                    <ResourceDictionary.MergedDictionaries>
+                                        <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="Grey" SecondaryColor="Lime" />
+                                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                                    </ResourceDictionary.MergedDictionaries>
+                                </ResourceDictionary>
+                            </StackPanel.Resources>
+
+                            <TextBox Width="87"                        
+                                     FontSize="14"/>
+
+                            <Button Width="75" 
+                                    Height="25"
+                                    FontSize="10"
+                                    Content="Поиск"
+                                    Margin="15 0"
+                                    
+                                    />
+
+                        </StackPanel>
+                    </GroupBox>
+
+                    <GroupBox Header="Данные клиента"
+                              >
+
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="357*"/>
+                                <ColumnDefinition Width="419*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0"
+                                        Margin="0,5,0,5" >
+                                <TextBlock Text="Марка автомобиля:"/>
+                                <TextBox Text="{Binding ClientAfterSearh.Car}"/>
+
+                                <TextBlock Text="VIN:"/>
+                                <TextBox Text="{Binding Vin}"/>
+
+                                <TextBlock Text="Масло"/>
+                                <TextBox Text="{Binding Oil}"/>
+
+                                <TextBlock Text="Кешбек"/>
+                                <TextBox Text="{Binding CashBack}"/>
+
+                                <GroupBox Height="166"
+                                          Header="Работа с кешбеком"
+                                          Margin="0 5" >
+                                    <GroupBox.Resources>
+                                        <ResourceDictionary>
+                                            <ResourceDictionary.MergedDictionaries>
+                                                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="Grey" SecondaryColor="Lime" />
+                                                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                                            </ResourceDictionary.MergedDictionaries>
+                                        </ResourceDictionary>
+                                    </GroupBox.Resources>
+
+
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition/>
+                                        </Grid.ColumnDefinitions>
+
+
+                                        <GroupBox Header="Добавить" Grid.Column="0"
+                                                  Margin="0 0 15 0">
+                                            <StackPanel>
+                                                <TextBox/>
+                                                <Button Content="Добавить" Margin="0 5"/>
+                                            </StackPanel>
+
+
+                                        </GroupBox>
+
+                                        <GroupBox Header="Списать" Grid.Column="1"
+                                                  Margin="0 0 15 0">
+                                            <StackPanel Margin="0,0,0,-9" Width="134">
+                                                <TextBox/>
+                                                <Button Content="Списать" Margin="0 5"/>
+
+                                            </StackPanel>
+
+                                        </GroupBox>
+
+                                    </Grid>
+
+                                </GroupBox>
+
+
+
+                                <StackPanel Width="251">
+                                    <StackPanel.Resources>
+                                        <ResourceDictionary>
+                                            <ResourceDictionary.MergedDictionaries>
+                                                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Lime" />
+                                                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                                            </ResourceDictionary.MergedDictionaries>
+                                        </ResourceDictionary>
+                                    </StackPanel.Resources>
+
+
+
+                                </StackPanel>
+
+
+
+                            </StackPanel>
+
+                            <GroupBox 
+                                      Grid.Column="1"
+                                      Margin="5,0,5,0">
+
+                                <GroupBox.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <fa5:ImageAwesome Icon="Solid_CarBattery"
+                                                          Width="15"
+                                                          Focusable="True"
+                                                          Margin="0 0 2 0"/>
+                                        <TextBlock Text="Расходники"></TextBlock>
+                                    </StackPanel>
+                                </GroupBox.Header>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="278*"/>
+                                        <ColumnDefinition Width="213*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel>
+
+                                        <TextBlock Text="Масляный фильтр"/>
+                                        <TextBox Text="{Binding OilFilter}"/>
+
+                                        <TextBlock Text="Воздушный фильтр"/>
+                                        <TextBox Text="{Binding AirFilter}"/>
+
+                                        <TextBlock Text="Салонный фильтр"/>
+                                        <TextBox Text="{Binding SalonFilter}"/>
+
+                                        <TextBlock Text="Свечи"/>
+                                        <TextBox Text="{Binding Ngk}"/>
+
+                                        <TextBlock Text="Колодки передние"/>
+                                        <TextBox Text="{Binding Padsfront}"/>
+
+                                        <TextBlock Text="Колодки задние"/>
+                                        <TextBox Text="{Binding Padsrear}"/>
+
+                                        <TextBlock Text="Топливный фильтр"/>
+                                        <TextBox Text="{Binding Fuelfilter}"/>
+
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1" Margin="15 0">
+                                        <TextBlock Text="Комментарий"/>
+
+                                        <TextBox Height="150" TextWrapping="Wrap"
+                                                 HorizontalScrollBarVisibility="Visible"
+                                                 Text="{Binding Comment}"/>
+
+
+                                    </StackPanel>
+
+
+
+                                </Grid>
+                            </GroupBox>
+                        </Grid>
+
+                    </GroupBox>
+
+                </DockPanel>
+            </TabItem>
+
+
         </TabControl>
 
     </DockPanel>

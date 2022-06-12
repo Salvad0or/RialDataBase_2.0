@@ -40,7 +40,7 @@ namespace RialDataBase_2._0.ViewModel
 
         #endregion
 
-        #region Поля окна добавления клиентов
+        #region Свойства окна добавления клиентов
 
         public string Date
         {
@@ -245,6 +245,19 @@ namespace RialDataBase_2._0.ViewModel
                 OnPropertyChanged();                          
             }           
         }
+
+        #endregion
+
+        #region Свойства окна работы с клиентом и кешбеком
+
+        private VinWindow _clientAfterSearch;
+
+        public VinWindow ClientAfterSearh
+        {
+            get { return _clientAfterSearch; }
+            set { _clientAfterSearch = value; }
+        }
+
 
         #endregion
 
