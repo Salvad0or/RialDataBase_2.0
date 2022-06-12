@@ -37,6 +37,10 @@ namespace RialDataBase_2._0.ViewModel
         private string _date;
         private string _exception;
         private ObservableCollection<VinWindow> _clients;
+        private VinWindow _clientAfterSearch;
+        private string _phoneSearch;
+        private int _addCashBack;
+        private int _spendCashBack;
 
         #endregion
 
@@ -250,14 +254,9 @@ namespace RialDataBase_2._0.ViewModel
 
         #region Свойства окна работы с клиентом и кешбеком
 
-        private VinWindow _clientAfterSearch;
-
-        private string _phoneSearch;
-
-        private int _addCashBack;
+       
         public bool Flag { get; set; }
-
-        private int _spendCashBack;
+        
         public int SpendCashBack
         {
             get => _spendCashBack;
@@ -287,9 +286,6 @@ namespace RialDataBase_2._0.ViewModel
                 
             }
         }
-
-
-
 
         public VinWindow ClientAfterSearh
         {
@@ -431,7 +427,7 @@ namespace RialDataBase_2._0.ViewModel
 
 
         #endregion
-        #endregion
+        
 
         #region Команда добавления кешбека
 
@@ -510,6 +506,8 @@ namespace RialDataBase_2._0.ViewModel
 
         #endregion  
 
+        #endregion
+
         #region Конструктор
         public MainWindowViewModel()
         {
@@ -525,7 +523,6 @@ namespace RialDataBase_2._0.ViewModel
             
         }
         #endregion
-
 
         #region Вспомогательные методы
 
