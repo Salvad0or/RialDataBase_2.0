@@ -319,6 +319,48 @@ namespace RialDataBase_2._0.ViewModel
 
         #endregion
 
+        #region Свойтсва окна редактирования клиента
+
+        private string _editSearchPhone;
+
+        public string EditSearchPhone
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(_editSearchPhone))
+                {
+                    return "";
+                }
+
+                return _editSearchPhone;
+            }
+            set
+            {
+                if (Equals(_editSearchPhone, value)) return;
+                _editSearchPhone = value;
+                OnPropertyChanged();
+                
+            }
+        }
+
+        private VinWindow _editClient;
+
+        public VinWindow EditClient
+        {
+            get { return _editClient; }
+            set
+            {
+                if (Equals(_editClient, value))
+                    return;
+                _editClient = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
+        #endregion
+
         #region Основные свойства
         public ObservableCollection<VinWindow> Clients
         {
@@ -428,7 +470,6 @@ namespace RialDataBase_2._0.ViewModel
 
         #endregion
         
-
         #region Команда добавления кешбека
 
         public ICommand AddCashBackCommand { get; }
@@ -504,7 +545,62 @@ namespace RialDataBase_2._0.ViewModel
 
 
 
-        #endregion  
+        #endregion
+
+
+        #region Команда поиска для редактирования клиента
+        public ICommand SearchEditClientDataCommand { get; }
+
+        public bool CanSearchEditClientDataExecuted(object p)
+        {
+            if (EditSearchPhone.Length >= 11)
+                return true;
+         
+            return false;
+            
+
+        }
+
+        public void OnSearchEditClientDataExecuted(object p)
+        {
+            EditClient = Clients.FirstOrDefault(x => x.Phone == EditSearchPhone);
+
+            if (EditClient == null)
+            {
+                MessageBox.Show("Клиент не найден");
+                return;
+            }
+
+
+        }
+
+        #endregion
+
+        #region Команда редактирования клиента
+
+        public ICommand EditClientDataCommand { get; }
+
+        public bool CanEditClientDataExecuted(object p) => true;
+
+        public void OnEditClientDataExecute(object p)
+
+        {
+            Clients.Remove(EditClient);
+
+            Clients.Add(EditClient);
+
+            DataWorker.SavesData(Clients);
+
+            MessageBox.Show("Данные успешно изменены");
+
+            EditClient = default;
+            EditSearchPhone = default;
+
+
+
+        }
+
+        #endregion
 
         #endregion
 
@@ -516,6 +612,8 @@ namespace RialDataBase_2._0.ViewModel
             SearchClientCommand = new LambaCommand(OnSearchClientExecute, CanSearchClientExecutrd);
             AddCashBackCommand = new LambaCommand(OnAddCashBackExecuted, CanAddCasbackExecuted);
             SpendСashback = new LambaCommand(OnSpendCashBackExecute, CanSpendCashBackExecuted);
+            EditClientDataCommand = new LambaCommand(OnEditClientDataExecute, CanEditClientDataExecuted);
+            SearchEditClientDataCommand = new LambaCommand(OnSearchEditClientDataExecuted, CanSearchEditClientDataExecuted);
 
             Clients = DataWorker.LoadData();
 

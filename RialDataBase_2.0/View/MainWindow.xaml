@@ -16,10 +16,6 @@
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="Файл">
             </MenuItem>
-            <MenuItem Header="Редактирование">
-                <MenuItem Header="Настройки кешбека"></MenuItem>
-
-            </MenuItem>
             <MenuItem Header="О программе">
             </MenuItem>
         </Menu>
@@ -116,16 +112,16 @@
 
                             <StackPanel Grid.Column="0"
                                         Margin="0,5,0,5" Grid.ColumnSpan="2">
-                                <TextBlock Text="Марка автомобиля:"/>
+                                <TextBlock Text="Марка автомобиля"/>
                                 <TextBox Text="{Binding Car}"/>
 
-                                <TextBlock Text="VIN:"/>
+                                <TextBlock Text="VIN"/>
                                 <TextBox Text="{Binding Vin}"/>
 
                                 <TextBlock Text="Масло"/>
                                 <TextBox Text="{Binding Oil}"/>
 
-                                <TextBlock Text="Сумма покупки: "/>
+                                <TextBlock Text="Сумма покупки"/>
                                 <TextBox Text="{Binding CashBack}"/>
 
                                 <StackPanel>
@@ -140,6 +136,7 @@
 
                                     <Button Margin="0 15"
                                             Content="Добавить клиента"
+                                            Width="238"
                                             Command="{Binding AddClientCommand}"/>
 
                                 </StackPanel>
@@ -493,11 +490,13 @@
                             <TextBox Margin="15 5 0 0" 
                                      Width="128" 
                                      Height="32"
-                                     Text="89046669025"
+                                     Text="{Binding EditSearchPhone,UpdateSourceTrigger=PropertyChanged}"
                                      FontSize="20"/>
                             <Button Content="Поиск"
                                     Margin="15 0"
-                                    Width="95"/>
+                                    Width="95"
+                                    Command="{Binding SearchEditClientDataCommand}"
+                                   />
                         </StackPanel>
                     </GroupBox>
 
@@ -532,14 +531,39 @@
 
                             <StackPanel Grid.Column="0"
                                         Margin="0,5,0,5" Grid.ColumnSpan="2">
+
+                                <TextBlock Text="Имя"/>
+                                <TextBox Text="{Binding EditClient.Name}"/>
+
+                                <TextBlock Text="Номер телефона"/>
+                                <TextBox Text="{Binding EditClient.Phone}"/>
+
                                 <TextBlock Text="Марка автомобиля"/>
-                                <TextBox Text="{Binding Car}"/>
+                                <TextBox Text="{Binding EditClient.Car}"/>
 
                                 <TextBlock Text="VIN"/>
-                                <TextBox Text="{Binding Vin}"/>
+                                <TextBox Text="{Binding EditClient.Vin}"/>
 
                                 <TextBlock Text="Масло"/>
-                                <TextBox Text="{Binding Oil}"/>
+                                <TextBox Text="{Binding EditClient.Oil}"/>
+
+                                <StackPanel>
+                                    <StackPanel.Resources>
+                                        <ResourceDictionary>
+                                            <ResourceDictionary.MergedDictionaries>
+                                                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="Green" SecondaryColor="Lime" />
+                                                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                                            </ResourceDictionary.MergedDictionaries>
+                                        </ResourceDictionary>
+
+                                    </StackPanel.Resources>
+                                    <Button 
+                                        Margin="0 25"
+                                        Content="Редактировать данные"
+                                        
+                                        Command="{Binding EditClientDataCommand}" Foreground="White" Width="238"/>
+                                </StackPanel>
+                                
 
                                 <StackPanel>
                                     <StackPanel.Resources>
@@ -581,25 +605,25 @@
                                     <StackPanel>
 
                                         <TextBlock Text="Масляный фильтр"/>
-                                        <TextBox Text="{Binding OilFilter}"/>
+                                        <TextBox Text="{Binding EditClient.OilFilter}"/>
 
                                         <TextBlock Text="Воздушный фильтр"/>
-                                        <TextBox Text="{Binding AirFilter}"/>
+                                        <TextBox Text="{Binding EditClient.AirFilter}"/>
 
                                         <TextBlock Text="Салонный фильтр"/>
-                                        <TextBox Text="{Binding SalonFilter}"/>
+                                        <TextBox Text="{Binding EditClient.SalonFilter}"/>
 
                                         <TextBlock Text="Свечи"/>
-                                        <TextBox Text="{Binding Ngk}"/>
+                                        <TextBox Text="{Binding EditClient.Ngk}"/>
 
                                         <TextBlock Text="Колодки передние"/>
-                                        <TextBox Text="{Binding Padsfront}"/>
+                                        <TextBox Text="{Binding EditClient.Padsfront}"/>
 
                                         <TextBlock Text="Колодки задние"/>
-                                        <TextBox Text="{Binding Padsrear}"/>
+                                        <TextBox Text="{Binding EditClient.Padsrear}"/>
 
                                         <TextBlock Text="Топливный фильтр"/>
-                                        <TextBox Text="{Binding Fuelfilter}"/>
+                                        <TextBox Text="{Binding EditClient.Fuelfilter}"/>
 
                                     </StackPanel>
 
@@ -608,7 +632,7 @@
 
                                         <TextBox Height="150" TextWrapping="Wrap"
                                                  HorizontalScrollBarVisibility="Visible"
-                                                 Text="{Binding Comment}"/>
+                                                 Text="{Binding EditClient.Comment}"/>
 
 
                                     </StackPanel>
