@@ -25,9 +25,28 @@ namespace RialDataBase_2._0.Model
         private string _fuelfilter;
         private string _comment;
         private string _date;
-        
+        private StatusEnum _status;
+        private int _totalPurchaseAmount;
 
         #endregion
+
+        #region Свойства
+
+        public StatusEnum Status
+        {
+            get { return _status; }
+            set { _status = value; }
+        }
+
+        /// <summary>
+        /// Общая сумма потраченная клиентом.
+        /// </summary>
+        public int TotalPurchaseAmount
+        {
+            get { return _totalPurchaseAmount; }
+            set { _totalPurchaseAmount = value; }
+        }
+
 
         public string Date
         {
@@ -118,9 +137,11 @@ namespace RialDataBase_2._0.Model
             set { _salonFilter = value; }
         }
 
+        #endregion  
+
         public VinWindow(string _vin, string _name, string _phone, string _car, string _oil,string _oilFilter, string _airFilter,
                         string _salonFilter, int _cashBack, string _ngk, string _padsfront, string _padsrear, string _fuelfilter,
-                        string _comment, string _date)
+                        string _comment, string _date, int total = 0)
         {
             Vin = _vin;
             Name = _name;
@@ -137,6 +158,8 @@ namespace RialDataBase_2._0.Model
             Fuelfilter = _fuelfilter;
             Comment = _comment;
             Date = _date;
+            Status = StatusEnum.Standart;
+            TotalPurchaseAmount = total;
       
         }
         
