@@ -402,7 +402,8 @@ namespace RialDataBase_2._0.ViewModel
             {
                
                 Exception = String.Empty; 
-                return true;              
+                return true;
+                
             }
 
             return false;
@@ -429,7 +430,9 @@ namespace RialDataBase_2._0.ViewModel
                 Padsrear = Padsrear,
                 Fuelfilter = Fuelfilter,
                 Comment = Comment,
-                Date = DateTime.Now.ToString("dd.MM.yy")
+                Date = DateTime.Now.ToString("dd.MM.yy"),
+                TotalPurchaseAmount = CashBack
+
             }) ;
 
             MessageBox.Show($"Клиент {Name} успешно добавлен");
@@ -485,11 +488,85 @@ namespace RialDataBase_2._0.ViewModel
         {
             int index = Clients.IndexOf(ClientAfterSearh);
 
-            Clients[index].CashBack += AddCashBack / 100;
+
+            Clients[index].TotalPurchaseAmount += AddCashBack;
+
+
+            switch (Clients[index].TotalPurchaseAmount)
+            {
+                case > 200_000:
+
+                    if (Clients[index].Status == StatusEnum.Vip)
+                    {
+                        break;
+                    }
+
+                    Clients[index].Status = StatusEnum.Vip;
+
+                    MessageBox.Show(
+                        $"Поздравьте клиента!" +
+                        $"\n{Clients[index].Name} получил VIP статус!" +
+                        $"\n Кешбек равен 4%!");
+
+                    break;
+
+                case > 100_000:
+
+                    if (Clients[index].Status == StatusEnum.Gold)
+                    {
+                        break;
+                    }
+
+                    Clients[index].Status = StatusEnum.Gold;
+
+                    MessageBox.Show(
+                        $"Поздравьте клиента!" +
+                        $"\n{Clients[index].Name} получил GOLD статус!" +
+                        $"\n Кешбек равен 3%!");           
+                    break;
+
+                case > 30_000:
+
+                    if (Clients[index].Status == StatusEnum.Silver)
+                    {
+                        break;
+                    }
+
+                    Clients[index].Status = StatusEnum.Silver;
+
+                    MessageBox.Show(
+                        $"Поздравьте клиента!" +
+                        $"\n{Clients[index].Name} получил Silver статус!" +
+                        $"\n Кешбек равен 2%!");               
+                    break;
+            }
+
+
+            int _cash = 0;
+
+            switch (Clients[index].Status)
+            {
+                case StatusEnum.Standart:
+                    _cash = AddCashBack / 100;
+                    Clients[index].CashBack += _cash;
+                    break;
+                case StatusEnum.Silver:
+                    _cash = AddCashBack / 100 * 2;
+                    Clients[index].CashBack += _cash;
+                    break;
+                case StatusEnum.Gold:
+                    _cash = AddCashBack / 100 * 3;
+                    Clients[index].CashBack += _cash;
+                    break;
+                case StatusEnum.Vip:
+                    _cash = AddCashBack / 100 * 4;
+                    Clients[index].CashBack += _cash;
+                    break;  
+            }   
 
             DataWorker.SavesData(Clients);
 
-            MessageBox.Show($"Клиенту {ClientAfterSearh.Name} был добавлен кешбек\nВ размере {AddCashBack / 100} рублей\n" +
+            MessageBox.Show($"Клиенту {ClientAfterSearh.Name} был добавлен кешбек\nВ размере {_cash} рублей\n" +
                             $"Накопленная сумма составляет {Clients[index].CashBack}");
 
             ClientAfterSearh = default;

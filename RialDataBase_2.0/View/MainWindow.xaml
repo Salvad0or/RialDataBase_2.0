@@ -297,7 +297,6 @@
                                           Margin="0 10" >
                                     <GroupBox.Header>
                                         <StackPanel Orientation="Horizontal">
-
                                             <TextBlock Text="Баланс : "
                                                        FontSize="15"
                                                        FontWeight="Bold"/>
@@ -306,7 +305,17 @@
                                                        FontWeight="Bold"/>
                                             <TextBlock Text="₽"
                                                        FontSize="15"
-                                                       FontWeight="Bold"/>
+                                                       FontWeight="Bold"
+                                                       Margin="0 0 10 0"/>
+                                            <TextBlock Text="Статус:" 
+                                                       FontSize="15"
+                                                       FontWeight="Bold"
+                                                       Margin="0 0 2 0"/>
+                                            <TextBlock Text="{Binding ClientAfterSearh.Status}"
+                                                       FontSize="15"
+                                                       FontWeight="Bold"
+                                                       />
+
                                         </StackPanel>
                                     </GroupBox.Header>
                                     <GroupBox.Resources>
@@ -669,7 +678,7 @@
                     <DataGrid.Columns>
                         <DataGridTextColumn IsReadOnly="True" Header="Дата" Binding="{Binding Date}" Width="55"/>
                         <DataGridTextColumn IsReadOnly="True" Header="Имя" Binding="{Binding Name}" Width="80"/>
-                        <DataGridTextColumn IsReadOnly="False" Header="Телефон" Binding="{Binding Phone}" Width="105"/>
+                        <DataGridTextColumn IsReadOnly="False" Header="Телефон" Binding="{Binding Phone}" Width="85 "/>
                         <DataGridTextColumn IsReadOnly="True" Header="Авто" Binding="{Binding Car}" Width="85"/>
                         <DataGridTextColumn IsReadOnly="True" Header="Масло" Binding="{Binding Oil}" Width="90"/>
                         <DataGridTextColumn IsReadOnly="True" Header="Масл." Binding="{Binding OilFilter}" Width="50"/>
@@ -678,9 +687,10 @@
                         <DataGridTextColumn IsReadOnly="True" Header="Свечи" Binding="{Binding Ngk}" Width="50"/>
                         <DataGridTextColumn IsReadOnly="True" Header="КолодкиПер." Binding="{Binding Padsfront}" Width="82"/>
                         <DataGridTextColumn IsReadOnly="True" Header="КолодкиЗад." Binding="{Binding Padsrear}" Width="80"/>
+                        <DataGridTextColumn IsReadOnly="True" Header="Топливный" Binding="{Binding Fuelfilter}" Width="80 "/>
                         <DataGridTextColumn IsReadOnly="True" Header="Кешбек" Binding="{Binding CashBack}" Width="80"/>
-                        <DataGridTextColumn IsReadOnly="True" Header="Топливный" Binding="{Binding Fuelfilter}" Width="* "/>
-
+                        <DataGridTextColumn IsReadOnly="True" Header="Общая сумма покупок" Binding="{Binding TotalPurchaseAmount}" Width="80"/>
+                        <DataGridTextColumn IsReadOnly="True" Header="Cтатус" Binding="{Binding Status}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
 
