@@ -398,7 +398,7 @@ namespace RialDataBase_2._0.ViewModel
                 }
             }
 
-            if (Phone.Length >= 11)
+            if (Phone.Length == 11)
             {
                 Exception = String.Empty;      
                 return true;
@@ -411,6 +411,7 @@ namespace RialDataBase_2._0.ViewModel
 
         public void OnTestCommandExecuted(object p)
         {
+
             Clients.Add(new VinWindow
             {
                 Vin = Vin,
@@ -427,13 +428,11 @@ namespace RialDataBase_2._0.ViewModel
                 Padsrear = Padsrear,
                 Fuelfilter = Fuelfilter,
                 Comment = Comment,
-                Date = DateTime.Now.ToShortDateString()    
+                Date = DateTime.Now.ToString("dd.MM.yy")
             }) ;
 
             MessageBox.Show($"Клиент {Name} успешно добавлен");
             ClearWindow();
-
-
 
         }
 
