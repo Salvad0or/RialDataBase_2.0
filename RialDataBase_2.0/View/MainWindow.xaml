@@ -77,7 +77,8 @@
                             <TextBox Margin="-5 5 0 0" 
                                      Width="150" 
                                      Height="32"
-                                     Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}"/>
+                                     Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}"
+                                     MaxLength="11"/>
                         </StackPanel>
                     </GroupBox>
 
@@ -666,9 +667,9 @@
                           AlternatingRowBackground="LightGray"
                           CanUserAddRows="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn IsReadOnly="True" Header="Дата" Binding="{Binding Date}" Width="90"/>
+                        <DataGridTextColumn IsReadOnly="True" Header="Дата" Binding="{Binding Date}" Width="55"/>
                         <DataGridTextColumn IsReadOnly="True" Header="Имя" Binding="{Binding Name}" Width="80"/>
-                        <DataGridTextColumn IsReadOnly="False" Header="Телефон" Binding="{Binding Phone}" Width="90"/>
+                        <DataGridTextColumn IsReadOnly="False" Header="Телефон" Binding="{Binding Phone}" Width="105"/>
                         <DataGridTextColumn IsReadOnly="True" Header="Авто" Binding="{Binding Car}" Width="85"/>
                         <DataGridTextColumn IsReadOnly="True" Header="Масло" Binding="{Binding Oil}" Width="90"/>
                         <DataGridTextColumn IsReadOnly="True" Header="Масл." Binding="{Binding OilFilter}" Width="50"/>

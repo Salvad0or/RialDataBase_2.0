@@ -398,10 +398,12 @@ namespace RialDataBase_2._0.ViewModel
                 }
             }
 
-            if (Phone.Length == 11)
+            if (Phone.Length == 11 && (long.TryParse(Phone, out long t)))
             {
-                Exception = String.Empty;      
+               
+                Exception = String.Empty; 
                 return true;
+                
             }
 
             return false;
