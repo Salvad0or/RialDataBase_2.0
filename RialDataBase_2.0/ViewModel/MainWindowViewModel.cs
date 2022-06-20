@@ -435,8 +435,11 @@ namespace RialDataBase_2._0.ViewModel
 
             }) ;
 
-            MessageBox.Show($"Клиент {Name} успешно добавлен");
             ClearWindow();
+
+            MessageBox.Show($"Клиент {Name} успешно добавлен");
+
+            
 
         }
 
