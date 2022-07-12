@@ -673,8 +673,8 @@
                     </StackPanel>
                 </TabItem.Header>
 
-                <DataGrid ItemsSource="{Binding Clients}"
-                          AutoGenerateColumns="False"              
+                <DataGrid ItemsSource="{Binding Data}"
+                          AutoGenerateColumns="True"              
                           HorizontalGridLinesBrush="Transparent"
                           VerticalGridLinesBrush="LightGray"
                           AlternatingRowBackground="LightGray"

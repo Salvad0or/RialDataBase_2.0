@@ -5,6 +5,7 @@ using RialDataBase_2._0.ViewModel.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text; 
 using System.Threading.Tasks;
@@ -40,6 +41,20 @@ namespace RialDataBase_2._0.ViewModel
         private string _phoneSearch;
         private int _addCashBack;
         private int _spendCashBack;
+        private DataWorker _dataWorkersql;
+
+        public DataWorker DataWorkerSql
+        {
+            get { return _dataWorkersql; }
+            set { _dataWorkersql = value; }
+        }
+
+        private DataTable _data;   
+        public DataTable Data
+        {
+            get { return  _data; }
+            set { _data = value; }
+        }
 
         #endregion
 
@@ -388,7 +403,6 @@ namespace RialDataBase_2._0.ViewModel
 
         public bool CanTestCommandExecuted(object p)
         {
-
             for (int i = 0; i < Clients.Count; i++)
             {
                 if (Equals(Phone, Clients[i].Phone))
@@ -567,7 +581,7 @@ namespace RialDataBase_2._0.ViewModel
                     break;  
             }   
 
-            DataWorker.SavesData(Clients);
+            //DataWorker.SavesData(Clients);
 
             MessageBox.Show($"Клиенту {ClientAfterSearh.Name} был добавлен кешбек\nВ размере {_cash} рублей\n" +
                             $"Накопленная сумма составляет {Clients[index].CashBack}");
@@ -612,7 +626,7 @@ namespace RialDataBase_2._0.ViewModel
 
             Clients[index].CashBack -= Math.Abs(SpendCashBack);
 
-            DataWorker.SavesData(Clients);
+           // DataWorker.SavesData(Clients);
 
             MessageBox.Show($"Кешбек клиента {ClientAfterSearh.Name} успешно списан\nНа балансе осталось {Clients[index].CashBack}");
 
@@ -668,7 +682,7 @@ namespace RialDataBase_2._0.ViewModel
 
             Clients.Add(EditClient);
            
-            DataWorker.SavesData(Clients);
+           // DataWorker.SavesData(Clients);
 
             MessageBox.Show("Данные успешно изменены");
 
@@ -694,9 +708,10 @@ namespace RialDataBase_2._0.ViewModel
             EditClientDataCommand = new LambaCommand(OnEditClientDataExecute, CanEditClientDataExecuted);
             SearchEditClientDataCommand = new LambaCommand(OnSearchEditClientDataExecuted, CanSearchEditClientDataExecuted);
 
-            Clients = DataWorker.LoadData();
+            DataWorkerSql = new DataWorker();
+            Data = DataWorkerSql.DataSet.Tables[0];
 
-            Clients.CollectionChanged += Clients_CollectionChanged;
+            //Clients.CollectionChanged += Clients_CollectionChanged;
             
         }
         #endregion
@@ -708,10 +723,10 @@ namespace RialDataBase_2._0.ViewModel
             switch (e.Action)
             {
                 case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
-                    DataWorker.SavesData(Clients);
+                   // DataWorker.SavesData(Clients);
                     break;
                 case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
-                    DataWorker.SavesData(Clients);
+                   // DataWorker.SavesData(Clients);
                     break;
                 case System.Collections.Specialized.NotifyCollectionChangedAction.Replace:
                     break;
