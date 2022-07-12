@@ -679,6 +679,7 @@
                           VerticalGridLinesBrush="LightGray"
                           AlternatingRowBackground="LightGray"
                           CanUserAddRows="False">
+                    
                     <DataGrid.Columns>
                         <DataGridTextColumn IsReadOnly="True" Header="Дата" Binding="{Binding Date}" Width="55"/>
                         <DataGridTextColumn IsReadOnly="True" Header="Имя" Binding="{Binding Name}" Width="80"/>
