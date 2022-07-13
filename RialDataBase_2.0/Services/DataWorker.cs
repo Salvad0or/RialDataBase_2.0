@@ -41,7 +41,7 @@ namespace RialDataBase_2._0.Services
                 using (SqlConnection sql = new SqlConnection(stringBuilder.ToString()))
                 {
 
-                    string command = "SELECT * FROM TempTable";
+                    string command = "SELECT * FROM RialDataBase";
 
                     dataAdapter = new SqlDataAdapter(command, sql);
                     DataSet = new DataSet();
