@@ -404,16 +404,9 @@ namespace RialDataBase_2._0.ViewModel
 
         public bool CanAddClient(object p)
         {
-            for (int i = 0; i < Clients.Count; i++)
-            {
-                if (Equals(Phone, Clients[i].Phone))
-                {
-                    Exception = "Такой клиент\nприсутствует в базе";        
-                    return false;
-                }
-            }
+            bool flag = DataWorkerSql.SearchClient(Phone);
 
-            if (Phone.Length == 11 && (long.TryParse(Phone, out long t)))
+            if (Phone.Length == 11 && (long.TryParse(Phone, out long t) && flag))
             {
                
                 Exception = String.Empty; 

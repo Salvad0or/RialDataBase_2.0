@@ -1,0 +1,2 @@
+﻿SELECT * FROM RialDataBase
+WHERE Phone = '89046669025'

@@ -25,6 +25,7 @@ namespace RialDataBase_2._0.Services
         private DataSet _dataset;
         private SqlCommand _searchCommand;
         private SqlDataAdapter dataAdapter;
+        private DataTable _dataTable;
 
         public SqlDataAdapter DataAdapter
         {
@@ -38,10 +39,16 @@ namespace RialDataBase_2._0.Services
             set { _dataset = value; }
         }
        
-        SqlCommand searchCommand
+        SqlCommand SearchCommand
         {
             get =>  _searchCommand;
             set => _searchCommand = value;
+        }
+
+        public DataTable DataTable
+        {
+            get => _dataTable;
+            set => _dataTable = value;
         }
 
         public DataWorker()
@@ -55,8 +62,10 @@ namespace RialDataBase_2._0.Services
 
                     DataAdapter = new SqlDataAdapter(command, sql);
                     DataSet = new DataSet();
+                    DataTable = new DataTable();
 
                     DataAdapter.Fill(DataSet);
+                    DataTable = DataSet.Tables[0];
 
 
                     #region insertCommand
@@ -71,9 +80,9 @@ namespace RialDataBase_2._0.Services
 
                     #region searchCommand
 
-                    string _searchCommandText = $"SELECT * FROM RialDataBase WHERE Phone = '@phone'";
+                    string _searchCommandText = $"SELECT * FROM RialDataBase WHERE Phone = @phone";
 
-                    searchCommand = new SqlCommand(_searchCommandText,sql);
+                    SearchCommand = new SqlCommand(_searchCommandText,sql);
 
 
                     #endregion
@@ -97,7 +106,6 @@ namespace RialDataBase_2._0.Services
         public void InsertCommand(string vin, string name,string phone, string car,string oil,string oilfilter,string airfilter,
             string salonfilter,int CashBack, string Ngk, string PadsFront,string PadsRear,string fuelfilter, string comment,
             int Total, string status = "")
-
 
         {
 
@@ -131,12 +139,31 @@ namespace RialDataBase_2._0.Services
            
         }
 
+
+        /// <summary>
+        /// Поиск клиента по номеру телефона
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <returns></returns>
+
         public bool SearchClient(string phone)
         {
 
-            bool a = searchCommand.
+            IEnumerable<DataRow> query =
+                from order in DataTable.AsEnumerable()
+                select order;
 
-            return true;
+
+            IEnumerable<DataRow> query2 =  query.Where(p => p.Field<string>("Phone") == phone);
+
+            if (query2.ToList().Count == 0)
+            {
+                return true;
+            }
+
+            return false;
+
+
         }
 
         #endregion
