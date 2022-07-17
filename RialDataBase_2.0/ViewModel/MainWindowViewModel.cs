@@ -42,6 +42,7 @@ namespace RialDataBase_2._0.ViewModel
         private int _addCashBack;
         private int _spendCashBack;
         private DataWorker _dataWorkersql;
+        private DataTable _data;
 
         public DataWorker DataWorkerSql
         {
@@ -49,8 +50,8 @@ namespace RialDataBase_2._0.ViewModel
             set { _dataWorkersql = value; }
         }
 
-        private DataTable _data;   
-        public DataTable Data
+        
+        public DataTable MainDataForViewModel
         {
             get { return  _data; }
             set { _data = value; }
@@ -401,7 +402,7 @@ namespace RialDataBase_2._0.ViewModel
 
         public ICommand AddClientCommand { get; }
 
-        public bool CanTestCommandExecuted(object p)
+        public bool CanAddClient(object p)
         {
             for (int i = 0; i < Clients.Count; i++)
             {
@@ -425,35 +426,15 @@ namespace RialDataBase_2._0.ViewModel
         }
 
 
-        public void OnTestCommandExecuted(object p)
+        public void OnAddClient (object p)
         {
 
-            Clients.Add(new VinWindow
-            {
-                Vin = Vin,
-                Name = Name,
-                Phone = Phone,
-                Car = Car,
-                Oil = Oil,
-                OilFilter = OilFilter,
-                AirFilter = AirFilter,
-                SalonFilter = SalonFilter,
-                CashBack = CashBack / 100,
-                Ngk = Ngk,
-                Padsfront = Padsfront,
-                Padsrear = Padsrear,
-                Fuelfilter = Fuelfilter,
-                Comment = Comment,
-                Date = DateTime.Now.ToString("dd.MM.yy"),
-                TotalPurchaseAmount = CashBack
-
-            }) ;
+            DataWorkerSql.InsertCommand(Vin, Name, Phone, Car, Oil, OilFilter, AirFilter, SalonFilter, CashBack / 100, Ngk, Padsfront, Padsrear, Fuelfilter, Comment, CashBack);
 
             ClearWindow();
 
             MessageBox.Show($"Клиент {Name} успешно добавлен");
-
-            
+ 
 
         }
 
@@ -701,7 +682,7 @@ namespace RialDataBase_2._0.ViewModel
         public MainWindowViewModel()
         {
            
-            AddClientCommand = new LambaCommand(OnTestCommandExecuted, CanTestCommandExecuted);
+            AddClientCommand = new LambaCommand(OnAddClient, CanAddClient);
             SearchClientCommand = new LambaCommand(OnSearchClientExecute, CanSearchClientExecutrd);
             AddCashBackCommand = new LambaCommand(OnAddCashBackExecuted, CanAddCasbackExecuted);
             SpendСashback = new LambaCommand(OnSpendCashBackExecute, CanSpendCashBackExecuted);
@@ -709,7 +690,7 @@ namespace RialDataBase_2._0.ViewModel
             SearchEditClientDataCommand = new LambaCommand(OnSearchEditClientDataExecuted, CanSearchEditClientDataExecuted);
 
             DataWorkerSql = new DataWorker();
-            Data = DataWorkerSql.DataSet.Tables[0];
+            MainDataForViewModel = DataWorkerSql.DataSet.Tables[0];
 
             //Clients.CollectionChanged += Clients_CollectionChanged;
             
