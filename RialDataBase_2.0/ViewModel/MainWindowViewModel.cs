@@ -49,12 +49,17 @@ namespace RialDataBase_2._0.ViewModel
             get { return _dataWorkersql; }
             set { _dataWorkersql = value; }
         }
-
         
         public DataTable MainDataForViewModel
         {
             get { return  _data; }
-            set { _data = value; }
+            set 
+            {
+                if (Equals(_data, value)) return;
+                _data = value;
+                OnPropertyChanged();
+               
+            }
         }
 
         #endregion
@@ -404,7 +409,7 @@ namespace RialDataBase_2._0.ViewModel
 
         public bool CanAddClient(object p)
         {
-            bool flag = DataWorkerSql.SearchClient(Phone);
+            bool flag = DataWorkerSql.SearchClientForAddClient(Phone);
 
             if (Phone.Length == 11 && (long.TryParse(Phone, out long t) && flag))
             {
@@ -447,9 +452,8 @@ namespace RialDataBase_2._0.ViewModel
         }
         public void OnSearchClientExecute(object p) 
         {
-            ClientAfterSearh = Clients.FirstOrDefault(x => x.Phone == PhoneSearch);
-
-            if (ClientAfterSearh == null)
+         
+            if (!DataWorkerSql.SearchClientForCashBackWindow(PhoneSearch))
             {
                 MessageBox.Show("Клиент не найден, попробуйте еще раз");
                 Flag = false;
@@ -614,7 +618,6 @@ namespace RialDataBase_2._0.ViewModel
 
         #endregion
 
-
         #region Команда поиска для редактирования клиента
         public ICommand SearchEditClientDataCommand { get; }
 
@@ -683,10 +686,10 @@ namespace RialDataBase_2._0.ViewModel
             SearchEditClientDataCommand = new LambaCommand(OnSearchEditClientDataExecuted, CanSearchEditClientDataExecuted);
 
             DataWorkerSql = new DataWorker();
-            MainDataForViewModel = DataWorkerSql.DataSet.Tables[0];
+            MainDataForViewModel = DataWorker.DataSetTable.Tables[0];
 
             //Clients.CollectionChanged += Clients_CollectionChanged;
-            
+
         }
         #endregion
 
@@ -694,6 +697,8 @@ namespace RialDataBase_2._0.ViewModel
 
         private void Clients_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
+
+            
             switch (e.Action)
             {
                 case System.Collections.Specialized.NotifyCollectionChangedAction.Add:

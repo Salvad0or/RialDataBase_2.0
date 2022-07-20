@@ -15,6 +15,9 @@ namespace RialDataBase_2._0.Services
 {
     public class DataWorker
     {
+
+        #region private поля
+
         private SqlConnectionStringBuilder stringBuilder = new SqlConnectionStringBuilder()
         { 
             DataSource = @"(LocalDB)\MSSQLLocalDB",
@@ -23,11 +26,19 @@ namespace RialDataBase_2._0.Services
             Pooling = true
         };
 
-
-        private DataSet _dataset;
+        private SqlConnection sql;
         private SqlCommand _searchCommand;
         private SqlDataAdapter dataAdapter;
         private DataTable _dataTable;
+
+        #endregion
+
+        #region public поля
+        public SqlConnection Sql 
+        { 
+            get => sql; 
+            set => sql = value; 
+        }
 
         public SqlDataAdapter DataAdapter
         {
@@ -35,136 +46,126 @@ namespace RialDataBase_2._0.Services
             set => dataAdapter = value;
         }
 
-        public DataSet DataSet
-        {
-            get { return _dataset; }
-            set { _dataset = value; }
-        }
-       
-        SqlCommand SearchCommand
+        public static DataSet DataSetTable;
+
+
+        public SqlCommand SearchCommand
         {
             get =>  _searchCommand;
             set => _searchCommand = value;
         }
 
-        public DataTable DataTable
+        public DataTable TableForSearch
         {
             get => _dataTable;
             set => _dataTable = value;
         }
 
+        #endregion
+
+
+        /// <summary>
+        /// Дефолтный конструктор
+        /// </summary>
         public DataWorker()
         {
 
-            string sqlString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Саша\ITVDN2db.mdf;Integrated Security=True";
-
             try
             {
-
-
-                using (SqlConnection sql = new SqlConnection(sqlString))
+                using (Sql = new SqlConnection(stringBuilder.ToString()))
                 {
-
                     string command = "SELECT * FROM RialDataBase";
+                    Sql.Open();
 
-                    DataAdapter = new SqlDataAdapter(command, sql);
-                    DataSet = new DataSet();
-                    DataTable = new DataTable();
+                    DataAdapter = new SqlDataAdapter(command, Sql);
+                    DataSetTable = new DataSet();
+                    TableForSearch = new DataTable();
+                    
+                    DataAdapter.Fill(DataSetTable);
 
-                    DataAdapter.Fill(DataSet);
-                    DataTable = DataSet.Tables[0];
+                    TableForSearch = DataSetTable.Tables[0];
 
-
-                    #region insertCommand
-                    DataAdapter.InsertCommand = new SqlCommand(@"INSERT INTO [RialDataBase] " +
-                                                                                                "(vin,Names,Phone,Car,Oil,OilFilter,AirFilter,SalonFilter,CashBack,Ngk,Padfront,Padsrear,Fuelfilter,Comment,TotalPurchaseAmount,Dates,Statuss" +
-                                    "VALUES" +
-                                    "@vin,@names,@phone,@car,@oil,@oilfilter,@airfilter,@salonfilter,@cashback,@ngk,@padsfront,@padsrear,@fuelfilter," +
-                                    "@comment,@totalpurchaseamount,@dates,@statuss",sql);
-
-                    #endregion
-
-                    #region searchCommand
-
-                    string _searchCommandText = $"SELECT * FROM RialDataBase WHERE Phone = @phone";
-
-                    SearchCommand = new SqlCommand(_searchCommandText,sql);
-
-
-                    #endregion
                 }
             }
 
             catch (Exception e)
             {
 
-                MessageBox.Show($"Ошибка : {e.Message}\nОбратитесь к создателю");
+                MessageBox.Show($"Ошибка : {e.Message}\n");
             }                  
         }
 
-        #region Запрос на добавление клиента
-
+        /// <summary>
+        /// Команда Insert на добавление клиента
+        /// </summary>
+        /// <param name="vin"></param>
+        /// <param name="name"></param>
+        /// <param name="phone"></param>
+        /// <param name="car"></param>
+        /// <param name="oil"></param>
+        /// <param name="oilfilter"></param>
+        /// <param name="airfilter"></param>
+        /// <param name="salonfilter"></param>
+        /// <param name="CashBack"></param>
+        /// <param name="Ngk"></param>
+        /// <param name="PadsFront"></param>
+        /// <param name="PadsRear"></param>
+        /// <param name="fuelfilter"></param>
+        /// <param name="comment"></param>
+        /// <param name="Total"></param>
+        /// <param name="status"></param>
         public void InsertCommand(string vin, string name,string phone, string car,string oil,string oilfilter,string airfilter,
             string salonfilter,int CashBack, string Ngk, string PadsFront,string PadsRear,string fuelfilter, string comment,
             int Total, string status = "")
 
-        {
-
+        {          
             try
             {
-               DataRow dataRow = DataSet.Tables[0].NewRow();
-                
-                dataRow["vin"] = vin;
-                dataRow["names"] = name;
-                dataRow["phone"] = phone;
-                dataRow["car"] = car;
-                dataRow["oil"] = oil;
-                dataRow["oilfilter"] = oilfilter;
-                dataRow["airfilter"] = airfilter;
-                dataRow["salonfilter"] = salonfilter;
-                dataRow["cashback"] = CashBack;
-                dataRow["ngk"] = Ngk;
-                dataRow["padsfront"] = PadsFront;
-                dataRow["padsrear"] = PadsRear;
-                dataRow["fuelfilter"] = fuelfilter;
-                dataRow["comment"] = comment;
-                dataRow["totalpurchaseamount"] = Total;
-                dataRow["dates"] = DateTime.Now.ToShortDateString();
-                dataRow["statuss"] = status;
 
-                DataSet.Tables[0].Rows.Add(dataRow);
+                using (Sql = new SqlConnection(stringBuilder.ToString()))
+                {
+                    Sql.Open();
+                    
+                    string command = "SELECT * FROM RialDataBase";
 
-                DataAdapter.Update(DataSet.Tables[0]);
+                    SqlDataAdapter adapter = new SqlDataAdapter(command, Sql);
 
-                DataSet.Clear();
+                    adapter.InsertCommand = new SqlCommand(@"INSERT INTO [RialDataBase] " +
+                                                                                                "(vin,Names,Phone,Car,Oil,OilFilter,AirFilter,SalonFilter,CashBack,Ngk,Padsfront,Padsrear,Fuelfilter,Comment,TotalPurchaseAmount,Dates,Statuss)" +
+                                    "VALUES" +
+                                    "(@vin,@names,@phone,@car,@oil,@oilfilter,@airfilter,@salonfilter,@cashback,@ngk,@padsfront,@padsrear,@fuelfilter," +
+                                    "@comment,@totalpurchaseamount,@dates,@statuss)", Sql);
 
-                DataAdapter.Fill(DataSet);
+                    adapter.InsertCommand.Parameters.AddWithValue("@vin", vin ??= String.Empty);
+                    adapter.InsertCommand.Parameters.AddWithValue("@names", name ??= String.Empty);
+                    adapter.InsertCommand.Parameters.AddWithValue("@phone", phone);
+                    adapter.InsertCommand.Parameters.AddWithValue("@car", car ??= String.Empty);
+                    adapter.InsertCommand.Parameters.AddWithValue("@oil", oil ??= String.Empty);
+                    adapter.InsertCommand.Parameters.AddWithValue("@oilfilter", oilfilter ??= String.Empty);
+                    adapter.InsertCommand.Parameters.AddWithValue("@airfilter", airfilter ??= String.Empty);
+                    adapter.InsertCommand.Parameters.AddWithValue("@salonfilter", salonfilter ??= String.Empty);
+                    adapter.InsertCommand.Parameters.AddWithValue("@cashback", CashBack);
+                    adapter.InsertCommand.Parameters.AddWithValue("@ngk", Ngk ??= String.Empty);
+                    adapter.InsertCommand.Parameters.AddWithValue("@padsfront", PadsFront ??= String.Empty);
+                    adapter.InsertCommand.Parameters.AddWithValue("@padsrear", PadsRear ??= String.Empty);
+                    adapter.InsertCommand.Parameters.AddWithValue("@fuelfilter", fuelfilter ??= String.Empty);
+                    adapter.InsertCommand.Parameters.AddWithValue("@comment", comment ??= String.Empty);
+                    adapter.InsertCommand.Parameters.AddWithValue("@totalpurchaseamount", Total);
+                    adapter.InsertCommand.Parameters.AddWithValue("@dates", DateTime.Now.ToString("dd.MM.yy"));
+                    adapter.InsertCommand.Parameters.AddWithValue("@statuss", StatusEnum.Standart.ToString());
 
+                    adapter.InsertCommand.ExecuteNonQuery();
 
-                //DataAdapter.InsertCommand.Parameters.AddWithValue("@vin", vin);
-                //DataAdapter.InsertCommand.Parameters.AddWithValue("@names", name);
-                //DataAdapter.InsertCommand.Parameters.Add("@phone", SqlDbType.NVarChar, 11, phone);
-                //DataAdapter.InsertCommand.Parameters.AddWithValue("@car", car);
-                //DataAdapter.InsertCommand.Parameters.AddWithValue("@oil", oil);
-                //DataAdapter.InsertCommand.Parameters.AddWithValue("@oilfilter", oilfilter);
-                //DataAdapter.InsertCommand.Parameters.AddWithValue("@airfilter", airfilter);
-                //DataAdapter.InsertCommand.Parameters.AddWithValue("@salonfilter", salonfilter);
-                //DataAdapter.InsertCommand.Parameters.AddWithValue("@cashback", CashBack);
-                //DataAdapter.InsertCommand.Parameters.AddWithValue("@ngk", Ngk);
-                //DataAdapter.InsertCommand.Parameters.AddWithValue("@padsfront", PadsFront);
-                //DataAdapter.InsertCommand.Parameters.AddWithValue("@padsrear", PadsRear);
-                //DataAdapter.InsertCommand.Parameters.AddWithValue("@fuelfilter", fuelfilter);
-                //DataAdapter.InsertCommand.Parameters.AddWithValue("@comment", comment);
-                //DataAdapter.InsertCommand.Parameters.AddWithValue("@totalpurchaseamount", Total);
-                //DataAdapter.InsertCommand.Parameters.AddWithValue("@dates", DateTime.Now.ToShortDateString());
-                //DataAdapter.InsertCommand.Parameters.AddWithValue("@statuss", status);
+                    DataSetTable.Clear();
 
-                //DataAdapter.InsertCommand.ExecuteNonQuery();
+                    adapter.Fill(DataSetTable);
+
+                }
             }
             catch (Exception e)
             {
 
-                MessageBox.Show(e.Message);     
+                MessageBox.Show($"Ошибка: {e.Message}");     
             }
            
         }
@@ -176,11 +177,11 @@ namespace RialDataBase_2._0.Services
         /// <param name="phone"></param>
         /// <returns></returns>
 
-        public bool SearchClient(string phone)
+        public bool SearchClientForAddClient(string phone)
         {
 
             IEnumerable<DataRow> query =
-                from order in DataTable.AsEnumerable()
+                from order in TableForSearch.AsEnumerable()
                 select order;
 
 
@@ -196,7 +197,20 @@ namespace RialDataBase_2._0.Services
 
         }
 
-        #endregion
+        public bool SearchClientForCashBackWindow(string phone)
+        {
+            IEnumerable<DataRow> query =
+                from order in TableForSearch.AsEnumerable()
+                select order;
 
+            IEnumerable<DataRow> query2 = query.Where(p => p.Field<string>("Phone") == phone);
+
+            if (query2.ToList().Count == 0) return false;
+          
+            return true;
+
+        }
+
+        
     }
 }
