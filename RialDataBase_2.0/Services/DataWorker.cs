@@ -197,6 +197,11 @@ namespace RialDataBase_2._0.Services
 
         }
 
+        /// <summary>
+        /// Поиск клиента для окна кешбека
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <returns></returns>
         public bool SearchClientForCashBackWindow(string phone)
         {
             IEnumerable<DataRow> query =
@@ -210,8 +215,12 @@ namespace RialDataBase_2._0.Services
             return true;
         }
 
-
-        public VinWindow FillClientForSecondWindow(string phone)
+        /// <summary>
+        /// Заполнения класса по номеру телефона
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <returns></returns>
+        public VinWindow FillsClass(string phone)
         {
             VinWindow ClientAferSearch = new VinWindow();
             try
@@ -237,9 +246,7 @@ namespace RialDataBase_2._0.Services
                         ClientAferSearch.OilFilter = reader["OilFilter"] as string;
                         ClientAferSearch.AirFilter = reader["AirFilter"] as string;
                         ClientAferSearch.SalonFilter = reader["SalonFilter"] as string;
-
                         ClientAferSearch.CashBack = (reader["CashBack"] as int?).GetValueOrDefault();
-
                         ClientAferSearch.Ngk = reader["Ngk"] as string;
                         ClientAferSearch.Padsfront = reader["Padsfront"] as string;
                         ClientAferSearch.Padsrear = reader["Padsrear"] as string;
@@ -272,13 +279,151 @@ namespace RialDataBase_2._0.Services
                 return ClientAferSearch;
 
             }
-            catch (Exception e )
+            catch (Exception e)
             {
 
                 MessageBox.Show(e.Message);
                 return null;
             }
         }
+
+        /// <summary>
+        /// Изменение кешбека
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="ClientAfterSearch"></param>
+        public void UpdateCashBackCommand(int a,VinWindow ClientAfterSearch)
+        {
+            try
+            {
+                using (SqlConnection sqlConnection = new SqlConnection(stringBuilder.ToString()))
+                {
+
+                    sqlConnection.Open();
+
+                    string command = "UPDATE [RialDataBase] SET CashBack = @cashBack WHERE Phone = @phone";
+                    string commandForSqlAdapter = "Select * FROM RialDataBase";
+
+                    SqlCommand sqlCommand = new SqlCommand(command, sqlConnection);
+                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(commandForSqlAdapter, sqlConnection);
+
+                    sqlCommand.Parameters.AddWithValue("@cashBack", ClientAfterSearch.CashBack);
+                    sqlCommand.Parameters.AddWithValue("@phone", ClientAfterSearch.Phone);
+                    
+                    sqlCommand.ExecuteNonQuery();
+
+                    DataSetTable.Clear();
+                    sqlDataAdapter.Fill(DataSetTable);
+
+                }
+            }
+            catch (Exception e)
+            {
+
+                MessageBox.Show(e.Message);
+            }
+        }
+
+        /// <summary>
+        /// Изменение статуса клиента
+        /// </summary>
+        /// <param name="ClientAfterSearch"></param>
+        public void ChangeStatusUpdateCommand(VinWindow ClientAfterSearch)
+        {
+            try
+            {
+                using (SqlConnection sqlConnection = new SqlConnection(stringBuilder.ToString()))
+                {
+
+                    sqlConnection.Open();
+
+                    string command = "UPDATE [RialDataBase] SET Statuss = @status WHERE Phone = @phone";
+                    string commandForSqlAdapter = "Select * FROM RialDataBase";
+
+                    SqlCommand sqlCommand = new SqlCommand(command, sqlConnection);
+                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(commandForSqlAdapter, sqlConnection);
+
+                    sqlCommand.Parameters.AddWithValue("@status", ClientAfterSearch.Status.ToString());
+                    sqlCommand.Parameters.AddWithValue("@phone", ClientAfterSearch.Phone);
+
+                    sqlCommand.ExecuteNonQuery();
+
+                    DataSetTable.Clear();
+                    sqlDataAdapter.Fill(DataSetTable);
+
+                }
+            }
+            catch (Exception e)
+            {
+
+                MessageBox.Show(e.Message);
+            }
+
+        }
+
+        public void ChangesDataOfClient(VinWindow EditClient)
+        {
+
+            string startPhone = EditClient.Phone;
+
+            #region Команда Update and Select
+            string UpdateCommand = "UPDATE RialDataBase SET vin = @vin," +
+                "Names = @names," +
+                "Car = @car," +
+                "Oil = @oil," +
+                "OilFilter = @oilfilter," +
+                "AirFilter = @airfilter," +
+                "SalonFilter = @salonfilter," +
+                "Ngk = @ngk," +
+                "Padsfront = @padsfront," +
+                "Padsrear = @padsrear," +
+                "Phone = @editphone," +
+                "Fuelfilter = @fuelfilter," +
+                "Comment = @comment WHERE Phone = @phone";
+
+            string SelectCommand = "SELECT * FROM RialDataBase";
+            #endregion
+
+            try
+            {
+                using (SqlConnection sqlConnection = new SqlConnection(stringBuilder.ToString()))
+                {
+                    sqlConnection.Open();
+                    SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(SelectCommand, sqlConnection);
+                    SqlCommand sqlCommand = new SqlCommand(UpdateCommand, sqlConnection);
+
+                    sqlCommand.Parameters.AddWithValue("@vin", EditClient.Vin ??= String.Empty);
+                    sqlCommand.Parameters.AddWithValue("@names", EditClient.Name ??= String.Empty);
+                    sqlCommand.Parameters.AddWithValue("@car", EditClient.Car ??= String.Empty);
+                    sqlCommand.Parameters.AddWithValue("@oil", EditClient.Oil ??= String.Empty);
+                    sqlCommand.Parameters.AddWithValue("@oilfilter", EditClient.OilFilter ??= String.Empty);
+                    sqlCommand.Parameters.AddWithValue("@airfilter", EditClient.AirFilter ??= String.Empty);
+                    sqlCommand.Parameters.AddWithValue("@salonfilter", EditClient.SalonFilter ??= String.Empty);
+                    sqlCommand.Parameters.AddWithValue("@ngk", EditClient.Ngk ??= String.Empty);
+                    sqlCommand.Parameters.AddWithValue("@padsfront", EditClient.Padsfront ??= String.Empty);
+                    sqlCommand.Parameters.AddWithValue("@padsrear", EditClient.Padsrear ??= String.Empty);
+                    sqlCommand.Parameters.AddWithValue("@fuelfilter", EditClient.Fuelfilter ??= String.Empty);
+                    sqlCommand.Parameters.AddWithValue("@comment", EditClient.Comment ??= String.Empty);
+                    sqlCommand.Parameters.AddWithValue("@phone", startPhone);
+                    sqlCommand.Parameters.AddWithValue("@editphone", EditClient.Phone);
+
+                    sqlCommand.ExecuteNonQuery();
+
+                    DataSetTable.Clear();
+                    sqlDataAdapter.Fill(DataSetTable);
+
+
+
+                }
+
+            }
+            catch (Exception e)
+            {
+
+                MessageBox.Show($"Ошибка {e.Message}");
+            }
+        }
+
         
     }
 }

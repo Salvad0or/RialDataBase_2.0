@@ -43,24 +43,11 @@ namespace RialDataBase_2._0.ViewModel
         private int _spendCashBack;
         private DataWorker _dataWorkersql;
         private DataTable _data;
+        private bool _flagForEditClient;
+        private string _editSearchPhone;
+        private VinWindow _editClient;
 
-        public DataWorker DataWorkerSql
-        {
-            get { return _dataWorkersql; }
-            set { _dataWorkersql = value; }
-        }
-        
-        public DataTable MainDataForViewModel
-        {
-            get { return  _data; }
-            set 
-            {
-                if (Equals(_data, value)) return;
-                _data = value;
-                OnPropertyChanged();
-               
-            }
-        }
+
 
         #endregion
 
@@ -341,7 +328,7 @@ namespace RialDataBase_2._0.ViewModel
 
         #region Свойтсва окна редактирования клиента
 
-        private string _editSearchPhone;
+  
 
         public string EditSearchPhone
         {
@@ -363,7 +350,7 @@ namespace RialDataBase_2._0.ViewModel
             }
         }
 
-        private VinWindow _editClient;
+       
 
         public VinWindow EditClient
         {
@@ -375,6 +362,15 @@ namespace RialDataBase_2._0.ViewModel
                 _editClient = value;
                 OnPropertyChanged();
             }
+        }
+
+
+        
+
+        public bool FlagForEditClient
+        {
+            get { return _flagForEditClient; }
+            set { _flagForEditClient = value; }
         }
 
 
@@ -395,6 +391,24 @@ namespace RialDataBase_2._0.ViewModel
                 if (Equals(_clients, value)) return;
                 _clients = value;
                 OnPropertyChanged();
+            }
+        }
+
+        public DataWorker DataWorkerSql
+        {
+            get { return _dataWorkersql; }
+            set { _dataWorkersql = value; }
+        }
+
+        public DataTable MainDataForViewModel
+        {
+            get { return _data; }
+            set
+            {
+                if (Equals(_data, value)) return;
+                _data = value;
+                OnPropertyChanged();
+
             }
         }
         #endregion
@@ -460,7 +474,7 @@ namespace RialDataBase_2._0.ViewModel
                 return;
             }
 
-            ClientAfterSearh = DataWorkerSql.FillClientForSecondWindow(PhoneSearch);
+            ClientAfterSearh = DataWorkerSql.FillsClass(PhoneSearch);
 
             Flag = true;
            
@@ -484,57 +498,61 @@ namespace RialDataBase_2._0.ViewModel
 
         public void OnAddCashBackExecuted(object p)
         {
-            int index = Clients.IndexOf(ClientAfterSearh);
+            
+            ClientAfterSearh.TotalPurchaseAmount += AddCashBack;
 
-
-            Clients[index].TotalPurchaseAmount += AddCashBack;
-
-
-            switch (Clients[index].TotalPurchaseAmount)
+            switch (ClientAfterSearh.TotalPurchaseAmount)
             {
                 case > 200_000:
 
-                    if (Clients[index].Status == StatusEnum.Vip)
+                    if (ClientAfterSearh.Status == StatusEnum.Vip)
                     {
                         break;
                     }
 
-                    Clients[index].Status = StatusEnum.Vip;
+                    ClientAfterSearh.Status = StatusEnum.Vip;
+
+                    DataWorkerSql.ChangeStatusUpdateCommand(ClientAfterSearh);
 
                     MessageBox.Show(
                         $"Поздравьте клиента!" +
-                        $"\n{Clients[index].Name} получил VIP статус!" +
+                        $"\n{ClientAfterSearh.Name} получил VIP статус!" +
                         $"\n Кешбек равен 4%!");
 
                     break;
 
                 case > 100_000:
 
-                    if (Clients[index].Status == StatusEnum.Gold)
+                    if (ClientAfterSearh.Status == StatusEnum.Gold)
                     {
                         break;
                     }
 
-                    Clients[index].Status = StatusEnum.Gold;
+                    ClientAfterSearh.Status = StatusEnum.Gold;
+
+                    DataWorkerSql.ChangeStatusUpdateCommand(ClientAfterSearh);
+
 
                     MessageBox.Show(
                         $"Поздравьте клиента!" +
-                        $"\n{Clients[index].Name} получил GOLD статус!" +
+                        $"\n{ClientAfterSearh.Name} получил GOLD статус!" +
                         $"\n Кешбек равен 3%!");           
                     break;
 
                 case > 30_000:
 
-                    if (Clients[index].Status == StatusEnum.Silver)
+                    if (ClientAfterSearh.Status == StatusEnum.Silver)
                     {
                         break;
-                    }
+                    }                   
 
-                    Clients[index].Status = StatusEnum.Silver;
+                    ClientAfterSearh.Status = StatusEnum.Silver;
+
+                    DataWorkerSql.ChangeStatusUpdateCommand(ClientAfterSearh);
 
                     MessageBox.Show(
                         $"Поздравьте клиента!" +
-                        $"\n{Clients[index].Name} получил Silver статус!" +
+                        $"\n{ClientAfterSearh.Name} получил Silver статус!" +
                         $"\n Кешбек равен 2%!");               
                     break;
             }
@@ -542,36 +560,35 @@ namespace RialDataBase_2._0.ViewModel
 
             int _cash = 0;
 
-            switch (Clients[index].Status)
+            switch (ClientAfterSearh.Status)
             {
                 case StatusEnum.Standart:
                     _cash = AddCashBack / 100;
-                    Clients[index].CashBack += _cash;
+                    ClientAfterSearh.CashBack += _cash;
                     break;
                 case StatusEnum.Silver:
                     _cash = AddCashBack / 100 * 2;
-                    Clients[index].CashBack += _cash;
+                    ClientAfterSearh.CashBack += _cash;
                     break;
                 case StatusEnum.Gold:
                     _cash = AddCashBack / 100 * 3;
-                    Clients[index].CashBack += _cash;
+                    ClientAfterSearh.CashBack += _cash;
                     break;
                 case StatusEnum.Vip:
                     _cash = AddCashBack / 100 * 4;
-                    Clients[index].CashBack += _cash;
+                    ClientAfterSearh.CashBack += _cash;
                     break;  
-            }   
+            }
 
-            
+            DataWorkerSql.UpdateCashBackCommand(0, ClientAfterSearh);
 
             MessageBox.Show($"Клиенту {ClientAfterSearh.Name} был добавлен кешбек\nВ размере {_cash} рублей\n" +
-                            $"Накопленная сумма составляет {Clients[index].CashBack}");
+                            $"Накопленная сумма составляет {ClientAfterSearh.CashBack}");
 
             ClientAfterSearh = default;
             AddCashBack = default;
             PhoneSearch = default;
             Flag = false;
-
         }
 
 
@@ -593,9 +610,7 @@ namespace RialDataBase_2._0.ViewModel
         public void OnSpendCashBackExecute(object p) 
 
         {
-            int index = Clients.IndexOf(ClientAfterSearh);
-
-            bool canSpand = Clients[index].CashBack - SpendCashBack >= 0;
+            bool canSpand = ClientAfterSearh.CashBack - SpendCashBack >= 0;
 
             if (!canSpand)
             {
@@ -605,11 +620,11 @@ namespace RialDataBase_2._0.ViewModel
                 return;
             }
 
-            Clients[index].CashBack -= Math.Abs(SpendCashBack);
+            ClientAfterSearh.CashBack -= Math.Abs(SpendCashBack);
 
-           // DataWorker.SavesData(Clients);
+            DataWorkerSql.UpdateCashBackCommand(0,ClientAfterSearh);
 
-            MessageBox.Show($"Кешбек клиента {ClientAfterSearh.Name} успешно списан\nНа балансе осталось {Clients[index].CashBack}");
+            MessageBox.Show($"Кешбек клиента {ClientAfterSearh.Name} успешно списан\nНа балансе осталось {ClientAfterSearh.CashBack}");
 
             ClientAfterSearh = default;
             SpendCashBack = default;
@@ -636,15 +651,15 @@ namespace RialDataBase_2._0.ViewModel
 
         public void OnSearchEditClientDataExecuted(object p)
         {
-            EditClient = Clients.FirstOrDefault(x => x.Phone == EditSearchPhone);
-
-            if (EditClient == null)
+            if (!DataWorkerSql.SearchClientForCashBackWindow(EditSearchPhone))
             {
-                MessageBox.Show("Клиент не найден");
+                MessageBox.Show("Клиент не найден, попробуйте еще раз");
                 return;
             }
 
+            EditClient = DataWorkerSql.FillsClass(EditSearchPhone);
 
+            FlagForEditClient = true;
         }
 
         #endregion
@@ -653,23 +668,24 @@ namespace RialDataBase_2._0.ViewModel
 
         public ICommand EditClientDataCommand { get; }
 
-        public bool CanEditClientDataExecuted(object p) => true;
+        public bool CanEditClientDataExecuted(object p)
+        {
+            if (FlagForEditClient) return true;
+
+            return false;
+            
+        }
 
         public void OnEditClientDataExecute(object p)
 
         {
-            Clients.Remove(EditClient);
 
-            Clients.Add(EditClient);
-           
-           // DataWorker.SavesData(Clients);
+            DataWorkerSql.ChangesDataOfClient(EditClient);
 
             MessageBox.Show("Данные успешно изменены");
 
             EditClient = default;
             EditSearchPhone = default;
-
-
 
         }
 

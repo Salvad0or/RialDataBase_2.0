@@ -507,7 +507,8 @@
                                      Width="128" 
                                      Height="32"
                                      Text="{Binding EditSearchPhone,UpdateSourceTrigger=PropertyChanged}"
-                                     FontSize="20"/>
+                                     FontSize="20"
+                                     MaxLength="11"/>
                             <Button Content="Поиск"
                                     Margin="15 0"
                                     Width="95"
