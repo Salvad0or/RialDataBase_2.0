@@ -247,7 +247,7 @@
                             <TextBox Width="87"                        
                                      FontSize="14"
                                      Text="{Binding PhoneSearch, UpdateSourceTrigger=PropertyChanged}"
-                                     MaxLength="11"
+                                     MaxLength="11" Visibility="Visible"                   
                                      />
 
                             <Button Width="75" 

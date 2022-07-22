@@ -438,7 +438,7 @@ namespace RialDataBase_2._0.ViewModel
 
         #endregion
 
-        #region Команда поиска клиента
+        #region Команда поиска клиента во втором окне
 
         public ICommand SearchClientCommand { get; }
         public bool CanSearchClientExecutrd(object p)
@@ -459,6 +459,9 @@ namespace RialDataBase_2._0.ViewModel
                 Flag = false;
                 return;
             }
+
+            ClientAfterSearh = DataWorkerSql.FillClientForSecondWindow(PhoneSearch);
+
             Flag = true;
            
         }
@@ -559,7 +562,7 @@ namespace RialDataBase_2._0.ViewModel
                     break;  
             }   
 
-            //DataWorker.SavesData(Clients);
+            
 
             MessageBox.Show($"Клиенту {ClientAfterSearh.Name} был добавлен кешбек\nВ размере {_cash} рублей\n" +
                             $"Накопленная сумма составляет {Clients[index].CashBack}");
@@ -678,6 +681,7 @@ namespace RialDataBase_2._0.ViewModel
         public MainWindowViewModel()
         {
            
+
             AddClientCommand = new LambaCommand(OnAddClient, CanAddClient);
             SearchClientCommand = new LambaCommand(OnSearchClientExecute, CanSearchClientExecutrd);
             AddCashBackCommand = new LambaCommand(OnAddCashBackExecuted, CanAddCasbackExecuted);
