@@ -10,6 +10,7 @@ using System.Xml.Serialization;
 using Microsoft.Data.SqlClient;
 using System.Windows;
 using System.Data;
+using System.Reflection;
 
 namespace RialDataBase_2._0.Services
 {
@@ -18,14 +19,7 @@ namespace RialDataBase_2._0.Services
 
         #region private поля
 
-        private SqlConnectionStringBuilder stringBuilder = new SqlConnectionStringBuilder()
-        { 
-            DataSource = @"(LocalDB)\MSSQLLocalDB",
-            InitialCatalog = "ITVDN2db",
-            IntegratedSecurity = true,
-            Pooling = true
-        };
-
+        private SqlConnectionStringBuilder _stringBuilder;
         private SqlConnection sql;
         private SqlCommand _searchCommand;
         private SqlDataAdapter dataAdapter;
@@ -33,7 +27,13 @@ namespace RialDataBase_2._0.Services
 
         #endregion
 
-        #region public поля
+        #region public свойства
+
+        public SqlConnectionStringBuilder StringBuilder
+        {
+            get => _stringBuilder;
+            private set => _stringBuilder = value;
+        }
         public SqlConnection Sql 
         { 
             get => sql; 
@@ -70,9 +70,18 @@ namespace RialDataBase_2._0.Services
         public DataWorker()
         {
 
+            StringBuilder = new SqlConnectionStringBuilder()
+            {
+                DataSource = @"(LocalDB)\MSSQLLocalDB",
+                InitialCatalog = "ITVDN2db",
+                IntegratedSecurity = true,
+                Pooling = true
+            };
+
+
             try
             {
-                using (Sql = new SqlConnection(stringBuilder.ToString()))
+                using (Sql = new SqlConnection(StringBuilder.ToString()))
                 {
                     string command = "SELECT * FROM RialDataBase";
                     Sql.Open();
@@ -122,7 +131,7 @@ namespace RialDataBase_2._0.Services
             try
             {
 
-                using (Sql = new SqlConnection(stringBuilder.ToString()))
+                using (Sql = new SqlConnection(StringBuilder.ToString()))
                 {
                     Sql.Open();
                     
@@ -225,7 +234,7 @@ namespace RialDataBase_2._0.Services
             VinWindow ClientAferSearch = new VinWindow();
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(stringBuilder.ToString()))
+                using (SqlConnection sqlConnection = new SqlConnection(StringBuilder.ToString()))
                 {
                     
                     sqlConnection.Open();
@@ -296,7 +305,7 @@ namespace RialDataBase_2._0.Services
         {
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(stringBuilder.ToString()))
+                using (SqlConnection sqlConnection = new SqlConnection(StringBuilder.ToString()))
                 {
 
                     sqlConnection.Open();
@@ -332,7 +341,7 @@ namespace RialDataBase_2._0.Services
         {
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(stringBuilder.ToString()))
+                using (SqlConnection sqlConnection = new SqlConnection(StringBuilder.ToString()))
                 {
 
                     sqlConnection.Open();
@@ -361,11 +370,14 @@ namespace RialDataBase_2._0.Services
 
         }
 
-        public void ChangesDataOfClient(VinWindow EditClient)
+        /// <summary>
+        /// Редактирование клиента
+        /// </summary>
+        /// <param name="EditClient"></param>
+        /// <param name="EditSearchPhone"></param>
+        public void ChangesDataOfClient(VinWindow EditClient,string EditSearchPhone, VinWindow ImlicitClone)
         {
-
-            string startPhone = EditClient.Phone;
-
+          
             #region Команда Update and Select
             string UpdateCommand = "UPDATE RialDataBase SET vin = @vin," +
                 "Names = @names," +
@@ -381,17 +393,23 @@ namespace RialDataBase_2._0.Services
                 "Fuelfilter = @fuelfilter," +
                 "Comment = @comment WHERE Phone = @phone";
 
+            
+
             string SelectCommand = "SELECT * FROM RialDataBase";
             #endregion
 
             try
             {
-                using (SqlConnection sqlConnection = new SqlConnection(stringBuilder.ToString()))
+                using (SqlConnection sqlConnection = new SqlConnection(StringBuilder.ToString()))
                 {
                     sqlConnection.Open();
+
+
+                    
+
                     SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(SelectCommand, sqlConnection);
                     SqlCommand sqlCommand = new SqlCommand(UpdateCommand, sqlConnection);
-
+                    
                     sqlCommand.Parameters.AddWithValue("@vin", EditClient.Vin ??= String.Empty);
                     sqlCommand.Parameters.AddWithValue("@names", EditClient.Name ??= String.Empty);
                     sqlCommand.Parameters.AddWithValue("@car", EditClient.Car ??= String.Empty);
@@ -404,16 +422,14 @@ namespace RialDataBase_2._0.Services
                     sqlCommand.Parameters.AddWithValue("@padsrear", EditClient.Padsrear ??= String.Empty);
                     sqlCommand.Parameters.AddWithValue("@fuelfilter", EditClient.Fuelfilter ??= String.Empty);
                     sqlCommand.Parameters.AddWithValue("@comment", EditClient.Comment ??= String.Empty);
-                    sqlCommand.Parameters.AddWithValue("@phone", startPhone);
+                    sqlCommand.Parameters.AddWithValue("@phone", EditSearchPhone);
                     sqlCommand.Parameters.AddWithValue("@editphone", EditClient.Phone);
 
                     sqlCommand.ExecuteNonQuery();
-
+        
                     DataSetTable.Clear();
                     sqlDataAdapter.Fill(DataSetTable);
-
-
-
+         
                 }
 
             }

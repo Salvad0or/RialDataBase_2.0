@@ -688,6 +688,7 @@
                         <DataGridTextColumn IsReadOnly="True" Header="Имя" Binding="{Binding Names}" Width="80"/>
                         <DataGridTextColumn IsReadOnly="False" Header="Телефон" Binding="{Binding Phone}" Width="85 "/>
                         <DataGridTextColumn IsReadOnly="True" Header="Авто" Binding="{Binding Car}" Width="85"/>
+                        <DataGridTextColumn IsReadOnly="True" Header="VIN" Binding="{Binding vin}" Width="85"/>
                         <DataGridTextColumn IsReadOnly="True" Header="Масло" Binding="{Binding Oil}" Width="90"/>
                         <DataGridTextColumn IsReadOnly="True" Header="Масл." Binding="{Binding OilFilter}" Width="50"/>
                         <DataGridTextColumn IsReadOnly="True" Header="Возд." Binding="{Binding AirFilter}" Width="50"/>

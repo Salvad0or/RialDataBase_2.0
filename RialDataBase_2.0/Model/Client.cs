@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RialDataBase_2._0.Model
 {
-    public class VinWindow
+    public class VinWindow : ICloneable
     {
         #region private поля
         private string _vin;
@@ -97,8 +97,8 @@ namespace RialDataBase_2._0.Model
 
         public string Vin
         {
-            get { return _vin; }
-            set { _vin = value; }
+            get { return _vin.ToUpper(); }
+            set { _vin = value.ToUpper() ; }
         }
         public string Phone
         {
@@ -168,6 +168,9 @@ namespace RialDataBase_2._0.Model
 
         }
 
-        
+        public object Clone()
+        {
+            return MemberwiseClone();
+        }
     }
 }

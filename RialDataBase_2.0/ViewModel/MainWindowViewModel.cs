@@ -46,6 +46,7 @@ namespace RialDataBase_2._0.ViewModel
         private bool _flagForEditClient;
         private string _editSearchPhone;
         private VinWindow _editClient;
+        private VinWindow _implicitClone;
 
 
 
@@ -328,7 +329,14 @@ namespace RialDataBase_2._0.ViewModel
 
         #region Свойтсва окна редактирования клиента
 
-  
+        public VinWindow ImlicitClone
+        {
+            get => _implicitClone; 
+
+            set => _implicitClone = value;
+        }
+
+
 
         public string EditSearchPhone
         {
@@ -658,6 +666,7 @@ namespace RialDataBase_2._0.ViewModel
             }
 
             EditClient = DataWorkerSql.FillsClass(EditSearchPhone);
+            ImlicitClone = (VinWindow)EditClient.Clone();
 
             FlagForEditClient = true;
         }
@@ -680,7 +689,7 @@ namespace RialDataBase_2._0.ViewModel
 
         {
 
-            DataWorkerSql.ChangesDataOfClient(EditClient);
+            DataWorkerSql.ChangesDataOfClient(EditClient, EditSearchPhone, ImlicitClone);
 
             MessageBox.Show("Данные успешно изменены");
 
