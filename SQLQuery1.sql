@@ -1,2 +1,1 @@
-﻿SELECT * FROM RialDataBase
-WHERE Phone = '89046669025'
+﻿UPDATE RialDataBase SET Phone = '00000000000' WHERE Phone = '89046669025'

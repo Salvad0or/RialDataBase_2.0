@@ -63,7 +63,6 @@ namespace RialDataBase_2._0.Services
 
         #endregion
 
-
         /// <summary>
         /// Дефолтный конструктор
         /// </summary>
@@ -178,7 +177,6 @@ namespace RialDataBase_2._0.Services
             }
            
         }
-
 
         /// <summary>
         /// Поиск клиента по номеру телефона
