@@ -71,15 +71,22 @@ namespace RialDataBase_2._0.Services
 
             StringBuilder = new SqlConnectionStringBuilder()
             {
-                DataSource = @"(LocalDB)\MSSQLLocalDB",
-                InitialCatalog = "ITVDN2db",
-                IntegratedSecurity = true,
+                DataSource = @"192.168.0.104, 1994",
+                InitialCatalog = "DBTest",
+                UserID = "sa",
+                Password = "12345",
+                Encrypt = false,
                 Pooling = true
             };
 
 
+            //Data Source = ""; Initial Catalog = ; User ID = sa; Password = ***********
+
+
             try
             {
+                
+
                 using (Sql = new SqlConnection(StringBuilder.ToString()))
                 {
                     string command = "SELECT * FROM RialDataBase";
@@ -88,7 +95,7 @@ namespace RialDataBase_2._0.Services
                     DataAdapter = new SqlDataAdapter(command, Sql);
                     DataSetTable = new DataSet();
                     TableForSearch = new DataTable();
-                    
+
                     DataAdapter.Fill(DataSetTable);
 
                     TableForSearch = DataSetTable.Tables[0];
