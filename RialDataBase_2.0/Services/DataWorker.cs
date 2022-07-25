@@ -71,13 +71,17 @@ namespace RialDataBase_2._0.Services
 
             StringBuilder = new SqlConnectionStringBuilder()
             {
-                DataSource = @"192.168.0.104, 1994",
-                InitialCatalog = "DBTest",
+                DataSource = @"192.168.1.48, 1994",
+                InitialCatalog = "RialShop",
                 UserID = "sa",
-                Password = "12345",
-                Encrypt = false,
+                Password = "rnjcerfkjvftN1",
+                Encrypt = false,              
                 Pooling = true
             };       
+
+
+            //Data Source = ""; Initial Catalog = ; User ID = sa; Password = ***********
+
 
             try
             {
