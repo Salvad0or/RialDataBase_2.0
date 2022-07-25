@@ -77,11 +77,7 @@ namespace RialDataBase_2._0.Services
                 Password = "12345",
                 Encrypt = false,
                 Pooling = true
-            };
-
-
-            //Data Source = ""; Initial Catalog = ; User ID = sa; Password = ***********
-
+            };       
 
             try
             {
