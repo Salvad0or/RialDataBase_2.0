@@ -74,6 +74,8 @@ namespace RialDataBase_2._0.Services
                 Password = "rnjcerfkjvftN1",
                 Encrypt = false,
                 Pooling = true
+                ''''
+
             };
 
             //Data Source=;AttachDbFilename=C:\Users\Саша\ITVDN2db.mdf;Integrated Security=True;Connect Timeout=30
