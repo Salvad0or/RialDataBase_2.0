@@ -24,7 +24,7 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
                     StatusId = 1
                 });
 
-                c
+                
             }
 
         }
