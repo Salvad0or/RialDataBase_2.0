@@ -68,17 +68,14 @@ namespace RialDataBase_2._0.Services
 
             StringBuilder = new SqlConnectionStringBuilder()
             {
-                DataSource = @"192.168.1.48, 1994",
-                InitialCatalog = "RialShop",
-                UserID = "sa",
-                Password = "rnjcerfkjvftN1",
-                Encrypt = false,
+                DataSource = @"(LocalDB)\MSSQLLocalDB",
+                InitialCatalog = "ITVDN2db",
                 Pooling = true
-                ''''
+                
 
             };
 
-            //Data Source=;AttachDbFilename=C:\Users\Саша\ITVDN2db.mdf;Integrated Security=True;Connect Timeout=30
+            //Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Саша\ITVDN2db.mdf;Integrated Security=True;Connect Timeout=30
 
             /*DataSource = @"192.168.1.48, 1994",
             InitialCatalog = "RialShop",
