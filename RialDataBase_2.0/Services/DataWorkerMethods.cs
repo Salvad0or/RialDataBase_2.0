@@ -136,9 +136,9 @@ namespace RialDataBase_2._0.Services
         /// </summary>
         /// <param name="phone"></param>
         /// <returns></returns>
-        public VinWindow FillsClass(string phone)
+        public EntityClient FillsClass(string phone)
         {
-            VinWindow ClientAferSearch = new VinWindow();
+            EntityClient ClientAferSearch = new EntityClient();
             try
             {
                 using (SqlConnection sqlConnection = new SqlConnection(StringBuilder.ToString()))
@@ -208,7 +208,7 @@ namespace RialDataBase_2._0.Services
         /// </summary>
         /// <param name="a"></param>
         /// <param name="ClientAfterSearch"></param>
-        public void UpdateCashBackCommand(int a, VinWindow ClientAfterSearch)
+        public void UpdateCashBackCommand(int a, EntityClient ClientAfterSearch)
         {
             try
             {
@@ -246,7 +246,7 @@ namespace RialDataBase_2._0.Services
         /// Изменение статуса клиента
         /// </summary>
         /// <param name="ClientAfterSearch"></param>
-        public void ChangeStatusUpdateCommand(VinWindow ClientAfterSearch)
+        public void ChangeStatusUpdateCommand(EntityClient ClientAfterSearch)
         {
             try
             {
@@ -284,7 +284,7 @@ namespace RialDataBase_2._0.Services
         /// </summary>
         /// <param name="EditClient"></param>
         /// <param name="EditSearchPhone"></param>
-        public void ChangesDataOfClient(VinWindow EditClient, string EditSearchPhone, VinWindow ImlicitClone)
+        public void ChangesDataOfClient(EntityClient EditClient, string EditSearchPhone, EntityClient ImlicitClone)
         {
 
             #region Команда Update and Select

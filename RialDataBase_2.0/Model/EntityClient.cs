@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace RialDataBase_2._0.Model
 {
-    public class VinWindow : ICloneable
+    public class EntityClient : ICloneable
     {
         #region private поля
         private string _vin;
@@ -24,7 +24,7 @@ namespace RialDataBase_2._0.Model
         private string _padsrear;
         private string _fuelfilter;
         private string _comment;
-        private string _date;
+        private DateTime _date;
         private StatusEnum _status;
         private int _totalPurchaseAmount;
 
@@ -48,7 +48,7 @@ namespace RialDataBase_2._0.Model
         }
 
 
-        public string Date
+        public DateTime Date
         {
             get { return _date; }
             set { _date = value; }
@@ -92,7 +92,27 @@ namespace RialDataBase_2._0.Model
         public int CashBack
         {
             get { return _cashBack; }
-            set { _cashBack = value; }
+            set
+            {
+                switch (Status)
+                {
+                    case StatusEnum.Standart:
+                        _cashBack = _cashBack / 100 * 1;
+                        break;
+                    case StatusEnum.Silver:
+                        _cashBack = _cashBack / 100 * 2;
+                        break;
+                    case StatusEnum.Gold:
+                        _cashBack = _cashBack / 100 * 3;
+                        break;
+                    case StatusEnum.Vip:
+                        _cashBack = _cashBack / 100 * 4;
+                        break;
+
+                    default:
+                        break;
+                }
+            }
         }
 
         public string Vin
@@ -139,9 +159,9 @@ namespace RialDataBase_2._0.Model
 
         #endregion  
 
-        public VinWindow(string _vin, string _name, string _phone, string _car, string _oil,string _oilFilter, string _airFilter,
+        public EntityClient(string _vin, string _name, string _phone, string _car, string _oil,string _oilFilter, string _airFilter,
                         string _salonFilter, int _cashBack, string _ngk, string _padsfront, string _padsrear, string _fuelfilter,
-                        string _comment, string _date, int total = 0)
+                        string _comment, DateTime _date, int total = 0)
         {
             Vin = _vin;
             Name = _name;
@@ -163,7 +183,7 @@ namespace RialDataBase_2._0.Model
       
         }
         
-        public VinWindow()
+        public EntityClient()
         {
 
         }

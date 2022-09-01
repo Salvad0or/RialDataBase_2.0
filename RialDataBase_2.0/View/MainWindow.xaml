@@ -71,13 +71,13 @@
                             <TextBox Margin="5 5 0 0"
                                      Width="150" 
                                      Height="32"
-                                     Text="{Binding Name}"/>
+                                     Text="{Binding NewClient.Name}"/>
 
                             <TextBlock Margin ="10 0" Text="Номер:" VerticalAlignment ="Center"/>
                             <TextBox Margin="-5 5 0 0" 
                                      Width="150" 
                                      Height="32"
-                                     Text="{Binding Phone, UpdateSourceTrigger=PropertyChanged}"
+                                     Text="{Binding NewClient.Phone, UpdateSourceTrigger=PropertyChanged}"
                                      MaxLength="11"/>
                         </StackPanel>
                     </GroupBox>
@@ -114,16 +114,16 @@
                             <StackPanel Grid.Column="0"
                                         Margin="0,5,0,5" Grid.ColumnSpan="2">
                                 <TextBlock Text="Марка автомобиля"/>
-                                <TextBox Text="{Binding Car}"/>
+                                <TextBox Text="{Binding NewClient.Car}"/>
 
                                 <TextBlock Text="VIN"/>
-                                <TextBox Text="{Binding Vin}"/>
+                                <TextBox Text="{Binding NewClient.Vin}"/>
 
                                 <TextBlock Text="Масло"/>
-                                <TextBox Text="{Binding Oil}"/>
+                                <TextBox Text="{Binding NewClient.Oil}"/>
 
                                 <TextBlock Text="Сумма покупки"/>
-                                <TextBox Text="{Binding CashBack}"/>
+                                <TextBox Text="{Binding NewClient.CashBack}"/>
 
                                 <StackPanel>
                                     <StackPanel.Resources>
@@ -168,25 +168,25 @@
                                     <StackPanel>
 
                                         <TextBlock Text="Масляный фильтр"/>
-                                        <TextBox Text="{Binding OilFilter}"/>
+                                        <TextBox Text="{Binding NewClient.OilFilter}"/>
 
                                         <TextBlock Text="Воздушный фильтр"/>
-                                        <TextBox Text="{Binding AirFilter}"/>
+                                        <TextBox Text="{Binding NewClient.AirFilter}"/>
 
                                         <TextBlock Text="Салонный фильтр"/>
-                                        <TextBox Text="{Binding SalonFilter}"/>
+                                        <TextBox Text="{Binding NewClient.SalonFilter}"/>
 
                                         <TextBlock Text="Свечи"/>
-                                        <TextBox Text="{Binding Ngk}"/>
+                                        <TextBox Text="{Binding NewClient.Ngk}"/>
 
                                         <TextBlock Text="Колодки передние"/>
-                                        <TextBox Text="{Binding Padsfront}"/>
+                                        <TextBox Text="{Binding NewClient.Padsfront}"/>
 
                                         <TextBlock Text="Колодки задние"/>
-                                        <TextBox Text="{Binding Padsrear}"/>
+                                        <TextBox Text="{Binding NewClient.Padsrear}"/>
 
                                         <TextBlock Text="Топливный фильтр"/>
-                                        <TextBox Text="{Binding Fuelfilter}"/>
+                                        <TextBox Text="{Binding NewClient.Fuelfilter}"/>
 
                                     </StackPanel>
 
@@ -195,7 +195,7 @@
 
                                         <TextBox Height="150" TextWrapping="Wrap"
                                                  HorizontalScrollBarVisibility="Visible"
-                                                 Text="{Binding Comment}"/>
+                                                 Text="{Binding NewClient.Comment}"/>
 
 
                                     </StackPanel>
