@@ -25,7 +25,6 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
                     Date = DateTime.Now,
                     StatusId = 1
                 };
-     
                 context.Clients.Add(newClient);
 
                 context.SaveChanges();
