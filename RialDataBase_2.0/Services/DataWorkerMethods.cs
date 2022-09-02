@@ -138,69 +138,71 @@ namespace RialDataBase_2._0.Services
         /// <returns></returns>
         public EntityClient FillsClass(string phone)
         {
-            EntityClient ClientAferSearch = new EntityClient();
-            try
-            {
-                using (SqlConnection sqlConnection = new SqlConnection(StringBuilder.ToString()))
-                {
+            //EntityClient ClientAferSearch = new EntityClient();
+            //try
+            //{
+            //    using (SqlConnection sqlConnection = new SqlConnection(StringBuilder.ToString()))
+            //    {
 
-                    sqlConnection.Open();
-                    string command = "SELECT * FROM RialDataBase WHERE Phone = @phone";
+            //        sqlConnection.Open();
+            //        string command = "SELECT * FROM RialDataBase WHERE Phone = @phone";
 
-                    SqlCommand sqlCommand = new SqlCommand(command, sqlConnection);
-                    sqlCommand.Parameters.AddWithValue("@phone", phone);
+            //        SqlCommand sqlCommand = new SqlCommand(command, sqlConnection);
+            //        sqlCommand.Parameters.AddWithValue("@phone", phone);
 
-                    SqlDataReader reader = sqlCommand.ExecuteReader();
+            //        SqlDataReader reader = sqlCommand.ExecuteReader();
 
-                    while (reader.Read())
-                    {
-                        ClientAferSearch.Vin = reader["vin"] as string;
-                        ClientAferSearch.Name = reader["Names"] as string;
-                        ClientAferSearch.Phone = reader["Phone"] as string;
-                        ClientAferSearch.Car = reader["Car"] as string;
-                        ClientAferSearch.Oil = reader["Oil"] as string;
-                        ClientAferSearch.OilFilter = reader["OilFilter"] as string;
-                        ClientAferSearch.AirFilter = reader["AirFilter"] as string;
-                        ClientAferSearch.SalonFilter = reader["SalonFilter"] as string;
-                        ClientAferSearch.CashBack = (reader["CashBack"] as int?).GetValueOrDefault();
-                        ClientAferSearch.Ngk = reader["Ngk"] as string;
-                        ClientAferSearch.Padsfront = reader["Padsfront"] as string;
-                        ClientAferSearch.Padsrear = reader["Padsrear"] as string;
-                        ClientAferSearch.Fuelfilter = reader["Fuelfilter"] as string;
-                        ClientAferSearch.Comment = reader["Comment"] as string;
-                        ClientAferSearch.TotalPurchaseAmount = (reader["TotalPurchaseAmount"] as int?).GetValueOrDefault();
-                        ClientAferSearch.Date = reader["Dates"] as string;
+            //        while (reader.Read())
+            //        {
+            //            ClientAferSearch.Vin = reader["vin"] as string;
+            //            ClientAferSearch.Name = reader["Names"] as string;
+            //            ClientAferSearch.Phone = reader["Phone"] as string;
+            //            ClientAferSearch.Car = reader["Car"] as string;
+            //            ClientAferSearch.Oil = reader["Oil"] as string;
+            //            ClientAferSearch.OilFilter = reader["OilFilter"] as string;
+            //            ClientAferSearch.AirFilter = reader["AirFilter"] as string;
+            //            ClientAferSearch.SalonFilter = reader["SalonFilter"] as string;
+            //            ClientAferSearch.CashBack = (reader["CashBack"] as int?).GetValueOrDefault();
+            //            ClientAferSearch.Ngk = reader["Ngk"] as string;
+            //            ClientAferSearch.Padsfront = reader["Padsfront"] as string;
+            //            ClientAferSearch.Padsrear = reader["Padsrear"] as string;
+            //            ClientAferSearch.Fuelfilter = reader["Fuelfilter"] as string;
+            //            ClientAferSearch.Comment = reader["Comment"] as string;
+            //            ClientAferSearch.TotalPurchaseAmount = (reader["TotalPurchaseAmount"] as int?).GetValueOrDefault();
+            //            ClientAferSearch.Date = reader["Dates"] as string;
 
 
-                        switch (reader["Statuss"] as string)
-                        {
-                            case "Standart":
-                                ClientAferSearch.Status = StatusEnum.Standart;
-                                break;
-                            case "Silver":
-                                ClientAferSearch.Status = StatusEnum.Silver;
-                                break;
-                            case "Gold":
-                                ClientAferSearch.Status = StatusEnum.Gold;
-                                break;
-                            case "Vip":
-                                ClientAferSearch.Status = StatusEnum.Vip;
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
+            //            switch (reader["Statuss"] as string)
+            //            {
+            //                case "Standart":
+            //                    ClientAferSearch.Status = StatusEnum.Standart;
+            //                    break;
+            //                case "Silver":
+            //                    ClientAferSearch.Status = StatusEnum.Silver;
+            //                    break;
+            //                case "Gold":
+            //                    ClientAferSearch.Status = StatusEnum.Gold;
+            //                    break;
+            //                case "Vip":
+            //                    ClientAferSearch.Status = StatusEnum.Vip;
+            //                    break;
+            //                default:
+            //                    break;
+            //            }
+            //        }
+            //    }
 
-                return ClientAferSearch;
+            //    return ClientAferSearch;
 
-            }
-            catch (Exception e)
-            {
+            //}
+            //catch (Exception e)
+            //{
 
-                MessageBox.Show(e.Message);
-                return null;
-            }
+            //    MessageBox.Show(e.Message);
+            //    return null;
+            //}
+
+            return new EntityClient();
         }
 
         /// <summary>

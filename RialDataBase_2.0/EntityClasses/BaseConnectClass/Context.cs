@@ -133,45 +133,7 @@ namespace RialDataBase_2._0.EntityClasses.BaseConnectClass
 
                 entity.Property(e => e.Status).HasMaxLength(30);
             });
-
-            modelBuilder.Entity<RialDataBase>(entity =>
-            {
-                entity.ToTable("RialDataBase");
-
-                entity.Property(e => e.AirFilter).HasMaxLength(50);
-
-                entity.Property(e => e.Car).HasMaxLength(50);
-
-                entity.Property(e => e.Comment).HasMaxLength(200);
-
-                entity.Property(e => e.Dates).HasMaxLength(30);
-
-                entity.Property(e => e.Fuelfilter).HasMaxLength(50);
-
-                entity.Property(e => e.Names).HasMaxLength(50);
-
-                entity.Property(e => e.Ngk).HasMaxLength(50);
-
-                entity.Property(e => e.Oil).HasMaxLength(50);
-
-                entity.Property(e => e.OilFilter).HasMaxLength(50);
-
-                entity.Property(e => e.Padsfront).HasMaxLength(50);
-
-                entity.Property(e => e.Padsrear).HasMaxLength(50);
-
-                entity.Property(e => e.Phone).HasMaxLength(50);
-
-                entity.Property(e => e.SalonFilter).HasMaxLength(50);
-
-                entity.Property(e => e.Statuss).HasMaxLength(20);
-
-                entity.Property(e => e.Vin)
-                    .HasMaxLength(20)
-                    .HasColumnName("vin");
-            });
-
-            OnModelCreatingPartial(modelBuilder);
+      
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

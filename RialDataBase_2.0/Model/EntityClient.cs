@@ -97,16 +97,16 @@ namespace RialDataBase_2._0.Model
                 switch (Status)
                 {
                     case StatusEnum.Standart:
-                        _cashBack = _cashBack / 100 * 1;
+                        _cashBack = value / 100 * 1;
                         break;
                     case StatusEnum.Silver:
-                        _cashBack = _cashBack / 100 * 2;
+                        _cashBack = value / 100 * 2;
                         break;
                     case StatusEnum.Gold:
-                        _cashBack = _cashBack / 100 * 3;
+                        _cashBack = value / 100 * 3;
                         break;
                     case StatusEnum.Vip:
-                        _cashBack = _cashBack / 100 * 4;
+                        _cashBack = value / 100 * 4;
                         break;
 
                     default:
@@ -117,8 +117,8 @@ namespace RialDataBase_2._0.Model
 
         public string Vin
         {
-            get { return _vin.ToUpper(); }
-            set { _vin = value.ToUpper() ; }
+            get { return _vin; }
+            set { _vin = value; }
         }
         public string Phone
         {

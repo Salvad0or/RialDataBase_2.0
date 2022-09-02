@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="RialDataBase_2._0.EntityClasses.Objects.CarCharacteristic" Collapsed="true">
+    <Position X="0.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAQAAQAAQAAACACAAAAAAAAAAAQACCAAAAI=</HashCode>
+      <FileName>EntityClasses\Objects\CarCharacteristic.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RialDataBase_2._0.EntityClasses.Objects.Car" Collapsed="true">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAAAAAAAAIgIAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>EntityClasses\Objects\Car.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RialDataBase_2._0.EntityClasses.BaseConnectClass.Context" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAQAQAAAIACAAAAAAEAAQAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>EntityClasses\BaseConnectClass\Context.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RialDataBase_2._0.EntityClasses.Objects.Client" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAOAAAgAAAAAAAAAAAAAAAAAAABAAAAIAAAEAA=</HashCode>
+      <FileName>EntityClasses\Objects\Client.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RialDataBase_2._0.EntityClasses.Objects.ClientStatus" Collapsed="true">
+    <Position X="0.5" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAEAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>EntityClasses\Objects\ClientStatus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RialDataBase_2._0.EntityClasses.Objects.ClientBankAccout" Collapsed="true">
+    <Position X="0.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAEAAAAAAU=</HashCode>
+      <FileName>EntityClasses\Objects\ClientBankAccout.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

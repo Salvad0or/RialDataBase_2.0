@@ -1,4 +1,5 @@
-﻿using RialDataBase_2._0.Infrasrtucture;
+﻿using RialDataBase_2._0.EntityClasses.SqlCommands;
+using RialDataBase_2._0.Infrasrtucture;
 using RialDataBase_2._0.Model;
 using RialDataBase_2._0.Services;
 using RialDataBase_2._0.ViewModel.ViewModel;
@@ -20,6 +21,7 @@ namespace RialDataBase_2._0.ViewModel
 
         #region private Поля
 
+        private InsertCommands _insert;
 
         private ObservableCollection<EntityClient> _clients;
         private EntityClient _clientAfterSearch;
@@ -32,7 +34,23 @@ namespace RialDataBase_2._0.ViewModel
         private string _editSearchPhone;
         private EntityClient _editClient;
         private EntityClient _implicitClone;
+        
 
+
+        #endregion
+
+        #region Основные свойства
+
+
+        public InsertCommands Insert
+        {
+            get { return _insert; }
+            set 
+            {
+                _insert = value;
+                OnPropertyChanged();
+            }
+        }
 
 
         #endregion
@@ -243,13 +261,17 @@ namespace RialDataBase_2._0.ViewModel
 
         public void OnAddClient (object p)
         {
-         
-            DataWorkerSql.InsertCommand(Vin, Name, Phone, Car, Oil, OilFilter, AirFilter, SalonFilter, CashBack / 100, Ngk, Padsfront, Padsrear, Fuelfilter, Comment, CashBack);
+
+            Insert.InsertNewClient(NewClient);
+
+            NewClient = default;
+
+            //DataWorkerSql.InsertCommand(Vin, Name, Phone, Car, Oil, OilFilter, AirFilter, SalonFilter, CashBack / 100, Ngk, Padsfront, Padsrear, Fuelfilter, Comment, CashBack);
 
             //ClearWindow();
 
             //MessageBox.Show($"Клиент {Name} успешно добавлен");
- 
+
 
         }
 
@@ -510,14 +532,13 @@ namespace RialDataBase_2._0.ViewModel
             SearchEditClientDataCommand = new LambaCommand(OnSearchEditClientDataExecuted, CanSearchEditClientDataExecuted);
             #endregion
 
+            NewClient = new EntityClient();
+            Insert = new InsertCommands();
+
             DataWorkerSql = new DataWorker();
 
             MainDataForViewModel = DataWorker.DataSetTable.Tables[0];
-
-
-
             
-
         }
         #endregion
 

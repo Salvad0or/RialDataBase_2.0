@@ -14,17 +14,54 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
         public void InsertNewClient(EntityClient client)
         {
 
+            if (client is null) return;
+
             using (Context context = new Context())
             {
-                context.Clients.Add(new Client()
+                Client newClient = new Client()
                 {
                     Fname = client.Name,
                     Phone = client.Phone,
-                    Date = client.Date,
+                    Date = DateTime.Now,
                     StatusId = 1
+                };
+     
+                context.Clients.Add(newClient);
+
+                context.SaveChanges();
+
+                int i = context.Clients.Count();
+
+                context.ClientBankAccouts.Add(new ClientBankAccout()
+                {
+                    CashBack = client.CashBack,
+                    TotalPurchaseAmount = client.CashBack * 100,
+                    ClientId = context.Clients.Max(c => c.Id)
+                }) ;
+               
+                context.Cars.Add(new Car()
+                {
+                    CarName = client.Car,
+                    Vin = client.Vin,
+                    ClientId = context.Clients.Max(c => c.Id)
                 });
 
-                
+                context.SaveChanges();
+
+                context.CarCharacteristics.Add(new CarCharacteristic()
+                {
+                    AirFilter = client.AirFilter,
+                    FuelFilter = client.Fuelfilter,
+                    Oil = client.Oil,
+                    OilFilter = client.OilFilter,
+                    PadsFront = client.Padsfront,
+                    PadsRear = client.Padsrear,
+                    SalonFilter = client.SalonFilter,
+                    Сandles = client.Ngk,
+                    CarId = context.Cars.Max(p => p.Id)
+                }) ;
+
+                context.SaveChanges();
             }
 
         }
