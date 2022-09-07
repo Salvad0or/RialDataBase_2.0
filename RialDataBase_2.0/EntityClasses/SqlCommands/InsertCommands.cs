@@ -11,6 +11,13 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
 {
     internal class InsertCommands
     {
+
+        #region Команда добавления нового клиента
+
+        /// <summary>
+        /// Команда добавления клиента.
+        /// </summary>
+        /// <param name="client"></param>
         public void InsertNewClient(EntityClient client)
         {
 
@@ -18,6 +25,7 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
 
             using (Context context = new Context())
             {
+
                 Client newClient = new Client()
                 {
                     Fname = client.Name,
@@ -29,8 +37,7 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
 
                 context.SaveChanges();
 
-                int i = context.Clients.Count();
-
+              
                 context.ClientBankAccouts.Add(new ClientBankAccout()
                 {
                     CashBack = client.CashBack,
@@ -62,6 +69,7 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
 
                 context.SaveChanges();
             }
+            #endregion
 
         }
     }

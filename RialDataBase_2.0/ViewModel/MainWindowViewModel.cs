@@ -243,19 +243,20 @@ namespace RialDataBase_2._0.ViewModel
 
         public bool CanAddClient(object p)
         {
-            //bool flag = DataWorkerSql.SearchClientForAddClient(Phone);
+            //bool flag = DataWorkerSql.SearchClientForAddClient(NewClient.Phone);
 
-            //if (Phone.Length == 11 && (long.TryParse(Phone, out long t) && flag))
+            //if (NewClient.Phone.Length == 11 && (long.TryParse(NewClient.Phone, out long t) && flag))
             //{
 
-            //    Exception = String.Empty; 
+            //    Exception = String.Empty;
             //    return true;
 
             //}
 
             //return false;
 
-            return true;
+            return Inspector.SearchClient(NewClient.Phone);
+            
         }
 
 
