@@ -12,8 +12,8 @@ using RialDataBase_2._0.EntityClasses.BaseConnectClass;
 namespace RialDataBase_2._0.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20220901190113_Init")]
-    partial class Init
+    [Migration("20220907183424_Comment")]
+    partial class Comment
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -25,7 +25,7 @@ namespace RialDataBase_2._0.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("RialDataBase_2._0.Car", b =>
+            modelBuilder.Entity("RialDataBase_2._0.EntityClasses.Objects.Car", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -52,7 +52,7 @@ namespace RialDataBase_2._0.Migrations
                     b.ToTable("Car", (string)null);
                 });
 
-            modelBuilder.Entity("RialDataBase_2._0.CarCharacteristic", b =>
+            modelBuilder.Entity("RialDataBase_2._0.EntityClasses.Objects.CarCharacteristic", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -104,13 +104,16 @@ namespace RialDataBase_2._0.Migrations
                     b.ToTable("CarCharacteristics");
                 });
 
-            modelBuilder.Entity("RialDataBase_2._0.Client", b =>
+            modelBuilder.Entity("RialDataBase_2._0.EntityClasses.Objects.Client", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("Date")
                         .ValueGeneratedOnAdd()
@@ -141,7 +144,7 @@ namespace RialDataBase_2._0.Migrations
                     b.ToTable("Client", (string)null);
                 });
 
-            modelBuilder.Entity("RialDataBase_2._0.ClientBankAccout", b =>
+            modelBuilder.Entity("RialDataBase_2._0.EntityClasses.Objects.ClientBankAccout", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -167,7 +170,7 @@ namespace RialDataBase_2._0.Migrations
                     b.ToTable("ClientBankAccout", (string)null);
                 });
 
-            modelBuilder.Entity("RialDataBase_2._0.ClientStatus", b =>
+            modelBuilder.Entity("RialDataBase_2._0.EntityClasses.Objects.ClientStatus", b =>
                 {
                     b.Property<byte>("Id")
                         .ValueGeneratedOnAdd()
@@ -184,89 +187,9 @@ namespace RialDataBase_2._0.Migrations
                     b.ToTable("ClientStatus", (string)null);
                 });
 
-            modelBuilder.Entity("RialDataBase_2._0.RialDataBase", b =>
+            modelBuilder.Entity("RialDataBase_2._0.EntityClasses.Objects.Car", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("AirFilter")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Car")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<int?>("CashBack")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Comment")
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("Dates")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
-                    b.Property<string>("Fuelfilter")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Names")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Ngk")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Oil")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("OilFilter")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Padsfront")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Padsrear")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Phone")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("SalonFilter")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
-                    b.Property<string>("Statuss")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<int?>("TotalPurchaseAmount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Vin")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)")
-                        .HasColumnName("vin");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RialDataBase", (string)null);
-                });
-
-            modelBuilder.Entity("RialDataBase_2._0.Car", b =>
-                {
-                    b.HasOne("RialDataBase_2._0.Client", "Client")
+                    b.HasOne("RialDataBase_2._0.EntityClasses.Objects.Client", "Client")
                         .WithMany("Cars")
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -275,20 +198,20 @@ namespace RialDataBase_2._0.Migrations
                     b.Navigation("Client");
                 });
 
-            modelBuilder.Entity("RialDataBase_2._0.CarCharacteristic", b =>
+            modelBuilder.Entity("RialDataBase_2._0.EntityClasses.Objects.CarCharacteristic", b =>
                 {
-                    b.HasOne("RialDataBase_2._0.Car", "Car")
+                    b.HasOne("RialDataBase_2._0.EntityClasses.Objects.Car", "Car")
                         .WithOne("CarCharacteristic")
-                        .HasForeignKey("RialDataBase_2._0.CarCharacteristic", "CarId")
+                        .HasForeignKey("RialDataBase_2._0.EntityClasses.Objects.CarCharacteristic", "CarId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("FK__CarCharac__CarId__10E07F16");
 
                     b.Navigation("Car");
                 });
 
-            modelBuilder.Entity("RialDataBase_2._0.Client", b =>
+            modelBuilder.Entity("RialDataBase_2._0.EntityClasses.Objects.Client", b =>
                 {
-                    b.HasOne("RialDataBase_2._0.ClientStatus", "Status")
+                    b.HasOne("RialDataBase_2._0.EntityClasses.Objects.ClientStatus", "Status")
                         .WithMany("Clients")
                         .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -297,30 +220,30 @@ namespace RialDataBase_2._0.Migrations
                     b.Navigation("Status");
                 });
 
-            modelBuilder.Entity("RialDataBase_2._0.ClientBankAccout", b =>
+            modelBuilder.Entity("RialDataBase_2._0.EntityClasses.Objects.ClientBankAccout", b =>
                 {
-                    b.HasOne("RialDataBase_2._0.Client", "Client")
+                    b.HasOne("RialDataBase_2._0.EntityClasses.Objects.Client", "Client")
                         .WithOne("ClientBankAccout")
-                        .HasForeignKey("RialDataBase_2._0.ClientBankAccout", "ClientId")
+                        .HasForeignKey("RialDataBase_2._0.EntityClasses.Objects.ClientBankAccout", "ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .HasConstraintName("FK__ClientBan__Clien__02925FBF");
 
                     b.Navigation("Client");
                 });
 
-            modelBuilder.Entity("RialDataBase_2._0.Car", b =>
+            modelBuilder.Entity("RialDataBase_2._0.EntityClasses.Objects.Car", b =>
                 {
                     b.Navigation("CarCharacteristic");
                 });
 
-            modelBuilder.Entity("RialDataBase_2._0.Client", b =>
+            modelBuilder.Entity("RialDataBase_2._0.EntityClasses.Objects.Client", b =>
                 {
                     b.Navigation("Cars");
 
                     b.Navigation("ClientBankAccout");
                 });
 
-            modelBuilder.Entity("RialDataBase_2._0.ClientStatus", b =>
+            modelBuilder.Entity("RialDataBase_2._0.EntityClasses.Objects.ClientStatus", b =>
                 {
                     b.Navigation("Clients");
                 });

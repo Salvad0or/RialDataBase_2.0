@@ -241,24 +241,7 @@ namespace RialDataBase_2._0.ViewModel
 
         public ICommand AddClientCommand { get; }
 
-        public bool CanAddClient(object p)
-        {
-            //bool flag = DataWorkerSql.SearchClientForAddClient(NewClient.Phone);
-
-            //if (NewClient.Phone.Length == 11 && (long.TryParse(NewClient.Phone, out long t) && flag))
-            //{
-
-            //    Exception = String.Empty;
-            //    return true;
-
-            //}
-
-            //return false;
-
-            return Inspector.SearchClient(NewClient.Phone);
-            
-        }
-
+        public bool CanAddClient(object p) => Inspector.SearchClient(NewClient.Phone);
 
         public void OnAddClient (object p)
         {
@@ -266,14 +249,6 @@ namespace RialDataBase_2._0.ViewModel
             Insert.InsertNewClient(NewClient);
 
             NewClient = default;
-
-            //DataWorkerSql.InsertCommand(Vin, Name, Phone, Car, Oil, OilFilter, AirFilter, SalonFilter, CashBack / 100, Ngk, Padsfront, Padsrear, Fuelfilter, Comment, CashBack);
-
-            //ClearWindow();
-
-            //MessageBox.Show($"Клиент {Name} успешно добавлен");
-
-
         }
 
         #endregion

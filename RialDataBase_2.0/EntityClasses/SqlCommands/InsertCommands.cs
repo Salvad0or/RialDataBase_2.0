@@ -31,6 +31,7 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
                     Fname = client.Name,
                     Phone = client.Phone,
                     Date = DateTime.Now,
+                    Comment = client.Comment,
                     StatusId = 1
                 };
                 context.Clients.Add(newClient);

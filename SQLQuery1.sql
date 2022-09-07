@@ -1,1 +1,1 @@
-﻿UPDATE RialDataBase SET Phone = '00000000000' WHERE Phone = '89046669025'
+﻿SELECT * FROM Client

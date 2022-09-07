@@ -14,6 +14,9 @@ namespace RialDataBase_2._0.EntityClasses.Objects
         public string? Fname { get; set; }
         public string Phone { get; set; } = null!;
         public DateTime? Date { get; set; }
+
+        public string? Comment { get; set; }
+
         public byte? StatusId { get; set; }
 
         public virtual ClientStatus? Status { get; set; }
