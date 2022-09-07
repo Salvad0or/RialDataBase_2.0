@@ -11,7 +11,6 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
 {
     internal class InsertCommands
     {
-
         #region Команда добавления нового клиента
 
         /// <summary>
@@ -70,8 +69,10 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
 
                 context.SaveChanges();
             }
-            #endregion
+           
 
         }
+
+        #endregion
     }
 }

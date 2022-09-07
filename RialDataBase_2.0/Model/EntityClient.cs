@@ -92,24 +92,29 @@ namespace RialDataBase_2._0.Model
         public decimal CashBack
         {
             get { return _cashBack; }
+
             set
             {
                 switch (Status)
                 {
                     case StatusEnum.Standart:
                         _cashBack = value / 100 * 1;
-                        break;
-                    case StatusEnum.Silver:
-                        _cashBack = value / 100 * 2;
-                        break;
-                    case StatusEnum.Gold:
-                        _cashBack = value / 100 * 3;
-                        break;
-                    case StatusEnum.Vip:
-                        _cashBack = value / 100 * 4;
+                        TotalPurchaseAmount += value;
                         break;
 
-                    default:
+                    case StatusEnum.Silver:
+                        _cashBack = value / 100 * 2;
+                        TotalPurchaseAmount += value;
+                        break;
+
+                    case StatusEnum.Gold:
+                        _cashBack = value / 100 * 3;
+                        TotalPurchaseAmount += value;
+                        break;
+
+                    case StatusEnum.Vip:
+                        _cashBack = value / 100 * 4;
+                        TotalPurchaseAmount += value;
                         break;
                 }
             }

@@ -289,71 +289,75 @@ namespace RialDataBase_2._0.ViewModel
 
         public bool CanAddCasbackExecuted(object p)
         {
-            if (PhoneSearch.Length >= 11 && Flag)
-                return true;
+            //if (PhoneSearch.Length >= 11 && Flag)
+            //    return true;
 
-            return false;
+            //return false;
+
+            return true;
         }
 
         public void OnAddCashBackExecuted(object p)
         {
-            
-            ClientAfterSearh.TotalPurchaseAmount += AddCashBack;
 
-            switch (ClientAfterSearh.TotalPurchaseAmount)
-            {
-                case > 200_000:
+            ClientFromSecondWindow.CashBack += AddCashBack;
 
-                    if (ClientAfterSearh.Status == StatusEnum.Vip)
-                    {
-                        break;
-                    }
+            //ClientAfterSearh.TotalPurchaseAmount += AddCashBack;
 
-                    ClientAfterSearh.Status = StatusEnum.Vip;
+            //switch (ClientAfterSearh.TotalPurchaseAmount)
+            //{
+            //    case > 200_000:
 
-                    DataWorkerSql.ChangeStatusUpdateCommand(ClientAfterSearh);
+            //        if (ClientAfterSearh.Status == StatusEnum.Vip)
+            //        {
+            //            break;
+            //        }
 
-                    MessageBox.Show(
-                        $"Поздравьте клиента!" +
-                        $"\n{ClientAfterSearh.Name} получил VIP статус!" +
-                        $"\n Кешбек равен 4%!");
+            //        ClientAfterSearh.Status = StatusEnum.Vip;
 
-                    break;
+            //        DataWorkerSql.ChangeStatusUpdateCommand(ClientAfterSearh);
 
-                case > 100_000:
+            //        MessageBox.Show(
+            //            $"Поздравьте клиента!" +
+            //            $"\n{ClientAfterSearh.Name} получил VIP статус!" +
+            //            $"\n Кешбек равен 4%!");
 
-                    if (ClientAfterSearh.Status == StatusEnum.Gold)
-                    {
-                        break;
-                    }
+            //        break;
 
-                    ClientAfterSearh.Status = StatusEnum.Gold;
+            //    case > 100_000:
 
-                    DataWorkerSql.ChangeStatusUpdateCommand(ClientAfterSearh);
+            //        if (ClientAfterSearh.Status == StatusEnum.Gold)
+            //        {
+            //            break;
+            //        }
+
+            //        ClientAfterSearh.Status = StatusEnum.Gold;
+
+            //        DataWorkerSql.ChangeStatusUpdateCommand(ClientAfterSearh);
 
 
-                    MessageBox.Show(
-                        $"Поздравьте клиента!" +
-                        $"\n{ClientAfterSearh.Name} получил GOLD статус!" +
-                        $"\n Кешбек равен 3%!");           
-                    break;
+            //        MessageBox.Show(
+            //            $"Поздравьте клиента!" +
+            //            $"\n{ClientAfterSearh.Name} получил GOLD статус!" +
+            //            $"\n Кешбек равен 3%!");           
+            //        break;
 
-                case > 30_000:
+            //    case > 30_000:
 
-                    if (ClientAfterSearh.Status == StatusEnum.Silver)
-                    {
-                        break;
-                    }                   
+            //        if (ClientAfterSearh.Status == StatusEnum.Silver)
+            //        {
+            //            break;
+            //        }                   
 
-                    ClientAfterSearh.Status = StatusEnum.Silver;
+            //        ClientAfterSearh.Status = StatusEnum.Silver;
 
-                    DataWorkerSql.ChangeStatusUpdateCommand(ClientAfterSearh);
+            //        DataWorkerSql.ChangeStatusUpdateCommand(ClientAfterSearh);
 
-                    MessageBox.Show(
-                        $"Поздравьте клиента!" +
-                        $"\n{ClientAfterSearh.Name} получил Silver статус!" +
-                        $"\n Кешбек равен 2%!");               
-                    break;
+            //        MessageBox.Show(
+            //            $"Поздравьте клиента!" +
+            //            $"\n{ClientAfterSearh.Name} получил Silver статус!" +
+            //            $"\n Кешбек равен 2%!");               
+            //        break;
             }
 
 
