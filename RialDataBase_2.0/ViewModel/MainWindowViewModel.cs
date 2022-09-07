@@ -20,22 +20,21 @@ namespace RialDataBase_2._0.ViewModel
         #region Поля
 
         #region private Поля
-
-        private InsertCommands _insert;
-
-        private ObservableCollection<EntityClient> _clients;
-        private EntityClient _clientAfterSearch;
+ 
         private string _phoneSearch;
         private int _addCashBack;
-        private int _spendCashBack;
-        private DataWorker _dataWorkersql;
-        private DataTable _data;
+        private int _spendCashBack;        
         private bool _flagForEditClient;
         private string _editSearchPhone;
+
         private EntityClient _editClient;
         private EntityClient _implicitClone;
-        
-
+        private EntityClient _clientfromsecondwindow;
+        private DataWorker _dataWorkersql;
+        private DataTable _data;
+        private InsertCommands _insert;
+        private ObservableCollection<EntityClient> _clients;
+        private EntityClient _clientAfterSearch;
 
         #endregion
 
@@ -74,6 +73,19 @@ namespace RialDataBase_2._0.ViewModel
 
         #region Свойства окна работы с клиентом и кешбеком
 
+
+        /// <summary>
+        /// Клиент второго окна
+        /// </summary>
+        public EntityClient ClientFromSecondWindow
+        {
+            get => _clientfromsecondwindow;
+            set
+            {
+                _clientfromsecondwindow = value;
+                OnPropertyChanged();
+            }
+        }
 
         public bool Flag { get; set; }
         
@@ -259,32 +271,18 @@ namespace RialDataBase_2._0.ViewModel
         public bool CanSearchClientExecutrd(object p)
 
         {
-            if (PhoneSearch.Length < 11)
-                return false;
-  
-            return true;
 
+            ClientFromSecondWindow.Phone ??= String.Empty;
+
+            if ((ClientFromSecondWindow.Phone ??= String.Empty).Length < 11) return false;
+
+            return true;
         }
         public void OnSearchClientExecute(object p) 
-        {
-         
-            if (!DataWorkerSql.SearchClientForCashBackWindow(PhoneSearch))
-            {
-                MessageBox.Show("Клиент не найден, попробуйте еще раз");
-                Flag = false;
-                return;
-            }
-
-            ClientAfterSearh = DataWorkerSql.FillsClass(PhoneSearch);
-
-            Flag = true;
-           
-        }
-
-
+            => ClientFromSecondWindow = ClassWorker.FillSecondWindowClient(ClientFromSecondWindow.Phone);
 
         #endregion
-        
+
         #region Команда добавления кешбека
 
         public ICommand AddCashBackCommand { get; }
@@ -509,6 +507,7 @@ namespace RialDataBase_2._0.ViewModel
             #endregion
 
             NewClient = new EntityClient();
+            ClientFromSecondWindow = new EntityClient();
             Insert = new InsertCommands();
 
             DataWorkerSql = new DataWorker();

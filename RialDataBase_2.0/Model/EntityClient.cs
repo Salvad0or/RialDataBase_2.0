@@ -18,7 +18,7 @@ namespace RialDataBase_2._0.Model
         private string _oilFilter;
         private string _airFilter;
         private string _salonFilter;
-        private int _cashBack;
+        private decimal _cashBack;
         private string _ngk;
         private string _padsfront;
         private string _padsrear;
@@ -26,7 +26,7 @@ namespace RialDataBase_2._0.Model
         private string _comment;
         private DateTime _date;
         private StatusEnum _status;
-        private int _totalPurchaseAmount;
+        private decimal _totalPurchaseAmount;
 
         #endregion
 
@@ -41,7 +41,7 @@ namespace RialDataBase_2._0.Model
         /// <summary>
         /// Общая сумма потраченная клиентом.
         /// </summary>
-        public int TotalPurchaseAmount
+        public decimal TotalPurchaseAmount
         {
             get { return _totalPurchaseAmount; }
             set { _totalPurchaseAmount = value; }
@@ -89,7 +89,7 @@ namespace RialDataBase_2._0.Model
         }
 
 
-        public int CashBack
+        public decimal CashBack
         {
             get { return _cashBack; }
             set

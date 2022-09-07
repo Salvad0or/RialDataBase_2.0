@@ -246,7 +246,7 @@
 
                             <TextBox Width="87"                        
                                      FontSize="14"
-                                     Text="{Binding PhoneSearch, UpdateSourceTrigger=PropertyChanged}"
+                                     Text="{Binding ClientFromSecondWindow.Phone, UpdateSourceTrigger=PropertyChanged}"
                                      MaxLength="11" Visibility="Visible"                   
                                      />
 
@@ -255,10 +255,8 @@
                                     FontSize="10"
                                     Content="Поиск"
                                     Margin="15 0"
-                                    Command="{Binding SearchClientCommand}"
-                                    
-                                    />
-
+                                    Command="{Binding SearchClientCommand}"/>
+                            
                         </StackPanel>
                     </GroupBox>
 
@@ -286,16 +284,16 @@
                                         Margin="0,5,0,5" >
 
                                 <TextBlock Text="Имя:"/>
-                                <TextBox Text="{Binding ClientAfterSearh.Name, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Text="{Binding ClientFromSecondWindow.Name, UpdateSourceTrigger=PropertyChanged}"/>
                                 
                                 <TextBlock Text="Марка автомобиля:"/>
-                                <TextBox Text="{Binding ClientAfterSearh.Car, UpdateSourceTrigger=PropertyChanged}"/>
+                                <TextBox Text="{Binding ClientFromSecondWindow.Car, UpdateSourceTrigger=PropertyChanged}"/>
 
                                 <TextBlock Text="VIN:"/>
-                                <TextBox Text="{Binding ClientAfterSearh.Vin}"/>
+                                <TextBox Text="{Binding ClientFromSecondWindow.Vin}"/>
 
                                 <TextBlock Text="Масло"/>
-                                <TextBox Text="{Binding ClientAfterSearh.Oil}"/>
+                                <TextBox Text="{Binding ClientFromSecondWindow.Oil}"/>
 
 
 
@@ -306,7 +304,7 @@
                                             <TextBlock Text="Баланс : "
                                                        FontSize="15"
                                                        FontWeight="Bold"/>
-                                            <TextBlock Text="{Binding ClientAfterSearh.CashBack}"             
+                                            <TextBlock Text="{Binding ClientFromSecondWindow.CashBack}"             
                                                        FontSize="15"
                                                        FontWeight="Bold"/>
                                             <TextBlock Text="₽"
@@ -317,7 +315,7 @@
                                                        FontSize="15"
                                                        FontWeight="Bold"
                                                        Margin="0 0 2 0"/>
-                                            <TextBlock Text="{Binding ClientAfterSearh.Status}"
+                                            <TextBlock Text="{Binding ClientFromSecondWindow.Status}"
                                                        FontSize="15"
                                                        FontWeight="Bold"
                                                        />
@@ -412,25 +410,25 @@
                                     <StackPanel>
 
                                         <TextBlock Text="Масляный фильтр"/>
-                                        <TextBox Text="{Binding ClientAfterSearh.OilFilter}"/>
+                                        <TextBox Text="{Binding ClientFromSecondWindow.OilFilter}"/>
 
                                         <TextBlock Text="Воздушный фильтр"/>
-                                        <TextBox Text="{Binding ClientAfterSearh.AirFilter}"/>
+                                        <TextBox Text="{Binding ClientFromSecondWindow.AirFilter}"/>
 
                                         <TextBlock Text="Салонный фильтр"/>
-                                        <TextBox Text="{Binding ClientAfterSearh.SalonFilter}"/>
+                                        <TextBox Text="{Binding ClientFromSecondWindow.SalonFilter}"/>
 
                                         <TextBlock Text="Свечи"/>
-                                        <TextBox Text="{Binding ClientAfterSearh.Ngk}"/>
+                                        <TextBox Text="{Binding ClientFromSecondWindow.Ngk}"/>
 
                                         <TextBlock Text="Колодки передние"/>
-                                        <TextBox Text="{Binding ClientAfterSearh.Padsfront}"/>
+                                        <TextBox Text="{Binding ClientFromSecondWindow.Padsfront}"/>
 
                                         <TextBlock Text="Колодки задние"/>
-                                        <TextBox Text="{Binding ClientAfterSearh.Padsrear}"/>
+                                        <TextBox Text="{Binding ClientFromSecondWindow.Padsrear}"/>
 
                                         <TextBlock Text="Топливный фильтр"/>
-                                        <TextBox Text="{Binding ClientAfterSearh.Fuelfilter}"/>
+                                        <TextBox Text="{Binding ClientFromSecondWindow.Fuelfilter}"/>
 
                                     </StackPanel>
 
@@ -439,7 +437,7 @@
 
                                         <TextBox Height="150" TextWrapping="Wrap"
                                                  HorizontalScrollBarVisibility="Visible"
-                                                 Text="{Binding ClientAfterSearh.Comment}"/>
+                                                 Text="{Binding ClientFromSecondWindow.Comment}"/>
 
 
                                     </StackPanel>

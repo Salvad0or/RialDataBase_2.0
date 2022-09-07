@@ -22,7 +22,7 @@ namespace RialDataBase_2._0.EntityClasses.BaseConnectClass
         public virtual DbSet<Client> Clients { get; set; } = null!;
         public virtual DbSet<ClientBankAccout> ClientBankAccouts { get; set; } = null!;
         public virtual DbSet<ClientStatus> ClientStatuses { get; set; } = null!;
-        
+        public object Car { get; internal set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
