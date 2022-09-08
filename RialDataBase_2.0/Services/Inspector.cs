@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace RialDataBase_2._0.Services
 {
+    /// <summary>
+    /// Класс проверяющий
+    /// </summary>
     internal static class Inspector
     {
         /// <summary>

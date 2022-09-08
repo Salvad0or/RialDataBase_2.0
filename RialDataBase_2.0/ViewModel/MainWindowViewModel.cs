@@ -87,7 +87,8 @@ namespace RialDataBase_2._0.ViewModel
             }
         }
 
-        public bool Flag { get; set; }
+        private bool _flag;
+        public bool Flag { get => _flag; set { _flag = value; } }
         
         public int SpendCashBack
         {
@@ -278,9 +279,10 @@ namespace RialDataBase_2._0.ViewModel
 
             return true;
         }
-        public void OnSearchClientExecute(object p) 
-            => ClientFromSecondWindow = ClassWorker.FillSecondWindowClient(ClientFromSecondWindow.Phone);
-
+        public void OnSearchClientExecute(object p)        
+            => ClientFromSecondWindow = ClassWorker.FillSecondWindowClient(ClientFromSecondWindow.Phone, ref _flag);
+        
+            
         #endregion
 
         #region Команда добавления кешбека
@@ -289,109 +291,22 @@ namespace RialDataBase_2._0.ViewModel
 
         public bool CanAddCasbackExecuted(object p)
         {
-            //if (PhoneSearch.Length >= 11 && Flag)
-            //    return true;
+            if (ClientFromSecondWindow.Phone.Length >= 11 && Flag) return true;
 
-            //return false;
-
-            return true;
+            return false;
         }
 
         public void OnAddCashBackExecuted(object p)
         {
 
-            ClientFromSecondWindow.CashBack += AddCashBack;
+            UpdateCommands.AddCashBack(ClientFromSecondWindow,AddCashBack);
 
-            //ClientAfterSearh.TotalPurchaseAmount += AddCashBack;
+            ClientFromSecondWindow = new EntityClient();
 
-            //switch (ClientAfterSearh.TotalPurchaseAmount)
-            //{
-            //    case > 200_000:
+            AddCashBack = 0;
 
-            //        if (ClientAfterSearh.Status == StatusEnum.Vip)
-            //        {
-            //            break;
-            //        }
-
-            //        ClientAfterSearh.Status = StatusEnum.Vip;
-
-            //        DataWorkerSql.ChangeStatusUpdateCommand(ClientAfterSearh);
-
-            //        MessageBox.Show(
-            //            $"Поздравьте клиента!" +
-            //            $"\n{ClientAfterSearh.Name} получил VIP статус!" +
-            //            $"\n Кешбек равен 4%!");
-
-            //        break;
-
-            //    case > 100_000:
-
-            //        if (ClientAfterSearh.Status == StatusEnum.Gold)
-            //        {
-            //            break;
-            //        }
-
-            //        ClientAfterSearh.Status = StatusEnum.Gold;
-
-            //        DataWorkerSql.ChangeStatusUpdateCommand(ClientAfterSearh);
-
-
-            //        MessageBox.Show(
-            //            $"Поздравьте клиента!" +
-            //            $"\n{ClientAfterSearh.Name} получил GOLD статус!" +
-            //            $"\n Кешбек равен 3%!");           
-            //        break;
-
-            //    case > 30_000:
-
-            //        if (ClientAfterSearh.Status == StatusEnum.Silver)
-            //        {
-            //            break;
-            //        }                   
-
-            //        ClientAfterSearh.Status = StatusEnum.Silver;
-
-            //        DataWorkerSql.ChangeStatusUpdateCommand(ClientAfterSearh);
-
-            //        MessageBox.Show(
-            //            $"Поздравьте клиента!" +
-            //            $"\n{ClientAfterSearh.Name} получил Silver статус!" +
-            //            $"\n Кешбек равен 2%!");               
-            //        break;
-            }
-
-
-            int _cash = 0;
-
-            switch (ClientAfterSearh.Status)
-            {
-                case StatusEnum.Standart:
-                    _cash = AddCashBack / 100;
-                    ClientAfterSearh.CashBack += _cash;
-                    break;
-                case StatusEnum.Silver:
-                    _cash = AddCashBack / 100 * 2;
-                    ClientAfterSearh.CashBack += _cash;
-                    break;
-                case StatusEnum.Gold:
-                    _cash = AddCashBack / 100 * 3;
-                    ClientAfterSearh.CashBack += _cash;
-                    break;
-                case StatusEnum.Vip:
-                    _cash = AddCashBack / 100 * 4;
-                    ClientAfterSearh.CashBack += _cash;
-                    break;  
-            }
-
-            DataWorkerSql.UpdateCashBackCommand(0, ClientAfterSearh);
-
-            MessageBox.Show($"Клиенту {ClientAfterSearh.Name} был добавлен кешбек\nВ размере {_cash} рублей\n" +
-                            $"Накопленная сумма составляет {ClientAfterSearh.CashBack}");
-
-            ClientAfterSearh = default;
-            AddCashBack = default;
-            PhoneSearch = default;
             Flag = false;
+
         }
 
 

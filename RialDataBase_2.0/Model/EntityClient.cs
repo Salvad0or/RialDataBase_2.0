@@ -95,28 +95,7 @@ namespace RialDataBase_2._0.Model
 
             set
             {
-                switch (Status)
-                {
-                    case StatusEnum.Standart:
-                        _cashBack = value / 100 * 1;
-                        TotalPurchaseAmount += value;
-                        break;
-
-                    case StatusEnum.Silver:
-                        _cashBack = value / 100 * 2;
-                        TotalPurchaseAmount += value;
-                        break;
-
-                    case StatusEnum.Gold:
-                        _cashBack = value / 100 * 3;
-                        TotalPurchaseAmount += value;
-                        break;
-
-                    case StatusEnum.Vip:
-                        _cashBack = value / 100 * 4;
-                        TotalPurchaseAmount += value;
-                        break;
-                }
+                _cashBack = value;
             }
         }
 
@@ -162,8 +141,9 @@ namespace RialDataBase_2._0.Model
             set { _salonFilter = value; }
         }
 
-        #endregion  
+        #endregion
 
+        #region конструкторы
         public EntityClient(string _vin, string _name, string _phone, string _car, string _oil,string _oilFilter, string _airFilter,
                         string _salonFilter, int _cashBack, string _ngk, string _padsfront, string _padsrear, string _fuelfilter,
                         string _comment, DateTime _date, int total = 0)
@@ -193,9 +173,20 @@ namespace RialDataBase_2._0.Model
 
         }
 
+        #endregion
+
+        #region Методы
+
+        /// <summary>
+        /// Метод клонирования
+        /// </summary>
+        /// <returns></returns>
         public object Clone()
         {
             return MemberwiseClone();
         }
+
+        
+        #endregion
     }
 }

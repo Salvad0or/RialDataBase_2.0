@@ -12,7 +12,7 @@ namespace RialDataBase_2._0.Services
 {
     internal static class ClassWorker
     {
-        public static EntityClient FillSecondWindowClient(string phone)
+        public static EntityClient FillSecondWindowClient(string phone, ref bool Flag)
         {
             if (Inspector.SearchClient(phone))
             {
@@ -57,6 +57,8 @@ namespace RialDataBase_2._0.Services
 
                 
             }
+
+            Flag = true;
             return newClient;
         }
     }
