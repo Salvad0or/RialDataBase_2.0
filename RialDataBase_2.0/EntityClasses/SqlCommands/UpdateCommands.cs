@@ -106,5 +106,25 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
                         $"баланс {client.CashBack} руб.");
             }
         }
+
+        public static void SpendCashBack(EntityClient client, int cashback)
+        {
+            using (Context context = new Context())
+            {
+                ClientBankAccout cba = context.ClientBankAccouts.Single
+                    (i => i.ClientId ==
+                    context.Clients.Single(c => c.Phone == client.Phone).Id);
+
+                cba.CashBack -= cashback;
+
+                context.SaveChanges();
+
+                MessageBox.Show
+                    (
+                    "Кешбек успешно списан, " +
+                    $"баланс равен {cba.CashBack} руб"
+                    );
+            }
+        }
     }
 }

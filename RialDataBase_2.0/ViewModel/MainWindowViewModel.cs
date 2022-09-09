@@ -33,7 +33,6 @@ namespace RialDataBase_2._0.ViewModel
         private DataWorker _dataWorkersql;
         private DataTable _data;
         private InsertCommands _insert;
-        private ObservableCollection<EntityClient> _clients;
         private EntityClient _clientAfterSearch;
 
         #endregion
@@ -211,21 +210,7 @@ namespace RialDataBase_2._0.ViewModel
         #endregion
 
         #region Основные свойства
-        public ObservableCollection<EntityClient> Clients
-        {
-            get 
-                
-            {
-                return _clients;
-            }
-             
-            set
-            {
-                if (Equals(_clients, value)) return;
-                _clients = value;
-                OnPropertyChanged();
-            }
-        }
+        
 
         public DataWorker DataWorkerSql
         {
@@ -312,45 +297,34 @@ namespace RialDataBase_2._0.ViewModel
 
 
         #endregion
-
+   
         #region Команда списывания кешбека
 
         public ICommand SpendСashback { get; }
 
         public bool CanSpendCashBackExecuted(object p)
         {
-            if (PhoneSearch.Length >= 11 && Flag)
-                return true; 
-            
-            return false;
+            if (
+                ClientFromSecondWindow.Phone.Length >= 11 && 
+                Flag && 
+                SpendCashBack > 0 &&
+                ClientFromSecondWindow.CashBack >= SpendCashBack) return true;
+
+            return false;       
         }
 
         public void OnSpendCashBackExecute(object p) 
 
         {
-            bool canSpand = ClientAfterSearh.CashBack - SpendCashBack >= 0;
 
-            if (!canSpand)
-            {
-                MessageBox.Show($"У клиента {ClientAfterSearh.Name} недостаточно средств\n" +
-                    $"Баланс - {ClientAfterSearh.CashBack}\n" +
-                    $"Вы хотите списать сумму - {SpendCashBack}");
-                return;
-            }
+            UpdateCommands.SpendCashBack(ClientFromSecondWindow, SpendCashBack);
 
-            ClientAfterSearh.CashBack -= Math.Abs(SpendCashBack);
+            ClientFromSecondWindow = new EntityClient();
 
-            DataWorkerSql.UpdateCashBackCommand(0,ClientAfterSearh);
+            SpendCashBack = 0;
 
-            MessageBox.Show($"Кешбек клиента {ClientAfterSearh.Name} успешно списан\nНа балансе осталось {ClientAfterSearh.CashBack}");
-
-            ClientAfterSearh = default;
-            SpendCashBack = default;
-            PhoneSearch = default;
             Flag = false;
         }
-
-
 
         #endregion
 
