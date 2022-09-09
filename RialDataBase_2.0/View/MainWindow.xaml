@@ -548,19 +548,19 @@
                                         Margin="0,5,0,5" Grid.ColumnSpan="2">
 
                                 <TextBlock Text="Имя"/>
-                                <TextBox Text="{Binding EditClient.Name}"/>
+                                <TextBox Text="{Binding ThirtyWindowClient.Name}"/>
 
                                 <TextBlock Text="Номер телефона"/>
-                                <TextBox Text="{Binding EditClient.Phone}"/>
+                                <TextBox Text="{Binding ThirtyWindowClient.Phone}"/>
 
                                 <TextBlock Text="Марка автомобиля"/>
-                                <TextBox Text="{Binding EditClient.Car}"/>
+                                <TextBox Text="{Binding ThirtyWindowClient.Car}"/>
 
                                 <TextBlock Text="VIN"/>
-                                <TextBox Text="{Binding EditClient.Vin}"/>
+                                <TextBox Text="{Binding ThirtyWindowClient.Vin}"/>
 
                                 <TextBlock Text="Масло"/>
-                                <TextBox Text="{Binding EditClient.Oil}"/>
+                                <TextBox Text="{Binding ThirtyWindowClient.Oil}"/>
 
                                 <StackPanel>
                                     <StackPanel.Resources>
@@ -620,25 +620,25 @@
                                     <StackPanel>
 
                                         <TextBlock Text="Масляный фильтр"/>
-                                        <TextBox Text="{Binding EditClient.OilFilter}"/>
+                                        <TextBox Text="{Binding ThirtyWindowClient.OilFilter}"/>
 
                                         <TextBlock Text="Воздушный фильтр"/>
-                                        <TextBox Text="{Binding EditClient.AirFilter}"/>
+                                        <TextBox Text="{Binding ThirtyWindowClient.AirFilter}"/>
 
                                         <TextBlock Text="Салонный фильтр"/>
-                                        <TextBox Text="{Binding EditClient.SalonFilter}"/>
+                                        <TextBox Text="{Binding ThirtyWindowClient.SalonFilter}"/>
 
                                         <TextBlock Text="Свечи"/>
-                                        <TextBox Text="{Binding EditClient.Ngk}"/>
+                                        <TextBox Text="{Binding ThirtyWindowClient.Ngk}"/>
 
                                         <TextBlock Text="Колодки передние"/>
-                                        <TextBox Text="{Binding EditClient.Padsfront}"/>
+                                        <TextBox Text="{Binding ThirtyWindowClient.Padsfront}"/>
 
                                         <TextBlock Text="Колодки задние"/>
-                                        <TextBox Text="{Binding EditClient.Padsrear}"/>
+                                        <TextBox Text="{Binding ThirtyWindowClient.Padsrear}"/>
 
                                         <TextBlock Text="Топливный фильтр"/>
-                                        <TextBox Text="{Binding EditClient.Fuelfilter}"/>
+                                        <TextBox Text="{Binding ThirtyWindowClient.Fuelfilter}"/>
 
                                     </StackPanel>
 
@@ -647,7 +647,7 @@
 
                                         <TextBox Height="150" TextWrapping="Wrap"
                                                  HorizontalScrollBarVisibility="Visible"
-                                                 Text="{Binding EditClient.Comment}"/>
+                                                 Text="{Binding ThirtyWindowClient.Comment}"/>
 
 
                                     </StackPanel>

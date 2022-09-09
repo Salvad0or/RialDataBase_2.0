@@ -12,7 +12,7 @@ namespace RialDataBase_2._0.Services
 {
     internal static class ClassWorker
     {
-        public static EntityClient FillSecondWindowClient(string phone, ref bool Flag)
+        public static EntityClient FillClient(string phone, ref bool Flag)
         {
             if (Inspector.SearchClient(phone))
             {
@@ -27,13 +27,10 @@ namespace RialDataBase_2._0.Services
 
             using (Context context = new Context())
             {
-
                 Client client = context.Clients.First(p => p.Phone == phone);
                 ClientBankAccout clientBank = context.ClientBankAccouts.First(b => b.ClientId == client.Id);
                 Car car = context.Cars.First(c => c.ClientId == client.Id);
                 CarCharacteristic carCh = context.CarCharacteristics.First(cH => cH.CarId == car.Id);
-
-
 
                 newClient = new EntityClient()
                 {
@@ -53,9 +50,7 @@ namespace RialDataBase_2._0.Services
                     Padsfront = carCh.PadsFront,
                     Padsrear = carCh.PadsRear,
                     Fuelfilter = carCh.FuelFilter
-                };
-
-                
+                };      
             }
 
             Flag = true;

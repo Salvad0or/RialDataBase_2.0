@@ -34,7 +34,6 @@ namespace RialDataBase_2._0.Services
                 if (search is null) return true;
 
                 return false;
-
             }           
         }
     }

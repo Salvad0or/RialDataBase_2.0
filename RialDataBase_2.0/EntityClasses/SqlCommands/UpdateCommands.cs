@@ -107,6 +107,11 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
             }
         }
 
+        /// <summary>
+        /// Метод списывания кешбека
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="cashback"></param>
         public static void SpendCashBack(EntityClient client, int cashback)
         {
             using (Context context = new Context())
@@ -124,6 +129,41 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
                     "Кешбек успешно списан, " +
                     $"баланс равен {cba.CashBack} руб"
                     );
+            }
+        }
+
+        public static void ChangeClientData(EntityClient client, ref bool flag, string phone)
+        {
+            using (Context context = new Context())
+            {
+                Client EntityClient = context.Clients.Single(p => p.Phone == phone);
+
+                EntityClient.Fname = client.Name;
+                EntityClient.Phone = client.Phone;
+                EntityClient.Comment = client.Comment;
+
+                Car car = context.Cars.Single(c => c.Id == EntityClient.Id);
+
+                car.Vin = client.Vin;
+                car.CarName = client.Vin;
+
+                CarCharacteristic carCharacteristic = context.CarCharacteristics.Single(ch => ch.Id == car.Id);
+
+                carCharacteristic.Oil = client.Oil;
+                carCharacteristic.OilFilter = client.OilFilter;
+                carCharacteristic.AirFilter = client.AirFilter;
+                carCharacteristic.SalonFilter = client.SalonFilter;
+                carCharacteristic.Сandles = client.Ngk;
+                carCharacteristic.PadsFront = client.Padsfront;
+                carCharacteristic.PadsRear = client.Padsrear;
+                carCharacteristic.FuelFilter = client.Fuelfilter;
+
+                context.SaveChanges();
+
+                MessageBox.Show("Данные были успешно изменены");
+
+                client = new EntityClient();
+                flag = false;
             }
         }
     }

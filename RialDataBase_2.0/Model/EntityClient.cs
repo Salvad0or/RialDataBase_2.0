@@ -106,7 +106,13 @@ namespace RialDataBase_2._0.Model
         }
         public string Phone
         {
-            get { return _phone; }
+            get 
+
+            {
+                if (_phone is null) return String.Empty;
+                return _phone;
+            }
+
             set { _phone = value; }
         }
         public string Name

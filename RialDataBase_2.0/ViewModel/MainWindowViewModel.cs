@@ -20,20 +20,17 @@ namespace RialDataBase_2._0.ViewModel
         #region Поля
 
         #region private Поля
- 
-        private string _phoneSearch;
+   
         private int _addCashBack;
         private int _spendCashBack;        
         private bool _flagForEditClient;
         private string _editSearchPhone;
+        private bool _flag;
 
-        private EntityClient _editClient;
-        private EntityClient _implicitClone;
+        private EntityClient _newClient;
         private EntityClient _clientfromsecondwindow;
-        private DataWorker _dataWorkersql;
-        private DataTable _data;
         private InsertCommands _insert;
-        private EntityClient _clientAfterSearch;
+        private EntityClient _thirtywindowlient;
 
         #endregion
 
@@ -53,9 +50,7 @@ namespace RialDataBase_2._0.ViewModel
 
         #endregion
 
-        #region Свойства окна добавления клиентов
-
-        private EntityClient _newClient;
+        #region Свойства окна добавления клиентов   
 
         public EntityClient NewClient
         {
@@ -66,7 +61,6 @@ namespace RialDataBase_2._0.ViewModel
                 OnPropertyChanged();
             }
         }
-
 
         #endregion
 
@@ -86,7 +80,7 @@ namespace RialDataBase_2._0.ViewModel
             }
         }
 
-        private bool _flag;
+        
         public bool Flag { get => _flag; set { _flag = value; } }
         
         public int SpendCashBack
@@ -119,48 +113,19 @@ namespace RialDataBase_2._0.ViewModel
             }
         }
 
-        public EntityClient ClientAfterSearh
-        {
-            get { return _clientAfterSearch; }
-            set 
-            {
-                if (Equals(_clientAfterSearch, value)) return;
-                _clientAfterSearch = value;
-                OnPropertyChanged();          
-            }
-        }
-        public string PhoneSearch
-        {
-            get
-            {
-                if (String.IsNullOrEmpty(_phoneSearch))
-                {
-                    return "";
-                }
-                else
-                    return _phoneSearch;
-            }
-            set
-            {
-                if (Equals(_phoneSearch, value)) return;
-
-                _phoneSearch = value;
-                OnPropertyChanged();         
-            }
-        }
-
         #endregion
 
         #region Свойтсва окна редактирования клиента
 
-        public EntityClient ImlicitClone
+        public EntityClient ThirtyWindowClient
         {
-            get => _implicitClone; 
+            get { return _thirtywindowlient; }
 
-            set => _implicitClone = value;
+            set
+            { _thirtywindowlient = value;
+                OnPropertyChanged();
+            }
         }
-
-
 
         public string EditSearchPhone
         {
@@ -182,53 +147,12 @@ namespace RialDataBase_2._0.ViewModel
             }
         }
 
-       
-
-        public EntityClient EditClient
-        {
-            get { return _editClient; }
-            set
-            {
-                if (Equals(_editClient, value))
-                    return;
-                _editClient = value;
-                OnPropertyChanged();
-            }
-        }
-
-
-        
-
         public bool FlagForEditClient
         {
             get { return _flagForEditClient; }
             set { _flagForEditClient = value; }
         }
 
-
-
-        #endregion
-
-        #region Основные свойства
-        
-
-        public DataWorker DataWorkerSql
-        {
-            get { return _dataWorkersql; }
-            set { _dataWorkersql = value; }
-        }
-
-        public DataTable MainDataForViewModel
-        {
-            get { return _data; }
-            set
-            {
-                if (Equals(_data, value)) return;
-                _data = value;
-                OnPropertyChanged();
-
-            }
-        }
         #endregion
 
         #endregion
@@ -265,7 +189,7 @@ namespace RialDataBase_2._0.ViewModel
             return true;
         }
         public void OnSearchClientExecute(object p)        
-            => ClientFromSecondWindow = ClassWorker.FillSecondWindowClient(ClientFromSecondWindow.Phone, ref _flag);
+            => ClientFromSecondWindow = ClassWorker.FillClient(ClientFromSecondWindow.Phone, ref _flag);
         
             
         #endregion
@@ -328,34 +252,21 @@ namespace RialDataBase_2._0.ViewModel
 
         #endregion
 
-        #region Команда поиска для редактирования клиента
+        #region Команда поиска клиента для редактирования 
         public ICommand SearchEditClientDataCommand { get; }
 
         public bool CanSearchEditClientDataExecuted(object p)
         {
-            if (EditSearchPhone.Length >= 11)
-                return true;
-         
+            if (EditSearchPhone.Length == 11) return true;
+
             return false;
-            
-
         }
 
-        public void OnSearchEditClientDataExecuted(object p)
-        {
-            if (!DataWorkerSql.SearchClientForCashBackWindow(EditSearchPhone))
-            {
-                MessageBox.Show("Клиент не найден, попробуйте еще раз");
-                return;
-            }
-
-            EditClient = DataWorkerSql.FillsClass(EditSearchPhone);
-            ImlicitClone = (EntityClient)EditClient.Clone();
-
-            FlagForEditClient = true;
-        }
+        public void OnSearchEditClientDataExecuted(object p) =>
+            ThirtyWindowClient = ClassWorker.FillClient(EditSearchPhone, ref _flagForEditClient);
 
         #endregion
+
 
         #region Команда редактирования клиента
 
@@ -363,23 +274,17 @@ namespace RialDataBase_2._0.ViewModel
 
         public bool CanEditClientDataExecuted(object p)
         {
-            if (FlagForEditClient) return true;
+            if (EditSearchPhone.Length == 11 && FlagForEditClient) return true;
 
-            return false;
-            
+            return false;       
         }
-
         public void OnEditClientDataExecute(object p)
 
         {
+            UpdateCommands.ChangeClientData(ThirtyWindowClient, ref _flagForEditClient, EditSearchPhone);
 
-            DataWorkerSql.ChangesDataOfClient(EditClient, EditSearchPhone, ImlicitClone);
-
-            MessageBox.Show("Данные успешно изменены");
-
-            EditClient = default;
-            EditSearchPhone = default;
-
+            ThirtyWindowClient = new EntityClient();
+            EditSearchPhone = String.Empty;
         }
 
         #endregion
@@ -401,11 +306,8 @@ namespace RialDataBase_2._0.ViewModel
 
             NewClient = new EntityClient();
             ClientFromSecondWindow = new EntityClient();
+            ThirtyWindowClient = new EntityClient();
             Insert = new InsertCommands();
-
-            DataWorkerSql = new DataWorker();
-
-            MainDataForViewModel = DataWorker.DataSetTable.Tables[0];
             
         }
         #endregion
