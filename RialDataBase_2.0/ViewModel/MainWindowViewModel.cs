@@ -179,19 +179,11 @@ namespace RialDataBase_2._0.ViewModel
 
         public ICommand SearchClientCommand { get; }
         public bool CanSearchClientExecutrd(object p)
+            => (ClientFromSecondWindow.Phone ??= String.Empty).Length < 11;
 
-        {
-
-            ClientFromSecondWindow.Phone ??= String.Empty;
-
-            if ((ClientFromSecondWindow.Phone ??= String.Empty).Length < 11) return false;
-
-            return true;
-        }
         public void OnSearchClientExecute(object p)        
             => ClientFromSecondWindow = ClassWorker.FillClient(ClientFromSecondWindow.Phone, ref _flag);
-        
-            
+          
         #endregion
 
         #region Команда добавления кешбека
@@ -199,11 +191,7 @@ namespace RialDataBase_2._0.ViewModel
         public ICommand AddCashBackCommand { get; }
 
         public bool CanAddCasbackExecuted(object p)
-        {
-            if (ClientFromSecondWindow.Phone.Length >= 11 && Flag) return true;
-
-            return false;
-        }
+            => (ClientFromSecondWindow.Phone.Length >= 11 && Flag);
 
         public void OnAddCashBackExecuted(object p)
         {
@@ -218,24 +206,17 @@ namespace RialDataBase_2._0.ViewModel
 
         }
 
-
-
         #endregion
    
         #region Команда списывания кешбека
 
         public ICommand SpendСashback { get; }
 
-        public bool CanSpendCashBackExecuted(object p)
-        {
-            if (
-                ClientFromSecondWindow.Phone.Length >= 11 && 
+        public bool CanSpendCashBackExecuted(object p)   
+             => (ClientFromSecondWindow.Phone.Length >= 11 && 
                 Flag && 
                 SpendCashBack > 0 &&
-                ClientFromSecondWindow.CashBack >= SpendCashBack) return true;
-
-            return false;       
-        }
+                ClientFromSecondWindow.CashBack >= SpendCashBack);
 
         public void OnSpendCashBackExecute(object p) 
 
@@ -256,28 +237,20 @@ namespace RialDataBase_2._0.ViewModel
         public ICommand SearchEditClientDataCommand { get; }
 
         public bool CanSearchEditClientDataExecuted(object p)
-        {
-            if (EditSearchPhone.Length == 11) return true;
-
-            return false;
-        }
+        => (EditSearchPhone.Length == 11);
 
         public void OnSearchEditClientDataExecuted(object p) =>
             ThirtyWindowClient = ClassWorker.FillClient(EditSearchPhone, ref _flagForEditClient);
 
         #endregion
 
-
         #region Команда редактирования клиента
 
         public ICommand EditClientDataCommand { get; }
 
-        public bool CanEditClientDataExecuted(object p)
-        {
-            if (EditSearchPhone.Length == 11 && FlagForEditClient) return true;
-
-            return false;       
-        }
+        public bool CanEditClientDataExecuted(object p)    
+            => (EditSearchPhone.Length == 11 && FlagForEditClient);
+         
         public void OnEditClientDataExecute(object p)
 
         {
@@ -311,8 +284,6 @@ namespace RialDataBase_2._0.ViewModel
             
         }
         #endregion
-
-        
 
     }
 }
