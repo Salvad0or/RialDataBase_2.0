@@ -7,7 +7,7 @@
         xmlns:vm="clr-namespace:RialDataBase_2._0.ViewModel"
         xmlns:fa5="http://schemas.fontawesome.com/icons/" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Риальный Магазин " Height="510 " Width="800">
+        Title="Риальный Магазин " Height="510 " Width="900">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
@@ -674,19 +674,23 @@
                     </StackPanel>
                 </TabItem.Header>
 
-                <DataGrid ItemsSource="{Binding MainDataForViewModel}"
+                <DataGrid ItemsSource="{Binding AllJoinedClients}"
                           AutoGenerateColumns="False"              
                           HorizontalGridLinesBrush="Transparent"
                           VerticalGridLinesBrush="LightGray"
                           AlternatingRowBackground="LightGray"
-                          CanUserAddRows="False">
+                          CanUserAddRows="False"
+                          >
                     
                     <DataGrid.Columns>
-                        <DataGridTextColumn IsReadOnly="True" Header="Дата" Binding="{Binding Dates}" Width="55"/>
-                        <DataGridTextColumn IsReadOnly="True" Header="Имя" Binding="{Binding Names}" Width="80"/>
+                        <DataGridTextColumn IsReadOnly="True" Header="Id" Binding="{Binding Id}" Width="30"/>
+                        <DataGridTextColumn IsReadOnly="True" Header="Дата" 
+                                            Binding="{Binding Date , StringFormat= 'dd.MM.yy'}"  
+                                            Width="57"/>
+                        <DataGridTextColumn IsReadOnly="True" Header="Имя" Binding="{Binding Name}" Width="80"/>
                         <DataGridTextColumn IsReadOnly="False" Header="Телефон" Binding="{Binding Phone}" Width="85 "/>
                         <DataGridTextColumn IsReadOnly="True" Header="Авто" Binding="{Binding Car}" Width="85"/>
-                        <DataGridTextColumn IsReadOnly="True" Header="VIN" Binding="{Binding vin}" Width="85"/>
+                        <DataGridTextColumn IsReadOnly="True" Header="VIN" Binding="{Binding Vin}" Width="85"/>
                         <DataGridTextColumn IsReadOnly="True" Header="Масло" Binding="{Binding Oil}" Width="90"/>
                         <DataGridTextColumn IsReadOnly="True" Header="Масл." Binding="{Binding OilFilter}" Width="50"/>
                         <DataGridTextColumn IsReadOnly="True" Header="Возд." Binding="{Binding AirFilter}" Width="50"/>

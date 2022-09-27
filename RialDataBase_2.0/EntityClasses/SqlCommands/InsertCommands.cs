@@ -33,6 +33,7 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
                     Comment = client.Comment,
                     StatusId = 1
                 };
+
                 context.Clients.Add(newClient);
 
                 context.SaveChanges();
@@ -40,8 +41,8 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
               
                 context.ClientBankAccouts.Add(new ClientBankAccout()
                 {
-                    CashBack = client.CashBack,
-                    TotalPurchaseAmount = client.CashBack * 100,
+                    CashBack = client.CashBack / 100,
+                    TotalPurchaseAmount = client.CashBack,
                     ClientId = context.Clients.Max(c => c.Id)
                 }) ;
                
@@ -70,7 +71,6 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
                 context.SaveChanges();
             }
            
-
         }
 
         #endregion

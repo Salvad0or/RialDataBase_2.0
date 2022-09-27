@@ -10,6 +10,7 @@ namespace RialDataBase_2._0.Model
     public class EntityClient : ICloneable
     {
         #region private поля
+        private int _id;
         private string _vin;
         private string _name;
         private string _phone;
@@ -52,6 +53,12 @@ namespace RialDataBase_2._0.Model
         {
             get { return _date; }
             set { _date = value; }
+        }
+
+        public int Id
+        {
+            get => _id;
+            set => _id = value;
         }
 
         public string Comment
@@ -189,7 +196,28 @@ namespace RialDataBase_2._0.Model
         /// <returns></returns>
         public object Clone()
         {
-            return MemberwiseClone();
+            EntityClient client = new EntityClient();
+
+            client.Date = DateTime.Now;
+            client.TotalPurchaseAmount = CashBack;
+            client.CashBack = CashBack / 100;
+
+            client.Vin = Vin;
+            client.Name = Name ;
+            client.Phone = Phone;
+            client.Car = Car;
+            client.Oil = Oil ;
+            client.OilFilter = OilFilter;
+            client.AirFilter = AirFilter ;
+            client.SalonFilter = SalonFilter;
+            client.Ngk = Ngk;
+            client.Padsfront = Padsfront;
+            client.Padsrear = Padsrear;
+            client.Fuelfilter = Fuelfilter;
+            client.Comment = Comment;
+            client.Status = Status;
+                
+            return client;
         }
 
         

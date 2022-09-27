@@ -1,4 +1,5 @@
 ﻿using RialDataBase_2._0.EntityClasses.SqlCommands;
+using RialDataBase_2._0.HelperClasses;
 using RialDataBase_2._0.Infrasrtucture;
 using RialDataBase_2._0.Model;
 using RialDataBase_2._0.Services;
@@ -29,8 +30,11 @@ namespace RialDataBase_2._0.ViewModel
 
         private EntityClient _newClient;
         private EntityClient _clientfromsecondwindow;
-        private InsertCommands _insert;
         private EntityClient _thirtywindowlient;
+
+        private InsertCommands _insert;
+
+        private ObservableCollection<EntityClient> _alljoinedclients;
 
         #endregion
 
@@ -155,6 +159,21 @@ namespace RialDataBase_2._0.ViewModel
 
         #endregion
 
+        #region Свойства окна всех клиентов
+
+        public ObservableCollection<EntityClient> AllJoinedClients
+        {
+            get => _alljoinedclients;
+            set
+            {
+                _alljoinedclients = value;
+                OnPropertyChanged(); 
+            }
+            
+        }
+
+        #endregion
+
         #endregion
 
         #region Команды
@@ -167,10 +186,15 @@ namespace RialDataBase_2._0.ViewModel
 
         public void OnAddClient (object p)
         {
+            EntityClient c = (EntityClient)NewClient.Clone();
+            
+            AllJoinedClients.Add(c);
 
             Insert.InsertNewClient(NewClient);
 
-            NewClient = default;
+            NewClient = Helper.Cleaner(NewClient);
+
+
         }
 
         #endregion
@@ -179,7 +203,7 @@ namespace RialDataBase_2._0.ViewModel
 
         public ICommand SearchClientCommand { get; }
         public bool CanSearchClientExecutrd(object p)
-            => (ClientFromSecondWindow.Phone ??= String.Empty).Length < 11;
+            => (ClientFromSecondWindow.Phone ??= String.Empty).Length == 11;
 
         public void OnSearchClientExecute(object p)        
             => ClientFromSecondWindow = ClassWorker.FillClient(ClientFromSecondWindow.Phone, ref _flag);
@@ -281,9 +305,32 @@ namespace RialDataBase_2._0.ViewModel
             ClientFromSecondWindow = new EntityClient();
             ThirtyWindowClient = new EntityClient();
             Insert = new InsertCommands();
-            
+            AllJoinedClients = JoinCommands.JoinAllData();
+
+            AllJoinedClients.CollectionChanged += AllJoinedClients_CollectionChanged;    
+        }
+
+        private void AllJoinedClients_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
+                    break;
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
+                    break;
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Replace:
+                    break;
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Move:
+                    break;
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Reset:
+                    break;
+                default:
+                    break;
+            }
         }
         #endregion
 
+
+        
     }
 }
