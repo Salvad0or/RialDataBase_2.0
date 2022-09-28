@@ -17,7 +17,7 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
         /// Команда добавления клиента.
         /// </summary>
         /// <param name="client"></param>
-        public void InsertNewClient(EntityClient client)
+        public async void InsertNewClient(EntityClient client)
         {
 
             if (client is null) return;
@@ -36,7 +36,7 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
 
                 context.Clients.Add(newClient);
 
-                context.SaveChanges();
+                 context.SaveChanges();
 
               
                 context.ClientBankAccouts.Add(new ClientBankAccout()

@@ -242,11 +242,11 @@ namespace RialDataBase_2._0.ViewModel
                 SpendCashBack > 0 &&
                 ClientFromSecondWindow.CashBack >= SpendCashBack);
 
-        public void OnSpendCashBackExecute(object p) 
+        public async void OnSpendCashBackExecute(object p) 
 
         {
 
-            UpdateCommands.SpendCashBack(ClientFromSecondWindow, SpendCashBack);
+            await Task.Run(() => UpdateCommands.SpendCashBack(ClientFromSecondWindow, SpendCashBack));
 
             ClientFromSecondWindow = new EntityClient();
 

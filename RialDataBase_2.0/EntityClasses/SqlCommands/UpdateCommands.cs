@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 
@@ -17,7 +18,7 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
         /// </summary>
         /// <param name="client"></param>
         /// <param name="cashback"></param>
-        public static void AddCashBack(EntityClient client, int cashback)
+        public static async void AddCashBack(EntityClient client, int cashback)
         {
             bool flag = default;
 
@@ -99,7 +100,7 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
                     changeClient.StatusId = (byte)(client.Status);
                 }
                 
-                context.SaveChanges();
+               await context.SaveChangesAsync();
 
                 MessageBox.Show(
                         $"Кешбек добавлен, " +
@@ -112,7 +113,7 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
         /// </summary>
         /// <param name="client"></param>
         /// <param name="cashback"></param>
-        public static void SpendCashBack(EntityClient client, int cashback)
+        public static async void SpendCashBack(EntityClient client, int cashback)
         {
             using (Context context = new Context())
             {
@@ -122,7 +123,7 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
 
                 cba.CashBack -= cashback;
 
-                context.SaveChanges();
+                await context.SaveChangesAsync();
 
                 MessageBox.Show
                     (
