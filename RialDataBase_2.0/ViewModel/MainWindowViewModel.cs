@@ -306,6 +306,7 @@ namespace RialDataBase_2._0.ViewModel
             ThirtyWindowClient = new EntityClient();
             Insert = new InsertCommands();
             AllJoinedClients = JoinCommands.JoinAllDataAsync();
+            
 
         }
 
