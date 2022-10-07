@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RialDataBase_2._0.EntityClasses.SqlCommands
@@ -20,7 +21,7 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
         {
 
             Task<ObservableCollection<EntityClient>> task = Task.Run(JoinAllData);
-
+           
             return task.Result;
         }
 

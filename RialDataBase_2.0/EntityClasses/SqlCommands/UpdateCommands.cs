@@ -20,6 +20,26 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
         /// <param name="cashback"></param>
         public static void AddCashBackAsync(EntityClient client, int cashback)
         {
+            Task.Factory.StartNew(() => AddCashBack(client, cashback));
+        }
+
+        /// <summary>
+        /// Метод списывания кешбека
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="cashback"></param>
+        public static void SpendCashBackAsync(EntityClient client, int cashback)
+        {
+            Task.Run(() => SpendCashBack(client, cashback));
+        }
+
+        /// <summary>
+        /// Синхронный метод добавления кешбека
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="cashback"></param>
+        public static void AddCashBack(EntityClient client, int cashback)
+        {
             bool flag = default;
 
             client.TotalPurchaseAmount += cashback;
@@ -36,6 +56,7 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
                         $"Поздравьте клиента!" +
                         $"\n{client.Name} получил VIP статус!" +
                         $"\n Кешбек равен 4%!");
+
                     flag = true;
                     break;
 
@@ -57,7 +78,7 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
                     if (client.Status == StatusEnum.Silver) break;
 
                     client.Status = StatusEnum.Silver;
-             
+
                     MessageBox.Show(
                         $"Поздравьте клиента!" +
                         $"\n{client.Name} получил Silver статус!" +
@@ -69,25 +90,24 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
             switch (client.Status)
             {
                 case StatusEnum.Standart:
-                    client.CashBack += cashback / 100;       
+                    client.CashBack += cashback / 100;
                     break;
 
                 case StatusEnum.Silver:
-                    client.CashBack += cashback / 100 * 2;                   
+                    client.CashBack += cashback / 100 * 2;
                     break;
 
                 case StatusEnum.Gold:
-                    client.CashBack += cashback / 100 * 3;                    
+                    client.CashBack += cashback / 100 * 3;
                     break;
 
                 case StatusEnum.Vip:
-                    client.CashBack += cashback / 100 * 4;          
+                    client.CashBack += cashback / 100 * 4;
                     break;
             }
 
             using (Context context = new Context())
             {
-                
                 ClientBankAccout cba = context.ClientBankAccouts.First(i =>
                 i.ClientId == context.Clients.First(c => c.Phone == client.Phone).Id);
 
@@ -100,47 +120,53 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
                     changeClient.StatusId = (byte)(client.Status);
                 }
 
-                Task task = Task.Run(context.SaveChanges);
+                context.SaveChanges();
 
-                task.ContinueWith((t) =>
-                {
-                    MessageBox.Show(
-                        $"Кешбек добавлен, " +
-                        $"баланс {client.CashBack} руб.");
-                });
-                             
+                MessageBox.Show(
+                      $"Кешбек добавлен, " +
+                      $"баланс {client.CashBack} руб.");
             }
         }
-
+   
         /// <summary>
-        /// Метод списывания кешбека
+        /// Синхронный метод списывания кешбека
         /// </summary>
         /// <param name="client"></param>
         /// <param name="cashback"></param>
-        public static void SpendCashBackAsync(EntityClient client, int cashback)
+        public static void SpendCashBack(EntityClient client, int cashback)
         {
             using (Context context = new Context())
             {
                 ClientBankAccout cba = context.ClientBankAccouts.Single
-                    (i => i.ClientId ==
-                    context.Clients.Single(c => c.Phone == client.Phone).Id);
+
+                    (i => i.ClientId == context.Clients.Single
+                    (c => c.Phone == client.Phone).Id);
+
+                //var cba = (from c in context.ClientBankAccouts
+                //          where c.ClientId == (from o in context.Clients
+                //                               where o.Phone == client.Phone
+                //                               select o).Single().Id
+                //           select c).Single();
 
                 cba.CashBack -= cashback;
 
-                Task task = Task.Run(context.SaveChanges);
+                context.SaveChanges();
 
-                task.ContinueWith((t) =>
-                {
-                    MessageBox.Show
-                    (
-                    "Кешбек успешно списан, " +
-                    $"баланс равен {cba.CashBack} руб"
-                    );
-                });        
+                MessageBox.Show
+                   (
+                   "Кешбек успешно списан, " +
+                   $"баланс равен {cba.CashBack} руб"
+                   );
             }
         }
 
-        public static void ChangeClientDataAsync(EntityClient client, ref bool flag, string phone)
+        /// <summary>
+        /// Метод изменения данных о клиенте
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="flag"></param>
+        /// <param name="phone"></param>
+        public static void ChangeClientData(EntityClient client, ref bool flag, string phone)
         {
             using (Context context = new Context())
             {
@@ -166,9 +192,11 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
                 carCharacteristic.PadsRear = client.Padsrear;
                 carCharacteristic.FuelFilter = client.Fuelfilter;
 
-                Task task = Task.Run(context.SaveChanges);
+                context.SaveChanges();
 
-                task.ContinueWith((t) => MessageBox.Show("Данные были успешно изменены"));
+                Thread.Sleep(3000);
+
+                MessageBox.Show("Данные были успешно изменены");      
 
                 client = new EntityClient();
                 flag = false;

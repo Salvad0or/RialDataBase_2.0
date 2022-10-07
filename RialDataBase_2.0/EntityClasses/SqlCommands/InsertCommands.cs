@@ -18,9 +18,14 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
         /// Команда добавления клиента.
         /// </summary>
         /// <param name="client"></param>
+        public async void InsertNewClientAsync(EntityClient client)
+        {
+            await Task.Run(() => InsertNewClient(client));
+
+        }
+
         public void InsertNewClient(EntityClient client)
         {
-
             if (client is null) return;
 
             using (Context context = new Context())
@@ -38,14 +43,14 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
                 context.Clients.Add(newClient);
 
                 context.SaveChanges();
-      
+
                 context.ClientBankAccouts.Add(new ClientBankAccout()
                 {
                     CashBack = client.CashBack / 100,
                     TotalPurchaseAmount = client.CashBack,
                     ClientId = context.Clients.Max(c => c.Id)
-                }) ;
-               
+                });
+
                 context.Cars.Add(new Car()
                 {
                     CarName = client.Car,
@@ -66,20 +71,17 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
                     SalonFilter = client.SalonFilter,
                     Сandles = client.Ngk,
                     CarId = context.Cars.Max(p => p.Id)
-                }) ;
-
-                Task task = Task.Run(context.SaveChanges);
-
-                task.ContinueWith(
-                    (t) =>
-                {
-                     MessageBox.Show
-                        ($"Клиент {client.Name} успешно внесен в список" +
-                        $"постоянных клиентов.");
                 });
-                
+
+                context.SaveChanges();
+
+                MessageBox.Show
+                ($"Клиент {client.Name} успешно внесен в список" +
+                 $"постоянных клиентов.");
+
+
+
             }
-           
         }
 
         #endregion

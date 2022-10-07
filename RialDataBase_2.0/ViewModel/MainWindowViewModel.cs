@@ -9,7 +9,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
-using System.Text; 
+using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -190,7 +191,7 @@ namespace RialDataBase_2._0.ViewModel
             
             AllJoinedClients.Add(c);
 
-            Insert.InsertNewClient(NewClient);
+            Insert.InsertNewClientAsync(NewClient);
 
             NewClient = Helper.Cleaner(NewClient);
 
@@ -278,7 +279,7 @@ namespace RialDataBase_2._0.ViewModel
         public void OnEditClientDataExecute(object p)
 
         {
-            UpdateCommands.ChangeClientDataAsync(ThirtyWindowClient, ref _flagForEditClient, EditSearchPhone);
+            UpdateCommands.ChangeClientData(ThirtyWindowClient, ref _flagForEditClient, EditSearchPhone);
 
             ThirtyWindowClient = new EntityClient();
             EditSearchPhone = String.Empty;
@@ -289,9 +290,10 @@ namespace RialDataBase_2._0.ViewModel
         #endregion
 
         #region Конструктор
-        public MainWindowViewModel()
+        public  MainWindowViewModel()
         {
 
+    
             #region Команды
             AddClientCommand = new LambaCommand(OnAddClient, CanAddClient);
             SearchClientCommand = new LambaCommand(OnSearchClientExecute, CanSearchClientExecutrd);
@@ -305,9 +307,13 @@ namespace RialDataBase_2._0.ViewModel
             ClientFromSecondWindow = new EntityClient();
             ThirtyWindowClient = new EntityClient();
             Insert = new InsertCommands();
-            AllJoinedClients = JoinCommands.JoinAllDataAsync();
-            
 
+            Task.Factory.StartNew(PrepareAllClientTablesAsync);            
+        }
+
+        void PrepareAllClientTablesAsync()
+        {
+            AllJoinedClients = JoinCommands.JoinAllDataAsync();
         }
 
    
