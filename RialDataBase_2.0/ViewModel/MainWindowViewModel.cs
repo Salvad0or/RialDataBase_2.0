@@ -220,7 +220,7 @@ namespace RialDataBase_2._0.ViewModel
         public void OnAddCashBackExecuted(object p)
         {
 
-            UpdateCommands.AddCashBack(ClientFromSecondWindow,AddCashBack);
+            UpdateCommands.AddCashBackAsync(ClientFromSecondWindow,AddCashBack);
 
             ClientFromSecondWindow = new EntityClient();
 
@@ -246,7 +246,7 @@ namespace RialDataBase_2._0.ViewModel
 
         {
 
-            await Task.Run(() => UpdateCommands.SpendCashBack(ClientFromSecondWindow, SpendCashBack));
+            await Task.Run(() => UpdateCommands.SpendCashBackAsync(ClientFromSecondWindow, SpendCashBack));
 
             ClientFromSecondWindow = new EntityClient();
 
@@ -278,7 +278,7 @@ namespace RialDataBase_2._0.ViewModel
         public void OnEditClientDataExecute(object p)
 
         {
-            UpdateCommands.ChangeClientData(ThirtyWindowClient, ref _flagForEditClient, EditSearchPhone);
+            UpdateCommands.ChangeClientDataAsync(ThirtyWindowClient, ref _flagForEditClient, EditSearchPhone);
 
             ThirtyWindowClient = new EntityClient();
             EditSearchPhone = String.Empty;
@@ -305,29 +305,11 @@ namespace RialDataBase_2._0.ViewModel
             ClientFromSecondWindow = new EntityClient();
             ThirtyWindowClient = new EntityClient();
             Insert = new InsertCommands();
-            AllJoinedClients = JoinCommands.JoinAllData();
+            AllJoinedClients = JoinCommands.JoinAllDataAsync();
 
-            AllJoinedClients.CollectionChanged += AllJoinedClients_CollectionChanged;    
         }
 
-        private void AllJoinedClients_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            switch (e.Action)
-            {
-                case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
-                    break;
-                case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
-                    break;
-                case System.Collections.Specialized.NotifyCollectionChangedAction.Replace:
-                    break;
-                case System.Collections.Specialized.NotifyCollectionChangedAction.Move:
-                    break;
-                case System.Collections.Specialized.NotifyCollectionChangedAction.Reset:
-                    break;
-                default:
-                    break;
-            }
-        }
+   
         #endregion
 
 

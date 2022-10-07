@@ -11,15 +11,28 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
 {
     internal static class JoinCommands
     {
+        /// <summary>
+        /// Здесь создаем коллекцию для всеобщего списка в четвертом окне
+        /// </summary>
+        /// <returns></returns>
+
+        public static ObservableCollection<EntityClient> JoinAllDataAsync()
+        {
+
+            Task<ObservableCollection<EntityClient>> task = Task.Run(JoinAllData);
+
+            return task.Result;
+        }
+
         public static ObservableCollection<EntityClient> JoinAllData()
         {
 
-            List<EntityClient> EverythingJoined = new List<EntityClient>();
+            List<EntityClient> AllJoin = new List<EntityClient>();
             ObservableCollection<EntityClient> returnClient;
 
             using (Context context = new Context())
             {
-                EverythingJoined = (from c in context.Clients
+                AllJoin = (from c in context.Clients
                                     join cs in context.ClientStatuses
                                     on c.StatusId equals cs.Id
                                     join cba in context.ClientBankAccouts
@@ -54,9 +67,9 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
 
                 returnClient = new ObservableCollection<EntityClient>();
 
-                for (int i = 0; i < EverythingJoined.Count; i++)
+                for (int i = 0; i < AllJoin.Count; i++)
                 {
-                    returnClient.Add(EverythingJoined[i]);
+                    returnClient.Add(AllJoin[i]);
                 }
 
             }

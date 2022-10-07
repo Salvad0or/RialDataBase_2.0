@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace RialDataBase_2._0.EntityClasses.SqlCommands
 {
@@ -17,7 +18,7 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
         /// Команда добавления клиента.
         /// </summary>
         /// <param name="client"></param>
-        public async void InsertNewClient(EntityClient client)
+        public void InsertNewClient(EntityClient client)
         {
 
             if (client is null) return;
@@ -36,9 +37,8 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
 
                 context.Clients.Add(newClient);
 
-                 context.SaveChanges();
-
-              
+                context.SaveChanges();
+      
                 context.ClientBankAccouts.Add(new ClientBankAccout()
                 {
                     CashBack = client.CashBack / 100,
@@ -68,7 +68,16 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
                     CarId = context.Cars.Max(p => p.Id)
                 }) ;
 
-                context.SaveChanges();
+                Task task = Task.Run(context.SaveChanges);
+
+                task.ContinueWith(
+                    (t) =>
+                {
+                     MessageBox.Show
+                        ($"Клиент {client.Name} успешно внесен в список" +
+                        $"постоянных клиентов.");
+                });
+                
             }
            
         }

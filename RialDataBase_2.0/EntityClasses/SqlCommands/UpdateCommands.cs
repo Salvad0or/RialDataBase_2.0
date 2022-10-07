@@ -18,7 +18,7 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
         /// </summary>
         /// <param name="client"></param>
         /// <param name="cashback"></param>
-        public static async void AddCashBack(EntityClient client, int cashback)
+        public static void AddCashBackAsync(EntityClient client, int cashback)
         {
             bool flag = default;
 
@@ -99,12 +99,16 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
                     Client changeClient = context.Clients.First(i => i.Phone == client.Phone);
                     changeClient.StatusId = (byte)(client.Status);
                 }
-                
-               await context.SaveChangesAsync();
 
-                MessageBox.Show(
+                Task task = Task.Run(context.SaveChanges);
+
+                task.ContinueWith((t) =>
+                {
+                    MessageBox.Show(
                         $"Кешбек добавлен, " +
                         $"баланс {client.CashBack} руб.");
+                });
+                             
             }
         }
 
@@ -113,7 +117,7 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
         /// </summary>
         /// <param name="client"></param>
         /// <param name="cashback"></param>
-        public static async void SpendCashBack(EntityClient client, int cashback)
+        public static void SpendCashBackAsync(EntityClient client, int cashback)
         {
             using (Context context = new Context())
             {
@@ -123,17 +127,20 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
 
                 cba.CashBack -= cashback;
 
-                await context.SaveChangesAsync();
+                Task task = Task.Run(context.SaveChanges);
 
-                MessageBox.Show
+                task.ContinueWith((t) =>
+                {
+                    MessageBox.Show
                     (
                     "Кешбек успешно списан, " +
                     $"баланс равен {cba.CashBack} руб"
                     );
+                });        
             }
         }
 
-        public static void ChangeClientData(EntityClient client, ref bool flag, string phone)
+        public static void ChangeClientDataAsync(EntityClient client, ref bool flag, string phone)
         {
             using (Context context = new Context())
             {
@@ -159,9 +166,9 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
                 carCharacteristic.PadsRear = client.Padsrear;
                 carCharacteristic.FuelFilter = client.Fuelfilter;
 
-                context.SaveChanges();
+                Task task = Task.Run(context.SaveChanges);
 
-                MessageBox.Show("Данные были успешно изменены");
+                task.ContinueWith((t) => MessageBox.Show("Данные были успешно изменены"));
 
                 client = new EntityClient();
                 flag = false;
