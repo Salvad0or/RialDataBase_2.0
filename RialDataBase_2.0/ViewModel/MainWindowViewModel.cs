@@ -191,7 +191,7 @@ namespace RialDataBase_2._0.ViewModel
             
             AllJoinedClients.Add(c);
 
-            Insert.InsertNewClientAsync(NewClient);
+            Insert.InsertNewClient(NewClient);
 
             NewClient = Helper.Cleaner(NewClient);
 

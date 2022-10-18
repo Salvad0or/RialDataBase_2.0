@@ -18,16 +18,8 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
         /// Команда добавления клиента.
         /// </summary>
         /// <param name="client"></param>
-        public async void InsertNewClientAsync(EntityClient client)
-        {
-            await Task.Run(() => InsertNewClient(client));
-
-        }
-
         public void InsertNewClient(EntityClient client)
         {
-            if (client is null) return;
-
             using (Context context = new Context())
             {
 
@@ -76,13 +68,21 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
                 context.SaveChanges();
 
                 MessageBox.Show
-                ($"Клиент {client.Name} успешно внесен в список" +
+                ($"Клиент {client.Name} успешно внесен в список " +
                  $"постоянных клиентов.");
 
-
-
             }
+
+
         }
+           
+
+            
+
+
+
+            
+        
 
         #endregion
     }
