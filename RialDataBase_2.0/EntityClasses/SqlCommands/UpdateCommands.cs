@@ -171,18 +171,17 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
             using (Context context = new Context())
             {
                 Client EntityClient = context.Clients.Single(p => p.Phone == phone);
-
                 EntityClient.Fname = client.Name;
                 EntityClient.Phone = client.Phone;
                 EntityClient.Comment = client.Comment;
+                
 
-                Car car = context.Cars.Single(c => c.Id == EntityClient.Id);
-
+                Car car = context.Cars.Single(c => c.ClientId == EntityClient.Id);
                 car.Vin = client.Vin;
-                car.CarName = client.Vin;
+                car.CarName = client.Car;
+                
 
-                CarCharacteristic carCharacteristic = context.CarCharacteristics.Single(ch => ch.Id == car.Id);
-
+                CarCharacteristic carCharacteristic = context.CarCharacteristics.Single(ch => ch.CarId == car.Id);
                 carCharacteristic.Oil = client.Oil;
                 carCharacteristic.OilFilter = client.OilFilter;
                 carCharacteristic.AirFilter = client.AirFilter;
@@ -193,12 +192,9 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
                 carCharacteristic.FuelFilter = client.Fuelfilter;
 
                 context.SaveChanges();
-
-                Thread.Sleep(3000);
-
+                
                 MessageBox.Show("Данные были успешно изменены");      
 
-                client = new EntityClient();
                 flag = false;
             }
         }

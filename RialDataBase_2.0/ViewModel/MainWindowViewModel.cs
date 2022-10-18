@@ -282,6 +282,7 @@ namespace RialDataBase_2._0.ViewModel
             UpdateCommands.ChangeClientData(ThirtyWindowClient, ref _flagForEditClient, EditSearchPhone);
 
             ThirtyWindowClient = new EntityClient();
+
             EditSearchPhone = String.Empty;
         }
 
