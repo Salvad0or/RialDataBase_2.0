@@ -3,6 +3,7 @@ using RialDataBase_2._0.HelperClasses;
 using RialDataBase_2._0.Infrasrtucture;
 using RialDataBase_2._0.Model;
 using RialDataBase_2._0.Services;
+using RialDataBase_2._0.Services.TgBot;
 using RialDataBase_2._0.ViewModel.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+
 
 namespace RialDataBase_2._0.ViewModel
 {
@@ -187,6 +189,8 @@ namespace RialDataBase_2._0.ViewModel
 
         public void OnAddClient (object p)
         {
+            
+
             EntityClient c = (EntityClient)NewClient.Clone();
             
             AllJoinedClients.Add(c);
@@ -304,10 +308,15 @@ namespace RialDataBase_2._0.ViewModel
             SearchEditClientDataCommand = new LambaCommand(OnSearchEditClientDataExecuted, CanSearchEditClientDataExecuted);
             #endregion
 
+            TgBot tgBot = new TgBot();
+            tgBot.Start();
+
+
             NewClient = new EntityClient();
             ClientFromSecondWindow = new EntityClient();
             ThirtyWindowClient = new EntityClient();
             Insert = new InsertCommands();
+            
 
             Task.Factory.StartNew(PrepareAllClientTablesAsync);            
         }
