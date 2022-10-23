@@ -142,8 +142,8 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
 
                 if(flag)
                 {
-                    message += " Так же позвольте Вас поздравить с получением нового статуса!" +
-                               $"Теперь Ваш статус {client.Status}!";
+                    message += "\nТак же позвольте Вас поздравить с получением нового статуса!\n" +
+                               $"Теперь Ваш статус - {client.Status}!";
                 }
 
                 botClient.SendInformationAboutCashBack(message, bot.ChatId);

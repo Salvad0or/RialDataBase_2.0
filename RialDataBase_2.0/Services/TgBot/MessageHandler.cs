@@ -15,16 +15,16 @@ namespace RialDataBase_2._0.Services.TgBot
         /// Метод обработки нового клиента
         /// </summary>
         /// <param name="message"></param>
-        /// <param name="chatId"></param>
-        /// <param name="botClient"></param>
+        /// <param name="ChatId"></param>
+        /// <param name="ClientBot"></param>
         /// <returns></returns>
-        public async static Task AddToBaseAsync(string message, long chatId, ITelegramBotClient botClient)
+        public async static Task AddToBaseAsync(string message, long ChatId)
         {
             bool flag = int.TryParse(message, out int phone);
 
             if (!flag && message.Length != 11)
             {
-                await botClient.SendTextMessageAsync(chatId, "Пожалуйста проверьте ввод и попробуйте еще раз");
+                await ClientBot.SendTextMessageAsync(ChatId, "Пожалуйста проверьте ввод и попробуйте еще раз");
                 return;
             }
 
@@ -36,10 +36,10 @@ namespace RialDataBase_2._0.Services.TgBot
 
                 if (client is null)
                 {
-                    await botClient.SendTextMessageAsync(chatId, "Номер был введен корректно,но я не нашел Вас в нашей базе данных,\n " +
+                    await ClientBot.SendTextMessageAsync(ChatId, "Номер был введен корректно,но я не нашел Вас в нашей базе данных,\n " +
                                                                  "Пожалуйста обратитесь за помощью в наш магазин по адресу: \n" +
                                                                  "Проспект Раиса Беляева, ГСК Чайка 2Г. Магазин Риальный, Вам помогут\n " +
-                                                                 "Номер нашего телефона: 89270482978\n " +
+                                                                 "Номер нашего телефона: 89270482078\n " +
                                                                  "Или попробуйте еще раз.");
                     return;
                 }
@@ -49,7 +49,7 @@ namespace RialDataBase_2._0.Services.TgBot
 
                     Bot newBot = new Bot()
                     {
-                        ChatId = chatId,
+                        ChatId = ChatId,
                         ClientId = client.Id
                     };
 
@@ -59,9 +59,9 @@ namespace RialDataBase_2._0.Services.TgBot
 
                     if (lastChek is not null)
                     {
-                        await botClient.SendTextMessageAsync(chatId, $"Уважемый {client.Fname}" +
-                                                                     $"По каким-то причинам Вы уже числитесь в базе данных" +
-                                                                     $"Обратитесь к нам в магазин по адресу :" +
+                        await ClientBot.SendTextMessageAsync(ChatId, $"Уважемый {client.Fname},\n" +
+                                                                     $"По каким-то причинам Вы уже числитесь в базе данных\n" +
+                                                                     $"Обратитесь к нам в магазин по адресу :\n" +
                                                                      $"Проспект Раиса Беляева, ГСК Чайка 2Г. Магазин Риальный, Вам помогут");
 
                         return;
@@ -71,9 +71,11 @@ namespace RialDataBase_2._0.Services.TgBot
                     context.Bots.Add(newBot);
                     await context.SaveChangesAsync();
 
-                    await botClient.SendTextMessageAsync(chatId, $"Уважаемый {client.Fname}" +
-                                                                 $"Вы были успешно добавлены в базу данных" +
+                    await ClientBot.SendTextMessageAsync(ChatId, $"Уважаемый {client.Fname},\n" +
+                                                                 $"Вы были успешно добавлены в базу данных.\n" +
                                                                  $"Приветственный бонус в размере 100 рублей был зачислен.");
+
+
 
                 }
             }
@@ -82,7 +84,7 @@ namespace RialDataBase_2._0.Services.TgBot
 
         }
 
-        public async static Task WorkWithExistClientAsync(Bot clientFromChatBot, long chatId, ITelegramBotClient botClient)
+        public async static Task WorkWithExistClientAsync(Bot clientFromChatBot, long chatId)
         {
 
 
@@ -116,7 +118,7 @@ namespace RialDataBase_2._0.Services.TgBot
 
                 foreach (var exist in ExistClient)
                 {
-                    await botClient.SendTextMessageAsync(chatId, $"Ваш кешбек составляет: {exist.CashBack}\n" +
+                    await ClientBot.SendTextMessageAsync(chatId, $"Ваш кешбек составляет: {exist.CashBack}\n" +
                                                                  $"Ваше имя: {exist.Name}\n" +
                                                                  $"Всего вы потратили у нас: {exist.Total}\n" +
                                                                  $"Ваш клиентский статус: {exist.Status}\n" +
@@ -129,9 +131,9 @@ namespace RialDataBase_2._0.Services.TgBot
 
         }
 
-        public async static Task SendMessageAboutCashbackAsync(ITelegramBotClient botClient, string message, long chatId)
+        public async static Task SendMessageAboutCashbackAsync(string message, long chatId)
         {
-            await botClient.SendTextMessageAsync(chatId, message);
+            await ClientBot.SendTextMessageAsync(chatId, message);
         }
     }
 }

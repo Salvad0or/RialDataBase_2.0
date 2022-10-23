@@ -14,9 +14,9 @@ namespace RialDataBase_2._0.Services.TgBot
     {
         #region private поля
 
-        private TelegramBotClient Bot { get; set; }
+        protected static TelegramBotClient ClientBot { get; set; }
         private CancellationTokenSource _cts { get; set; }
-        private Bot bot { get; set; }
+        private Bot _bot { get; set; }
         private bool registerFlag { get; set; } = true;
 
         const string ApiToken = "5156177003:AAFGMepLTciboz5oG6Yglm2usY3EchASwRc";
@@ -25,42 +25,43 @@ namespace RialDataBase_2._0.Services.TgBot
 
         public TheWorkerBot()
         {
-            Bot = new TelegramBotClient(ApiToken);
+            ClientBot = new TelegramBotClient(ApiToken);
             _cts = new CancellationTokenSource();
 
             CancellationToken cancellationToken = _cts.Token;
 
-            Bot.StartReceiving(UpdateHandler, PoolingHandleError);
+            ClientBot.StartReceiving(UpdateHandler, PoolingHandleError);
 
         }
 
         private async Task UpdateHandler(ITelegramBotClient botClient, Telegram.Bot.Types.Update update, CancellationToken cancellationToken)
         {
-            long chatId = update.Message.Chat.Id;
-            string message = update.Message.Text;
+            long ChatId = update.Message.Chat.Id;
+            string _message = update.Message.Text;
 
             await using (Context context = new Context())
             {
-                bot = (from b in context.Bots
-                       where b.ChatId == chatId
+                _bot = (from b in context.Bots
+                       where b.ChatId == ChatId
                        select b).FirstOrDefault();
             }
 
-            if (bot is null)
+            if (_bot is null)
             {
                 if (registerFlag)
                 {
-                    await botClient.SendTextMessageAsync(chatId, "Давайте Вас зарегестрируем. Введите номер телефона: ");
+                    await botClient.SendTextMessageAsync(ChatId, "Кажется, что Вы обратились ко мне впервые" +
+                                                                 "Давайте Вас зарегестрируем - это не долго. Введите номер телефона: ");
                     registerFlag = false;
                     return;
                 }
 
-                await MessageHandler.AddToBaseAsync(message, chatId, botClient);
+                await MessageHandler.AddToBaseAsync(_message, ChatId);
 
             }
             else
             {
-                await MessageHandler.WorkWithExistClientAsync(bot, chatId, botClient);
+                await MessageHandler.WorkWithExistClientAsync(_bot, ChatId);
             }
 
 
@@ -72,9 +73,9 @@ namespace RialDataBase_2._0.Services.TgBot
         }
 
         public async void SendInformationAboutCashBack(string message, long chatId)
-        {          
-            await MessageHandler.SendMessageAboutCashbackAsync(Bot, message, chatId);
-        }
+            =>       
+            await MessageHandler.SendMessageAboutCashbackAsync(message, chatId);
+        
 
     }
 }
