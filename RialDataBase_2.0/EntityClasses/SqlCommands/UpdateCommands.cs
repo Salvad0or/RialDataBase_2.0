@@ -1,6 +1,7 @@
 ﻿using RialDataBase_2._0.EntityClasses.BaseConnectClass;
 using RialDataBase_2._0.EntityClasses.Objects;
 using RialDataBase_2._0.Model;
+using RialDataBase_2._0.Services.TgBot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,9 +19,9 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
         /// </summary>
         /// <param name="client"></param>
         /// <param name="cashback"></param>
-        public static void AddCashBackAsync(EntityClient client, int cashback)
+        public static void AddCashBackAsync(EntityClient client, TheWorkerBot botClient, int cashback)
         {
-            Task.Factory.StartNew(() => AddCashBack(client, cashback));
+            Task.Factory.StartNew(() => AddCashBack(client, botClient, cashback));
         }
 
         /// <summary>
@@ -28,9 +29,10 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
         /// </summary>
         /// <param name="client"></param>
         /// <param name="cashback"></param>
-        public static void SpendCashBackAsync(EntityClient client, int cashback)
+        public static void SpendCashBackAsync(EntityClient client, TheWorkerBot botClient, int cashback)
         {
-            Task.Run(() => SpendCashBack(client, cashback));
+            Task.Run(() => SpendCashBack(client, botClient, cashback));
+
         }
 
         /// <summary>
@@ -38,10 +40,10 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
         /// </summary>
         /// <param name="client"></param>
         /// <param name="cashback"></param>
-        public static void AddCashBack(EntityClient client, int cashback)
+        public static void AddCashBack(EntityClient client,TheWorkerBot botClient, int cashback)
         {
             bool flag = default;
-
+            
             client.TotalPurchaseAmount += cashback;
 
             switch (client.TotalPurchaseAmount)
@@ -85,7 +87,9 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
                         $"\n Кешбек равен 2%!");
                     flag = true;
                     break;
+                
             }
+
 
             switch (client.Status)
             {
@@ -122,9 +126,28 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
 
                 context.SaveChanges();
 
-                MessageBox.Show(
-                      $"Кешбек добавлен, " +
-                      $"баланс {client.CashBack} руб.");
+                string message = $"Кешбек добавлен, " +
+                      $"баланс {client.CashBack} руб.";
+
+                MessageBox.Show(message);
+                      
+
+                var bot = (from b in context.Bots
+                           where b.ClientId == (from c in context.Clients
+                                                where c.Phone == client.Phone
+                                                select c).Single().Id
+                           select b).FirstOrDefault();
+
+                if (bot is null) return;
+
+                if(flag)
+                {
+                    message += " Так же позвольте Вас поздравить с получением нового статуса!" +
+                               $"Теперь Ваш статус {client.Status}!";
+                }
+
+                botClient.SendInformationAboutCashBack(message, bot.ChatId);
+
             }
         }
    
@@ -133,7 +156,7 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
         /// </summary>
         /// <param name="client"></param>
         /// <param name="cashback"></param>
-        public static void SpendCashBack(EntityClient client, int cashback)
+        public static void SpendCashBack(EntityClient client, TheWorkerBot botClient, int cashback)
         {
             using (Context context = new Context())
             {
@@ -152,11 +175,23 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
 
                 context.SaveChanges();
 
-                MessageBox.Show
-                   (
-                   "Кешбек успешно списан, " +
-                   $"баланс равен {cba.CashBack} руб"
-                   );
+
+                string message = "Кешбек успешно списан, " +
+                   $"баланс равен {cba.CashBack} руб";
+
+                MessageBox.Show(message);
+
+
+                var bot = (from b in context.Bots
+                           where b.ClientId == (from c in context.Clients
+                                                where c.Phone == client.Phone
+                                                select c).Single().Id
+                           select b).FirstOrDefault();
+
+                if (bot is null) return;
+               
+
+                botClient.SendInformationAboutCashBack(message, bot.ChatId);
             }
         }
 

@@ -10,7 +10,7 @@ using Telegram.Bot;
 
 namespace RialDataBase_2._0.Services.TgBot
 {
-    internal class TheWorkerBot
+    public class TheWorkerBot
     {
         #region private поля
 
@@ -19,11 +19,13 @@ namespace RialDataBase_2._0.Services.TgBot
         private Bot bot { get; set; }
         private bool registerFlag { get; set; } = true;
 
+        const string ApiToken = "5156177003:AAFGMepLTciboz5oG6Yglm2usY3EchASwRc";
+
         #endregion
 
-        public TheWorkerBot(string token)
+        public TheWorkerBot()
         {
-            Bot = new TelegramBotClient(token);
+            Bot = new TelegramBotClient(ApiToken);
             _cts = new CancellationTokenSource();
 
             CancellationToken cancellationToken = _cts.Token;
@@ -32,7 +34,7 @@ namespace RialDataBase_2._0.Services.TgBot
 
         }
 
-        public async Task UpdateHandler(ITelegramBotClient botClient, Telegram.Bot.Types.Update update, CancellationToken cancellationToken)
+        private async Task UpdateHandler(ITelegramBotClient botClient, Telegram.Bot.Types.Update update, CancellationToken cancellationToken)
         {
             long chatId = update.Message.Chat.Id;
             string message = update.Message.Text;
@@ -58,17 +60,20 @@ namespace RialDataBase_2._0.Services.TgBot
             }
             else
             {
-                await MessageHandler.WorkWithExistClient(bot, chatId, botClient);
+                await MessageHandler.WorkWithExistClientAsync(bot, chatId, botClient);
             }
 
 
         }
 
-
-
-        public async Task PoolingHandleError(ITelegramBotClient Bot, Exception e, CancellationToken token)
+        private async Task PoolingHandleError(ITelegramBotClient Bot, Exception e, CancellationToken token)
         {
 
+        }
+
+        public async void SendInformationAboutCashBack(string message, long chatId)
+        {          
+            await MessageHandler.SendMessageAboutCashbackAsync(Bot, message, chatId);
         }
 
     }

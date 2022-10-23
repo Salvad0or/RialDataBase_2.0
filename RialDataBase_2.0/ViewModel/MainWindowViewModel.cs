@@ -54,6 +54,8 @@ namespace RialDataBase_2._0.ViewModel
             }
         }
 
+        TheWorkerBot BotClient { get; set; }
+
 
         #endregion
 
@@ -225,7 +227,7 @@ namespace RialDataBase_2._0.ViewModel
         public void OnAddCashBackExecuted(object p)
         {
 
-            UpdateCommands.AddCashBackAsync(ClientFromSecondWindow,AddCashBack);
+            UpdateCommands.AddCashBackAsync(ClientFromSecondWindow, BotClient, AddCashBack);
 
             ClientFromSecondWindow = new EntityClient();
 
@@ -251,7 +253,7 @@ namespace RialDataBase_2._0.ViewModel
 
         {
 
-            await Task.Run(() => UpdateCommands.SpendCashBackAsync(ClientFromSecondWindow, SpendCashBack));
+            await Task.Run(() => UpdateCommands.SpendCashBackAsync(ClientFromSecondWindow, BotClient, SpendCashBack));
 
             ClientFromSecondWindow = new EntityClient();
 
@@ -298,7 +300,6 @@ namespace RialDataBase_2._0.ViewModel
         public  MainWindowViewModel()
         {
 
-    
             #region Команды
             AddClientCommand = new LambaCommand(OnAddClient, CanAddClient);
             SearchClientCommand = new LambaCommand(OnSearchClientExecute, CanSearchClientExecutrd);
@@ -307,18 +308,16 @@ namespace RialDataBase_2._0.ViewModel
             EditClientDataCommand = new LambaCommand(OnEditClientDataExecute, CanEditClientDataExecuted);
             SearchEditClientDataCommand = new LambaCommand(OnSearchEditClientDataExecuted, CanSearchEditClientDataExecuted);
             #endregion
-
-            TgBot tgBot = new TgBot();
-            tgBot.Start();
-
-
+   
+            BotClient = new TheWorkerBot();            
             NewClient = new EntityClient();
+
             ClientFromSecondWindow = new EntityClient();
             ThirtyWindowClient = new EntityClient();
             Insert = new InsertCommands();
+           
+            Task.Factory.StartNew(PrepareAllClientTablesAsync);
             
-
-            Task.Factory.StartNew(PrepareAllClientTablesAsync);            
         }
 
         void PrepareAllClientTablesAsync()

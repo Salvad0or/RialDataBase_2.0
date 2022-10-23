@@ -9,7 +9,7 @@ using Telegram.Bot;
 
 namespace RialDataBase_2._0.Services.TgBot
 {
-    public static class MessageHandler
+    public class MessageHandler : TheWorkerBot
     {
         /// <summary>
         /// Метод обработки нового клиента
@@ -82,7 +82,7 @@ namespace RialDataBase_2._0.Services.TgBot
 
         }
 
-        public async static Task WorkWithExistClient(Bot clientFromChatBot, long chatId, ITelegramBotClient botClient)
+        public async static Task WorkWithExistClientAsync(Bot clientFromChatBot, long chatId, ITelegramBotClient botClient)
         {
 
 
@@ -127,6 +127,11 @@ namespace RialDataBase_2._0.Services.TgBot
 
             }
 
+        }
+
+        public async static Task SendMessageAboutCashbackAsync(ITelegramBotClient botClient, string message, long chatId)
+        {
+            await botClient.SendTextMessageAsync(chatId, message);
         }
     }
 }
