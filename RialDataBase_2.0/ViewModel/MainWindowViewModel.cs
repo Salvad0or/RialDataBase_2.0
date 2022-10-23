@@ -191,7 +191,6 @@ namespace RialDataBase_2._0.ViewModel
 
         public void OnAddClient (object p)
         {
-            
 
             EntityClient c = (EntityClient)NewClient.Clone();
             

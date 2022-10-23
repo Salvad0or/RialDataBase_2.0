@@ -1,5 +1,7 @@
 ﻿using RialDataBase_2._0.EntityClasses.BaseConnectClass;
 using RialDataBase_2._0.EntityClasses.Objects;
+using RialDataBase_2._0.EntityClasses.SqlCommands;
+using RialDataBase_2._0.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +20,7 @@ namespace RialDataBase_2._0.Services.TgBot
         /// <param name="ChatId"></param>
         /// <param name="ClientBot"></param>
         /// <returns></returns>
-        public async static Task AddToBaseAsync(string message, long ChatId)
+        public async static Task AddToBaseAsync(string message, long ChatId, TheWorkerBot theWorkerbot)
         {
             bool flag = int.TryParse(message, out int phone);
 
@@ -69,14 +71,22 @@ namespace RialDataBase_2._0.Services.TgBot
 
 
                     context.Bots.Add(newBot);
+
+                    var cash = (from c in context.Clients
+                                where c.Phone == client.Phone
+                                from cba in context.ClientBankAccouts
+                                where cba.ClientId == c.Id
+                                select cba).Single();
+
+                    cash.CashBack += 100;
+
                     await context.SaveChangesAsync();
 
                     await ClientBot.SendTextMessageAsync(ChatId, $"Уважаемый {client.Fname},\n" +
                                                                  $"Вы были успешно добавлены в базу данных.\n" +
                                                                  $"Приветственный бонус в размере 100 рублей был зачислен.");
 
-
-
+                    
                 }
             }
 
@@ -131,9 +141,6 @@ namespace RialDataBase_2._0.Services.TgBot
 
         }
 
-        public async static Task SendMessageAboutCashbackAsync(string message, long chatId)
-        {
-            await ClientBot.SendTextMessageAsync(chatId, message);
-        }
+        
     }
 }

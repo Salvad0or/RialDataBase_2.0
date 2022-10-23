@@ -50,13 +50,14 @@ namespace RialDataBase_2._0.Services.TgBot
             {
                 if (registerFlag)
                 {
-                    await botClient.SendTextMessageAsync(ChatId, "Кажется, что Вы обратились ко мне впервые" +
-                                                                 "Давайте Вас зарегестрируем - это не долго. Введите номер телефона: ");
+                    await botClient.SendTextMessageAsync(ChatId, "Кажется вы обратились ко мне впервые.\n" +
+                                                                 "Давайте вас зарегестрируем - это не долго.\n" +
+                                                                 "Введите номер телефона: ");
                     registerFlag = false;
                     return;
                 }
 
-                await MessageHandler.AddToBaseAsync(_message, ChatId);
+                await MessageHandler.AddToBaseAsync(_message, ChatId, this);
 
             }
             else
@@ -73,9 +74,9 @@ namespace RialDataBase_2._0.Services.TgBot
         }
 
         public async void SendInformationAboutCashBack(string message, long chatId)
-            =>       
-            await MessageHandler.SendMessageAboutCashbackAsync(message, chatId);
-        
+            =>
+            await ClientBot.SendTextMessageAsync(chatId, message);
+
 
     }
 }

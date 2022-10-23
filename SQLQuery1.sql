@@ -8,7 +8,7 @@ On c.Id = b.ClientId
 where b.Id = 26
 
 DELETE FROM Bots
-where id = 25
+where id = 26
 
 SELECT * From Bots
 
