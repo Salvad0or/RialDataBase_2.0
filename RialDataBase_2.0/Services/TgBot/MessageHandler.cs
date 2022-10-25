@@ -26,7 +26,7 @@ namespace RialDataBase_2._0.Services.TgBot
 
             if (!flag && message.Length != 11)
             {
-                await ClientBot.SendTextMessageAsync(ChatId, "Пожалуйста проверьте ввод и попробуйте еще раз");
+                await WorkerBot.SendTextMessageAsync(ChatId, "Пожалуйста проверьте ввод и попробуйте еще раз");
                 return;
             }
 
@@ -38,7 +38,7 @@ namespace RialDataBase_2._0.Services.TgBot
 
                 if (client is null)
                 {
-                    await ClientBot.SendTextMessageAsync(ChatId, "Номер был введен корректно,но я не нашел Вас в нашей базе данных,\n " +
+                    await WorkerBot.SendTextMessageAsync(ChatId, "Номер был введен корректно,но я не нашел Вас в нашей базе данных,\n " +
                                                                  "Пожалуйста обратитесь за помощью в наш магазин по адресу: \n" +
                                                                  "Проспект Раиса Беляева, ГСК Чайка 2Г. Магазин Риальный, Вам помогут\n " +
                                                                  "Номер нашего телефона: 89270482078\n " +
@@ -61,7 +61,7 @@ namespace RialDataBase_2._0.Services.TgBot
 
                     if (lastChek is not null)
                     {
-                        await ClientBot.SendTextMessageAsync(ChatId, $"Уважемый {client.Fname},\n" +
+                        await WorkerBot.SendTextMessageAsync(ChatId, $"Уважемый {client.Fname},\n" +
                                                                      $"По каким-то причинам Вы уже числитесь в базе данных\n" +
                                                                      $"Обратитесь к нам в магазин по адресу :\n" +
                                                                      $"Проспект Раиса Беляева, ГСК Чайка 2Г. Магазин Риальный, Вам помогут");
@@ -82,7 +82,7 @@ namespace RialDataBase_2._0.Services.TgBot
 
                     await context.SaveChangesAsync();
 
-                    await ClientBot.SendTextMessageAsync(ChatId, $"Уважаемый {client.Fname},\n" +
+                    await WorkerBot.SendTextMessageAsync(ChatId, $"Уважаемый {client.Fname},\n" +
                                                                  $"Вы были успешно добавлены в базу данных.\n" +
                                                                  $"Приветственный бонус в размере 100 рублей был зачислен.");
 
@@ -128,7 +128,7 @@ namespace RialDataBase_2._0.Services.TgBot
 
                 foreach (var exist in ExistClient)
                 {
-                    await ClientBot.SendTextMessageAsync(chatId, $"Ваш кешбек составляет: {exist.CashBack}\n" +
+                    await WorkerBot.SendTextMessageAsync(chatId, $"Ваш кешбек составляет: {exist.CashBack}\n" +
                                                                  $"Ваше имя: {exist.Name}\n" +
                                                                  $"Всего вы потратили у нас: {exist.Total}\n" +
                                                                  $"Ваш клиентский статус: {exist.Status}\n" +
