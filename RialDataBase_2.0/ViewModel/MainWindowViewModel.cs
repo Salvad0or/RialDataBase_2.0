@@ -293,6 +293,16 @@ namespace RialDataBase_2._0.ViewModel
 
         #endregion
 
+
+        public ICommand ActivatePromocodeCommand { get; }
+
+        public bool CanActivatePromocodeExecuted(object p) => true;
+
+        public void OnActivatePromocodeExecute(object p)
+        {
+            MessageBox.Show("Done");
+        }
+
         #endregion
 
         #region Конструктор
@@ -300,14 +310,17 @@ namespace RialDataBase_2._0.ViewModel
         {
 
             #region Команды
+
             AddClientCommand = new LambaCommand(OnAddClient, CanAddClient);
             SearchClientCommand = new LambaCommand(OnSearchClientExecute, CanSearchClientExecutrd);
             AddCashBackCommand = new LambaCommand(OnAddCashBackExecuted, CanAddCasbackExecuted);
             SpendСashback = new LambaCommand(OnSpendCashBackExecute, CanSpendCashBackExecuted);
             EditClientDataCommand = new LambaCommand(OnEditClientDataExecute, CanEditClientDataExecuted);
             SearchEditClientDataCommand = new LambaCommand(OnSearchEditClientDataExecuted, CanSearchEditClientDataExecuted);
+            ActivatePromocodeCommand = new LambaCommand(OnActivatePromocodeExecute, CanActivatePromocodeExecuted);
+
             #endregion
-   
+
             BotClient = new TheWorkerBot();            
             NewClient = new EntityClient();
 

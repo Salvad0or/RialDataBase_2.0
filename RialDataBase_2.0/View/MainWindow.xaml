@@ -256,7 +256,7 @@
                                     Content="Поиск"
                                     Margin="15 0"
                                     Command="{Binding SearchClientCommand}"/>
-                            
+
                         </StackPanel>
                     </GroupBox>
 
@@ -285,7 +285,7 @@
 
                                 <TextBlock Text="Имя:"/>
                                 <TextBox Text="{Binding ClientFromSecondWindow.Name, UpdateSourceTrigger=PropertyChanged}"/>
-                                
+
                                 <TextBlock Text="Марка автомобиля:"/>
                                 <TextBox Text="{Binding ClientFromSecondWindow.Car, UpdateSourceTrigger=PropertyChanged}"/>
 
@@ -578,7 +578,7 @@
                                         
                                         Command="{Binding EditClientDataCommand}" Foreground="White" Width="238"/>
                                 </StackPanel>
-                                
+
 
                                 <StackPanel>
                                     <StackPanel.Resources>
@@ -590,7 +590,7 @@
                                         </ResourceDictionary>
                                     </StackPanel.Resources>
 
-                                    
+
 
                                 </StackPanel>
 
@@ -681,7 +681,7 @@
                           AlternatingRowBackground="LightGray"
                           CanUserAddRows="False"
                           >
-                    
+
                     <DataGrid.Columns>
                         <DataGridTextColumn IsReadOnly="True" Header="Id" Binding="{Binding Id}" Width="30"/>
                         <DataGridTextColumn IsReadOnly="True" Header="Дата" 
@@ -706,6 +706,57 @@
                 </DataGrid>
 
 
+
+            </TabItem>
+
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <fa5:ImageAwesome Icon="Solid_Robot" Height="15"/>
+                        <TextBlock Text ="Telegram Bot"
+                                   Margin="5 0"/>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="124*"></RowDefinition>
+                        <RowDefinition Height="141*"></RowDefinition>
+                        <RowDefinition Height="177*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <GroupBox Grid.Row="0" 
+                              Grid.Column="0"
+                              Header="Промокод">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition></ColumnDefinition>
+                                <ColumnDefinition></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+
+                            <TextBox Grid.Column="0"
+                                     Height="25"
+                                     Width="150"/>
+                            
+                            <Button Grid.Column="1"
+                                    Height="25"
+                                    Width="150"
+                                    Content="Утвердить промокод"
+                                    Command="{Binding ActivatePromocodeCommand}"/>
+                                    
+                                  
+
+                        </Grid>
+
+                        
+                        
+                    </GroupBox>
+
+                </Grid>
 
             </TabItem>
 
