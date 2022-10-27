@@ -67,7 +67,9 @@ namespace RialDataBase_2._0.Services.TgBot
             {
                 _keyboard = new(new[]
                 {
-                    new KeyboardButton[] { "Мой авто", "Мой баланс" }
+                    new KeyboardButton[] { "🚘 Авто", "💰 Баланс" },
+                    new KeyboardButton[] { "📍 Адрес", "💎 Промокод"},
+
 
                 }
                 )
@@ -76,9 +78,12 @@ namespace RialDataBase_2._0.Services.TgBot
                     
                 };
 
+
+                await WorkerBot.SendTextMessageAsync(_chatId, _message, replyMarkup: _keyboard);
+
                 await ButtonsMaster.ButtonHandlerAsync(_message, _chatId);
 
-                await WorkerBot.SendTextMessageAsync(_chatId, "Пожалуйста, используйте кнопки для навигации: ", replyMarkup: _keyboard);
+                
 
                                    
             }

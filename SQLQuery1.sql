@@ -1,17 +1,4 @@
-﻿UPDATE Client 
-Set StatusID = 1
-where Id = 244
-
-Select c.Id from Client c
-JOIN Bots b
-On c.Id = b.ClientId
-where b.Id = 26
-
-DELETE FROM Bots
-where id = 26
-
-SELECT * From Bots
-
-
-
-
+﻿select * from Bots b
+join Client c
+on b.ClientId = c.Id
+where b.Id = 28

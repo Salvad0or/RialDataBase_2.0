@@ -5,16 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Telegram.Bot;
+using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace RialDataBase_2._0.Services.TgBot
 {
     public class ButtonsMaster : TheWorkerBot
 
-
-    {
-     
-
+    {   
         /// <summary>
         /// Обработчик кнопок
         /// </summary>
@@ -23,18 +21,32 @@ namespace RialDataBase_2._0.Services.TgBot
         /// <returns></returns>
         public static async Task ButtonHandlerAsync(string buttonText,long chatId)
         {
-   
-            switch (buttonText)
+  
+            switch (buttonText.Substring(3))
             {
-                case "Мой авто":
+                case "Авто":
                     await ShowGarageToClient(chatId);
                     break;
 
-                case "Мой баланс":
+                case "Баланс":
                     await ShowBalanceToClient(chatId);
                     break;
 
-                case "Адрес" :
+                case "Адрес":
+                    await WorkerBot.SendTextMessageAsync(chatId, "Мы находимся по адресу:\n" +
+                                                                 "Проспект Раиса Беляева, \n" +
+                                                                 "ГСК Чайка 2Г \n" +
+                                                                 "Магазин - Риальный");
+                    await WorkerBot.SendPhotoAsync(chatId,
+                        photo: "https://vk.com/photo-47211478_457241338",
+                        caption: "<b>Навигатор</b>: " +
+                        "<a href=\"https://2gis.ru/nabchelny/firm/70000001007478750?m=52.417085%2C55.726752%2F16\">2ГИС</a>",
+                        parseMode: ParseMode.Html);
+                        
+
+                    break;
+
+                case "Промокод":
                     break;
 
                 default:
@@ -103,6 +115,12 @@ namespace RialDataBase_2._0.Services.TgBot
             }
         }
 
+
+        /// <summary>
+        /// Метод отправляющий клиенту данные о его балансе
+        /// </summary>
+        /// <param name="chatId"></param>
+        /// <returns></returns>
         private static async Task ShowBalanceToClient(long chatId)
         {
             using (Context context = new Context())
