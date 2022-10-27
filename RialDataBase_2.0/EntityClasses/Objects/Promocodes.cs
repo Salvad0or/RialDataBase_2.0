@@ -6,16 +6,10 @@ using System.Threading.Tasks;
 
 namespace RialDataBase_2._0.EntityClasses.Objects
 {
-    public class Bot
+    public class Promocode
     {
         public int Id { get; set; }
-
-        public int ClientId { get; set; }
-
-        public long ChatId { get; set; }
-
-        //public string Promocode { get; set; }
-
-        public virtual Client? Cient { get; set; }
+        public string Name { get; set; }
+        public int Sum { get; set; }
     }
 }

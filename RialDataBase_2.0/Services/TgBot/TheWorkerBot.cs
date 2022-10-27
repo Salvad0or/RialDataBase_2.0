@@ -69,22 +69,14 @@ namespace RialDataBase_2._0.Services.TgBot
                 {
                     new KeyboardButton[] { "🚘 Авто", "💰 Баланс" },
                     new KeyboardButton[] { "📍 Адрес", "💎 Промокод"},
-
-
-                }
-                )
+                })
                 {
-                    ResizeKeyboard = true,
-                    
+                    ResizeKeyboard = true,          
                 };
-
 
                 await WorkerBot.SendTextMessageAsync(_chatId, _message, replyMarkup: _keyboard);
 
-                await ButtonsMaster.ButtonHandlerAsync(_message, _chatId);
-
-                
-
+                await ButtonsMaster.ButtonHandlerAsync(_message, _chatId);      
                                    
             }
 

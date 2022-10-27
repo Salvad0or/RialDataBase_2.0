@@ -233,5 +233,10 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
                 flag = false;
             }
         }
+
+        public static void AddNewPromocode(string promocode, int sum)
+        {
+            
+        }
     }
 }
