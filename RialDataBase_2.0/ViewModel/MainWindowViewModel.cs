@@ -30,6 +30,8 @@ namespace RialDataBase_2._0.ViewModel
         private bool _flagForEditClient;
         private string _editSearchPhone;
         private bool _flag;
+        private int _promocodSum;
+        private string _promocodName;
 
         private EntityClient _newClient;
         private EntityClient _clientfromsecondwindow;
@@ -179,6 +181,33 @@ namespace RialDataBase_2._0.ViewModel
 
         #endregion
 
+        #region Свойства окна добавления промокода
+
+
+        public string PromocodName
+        {
+            get { return _promocodName; }
+            set 
+            {
+                _promocodName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public int PromocodSum
+        {
+            get { return _promocodSum; }
+            set 
+            { 
+                _promocodSum = value;
+                OnPropertyChanged();
+            }
+        }
+
+
+
+        #endregion
+
         #endregion
 
         #region Команды
@@ -294,19 +323,28 @@ namespace RialDataBase_2._0.ViewModel
         #endregion
 
 
+        #region Команда добавления промокода
+
         public ICommand ActivatePromocodeCommand { get; }
 
-        public bool CanActivatePromocodeExecuted(object p) => true;
+        public bool CanActivatePromocodeExecuted(object p)
+        {
+            if (PromocodName != null && PromocodSum > 0) return true;
+
+            return false;
+        }
 
         public void OnActivatePromocodeExecute(object p)
         {
-            MessageBox.Show("Done");
+           Insert.AddNewPromoCode(_promocodName, _promocodSum);
         }
+
+        #endregion  
 
         #endregion
 
         #region Конструктор
-        public  MainWindowViewModel()
+        public MainWindowViewModel()
         {
 
             #region Команды

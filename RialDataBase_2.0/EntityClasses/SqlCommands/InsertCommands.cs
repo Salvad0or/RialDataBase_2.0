@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Telegram.Bot;
 
 namespace RialDataBase_2._0.EntityClasses.SqlCommands
 {
@@ -75,7 +76,37 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
 
 
         }
-                   
+
+        #endregion
+
+        #region Команда добавления кешбека
+
+        public void AddNewPromoCode( string promocodeName,  int promocodeSum)
+        {        
+            Task.Run(() => AddNewPromoCodeAsync(promocodeName, promocodeSum));    
+        }
+
+        public async Task AddNewPromoCodeAsync(string promocodeName, int promocodeSum)
+        {
+            await using (Context context = new Context())
+            {
+                Promocode promocode = context.Promocodes.First();
+
+                if (promocode.Name == promocodeName)
+                {
+                    MessageBox.Show("Промокод с таким названием уже существует");
+                    return;
+                }
+
+                promocode.Name = promocodeName;
+                promocode.Sum = promocodeSum;
+
+                context.SaveChanges();                 
+            }
+
+            MessageBox.Show($"Промокод {promocodeName} добавлен");
+        }
+
         #endregion
     }
 }

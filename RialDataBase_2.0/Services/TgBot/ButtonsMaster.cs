@@ -1,4 +1,5 @@
 ﻿using RialDataBase_2._0.EntityClasses.BaseConnectClass;
+using RialDataBase_2._0.EntityClasses.Objects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,18 +22,25 @@ namespace RialDataBase_2._0.Services.TgBot
         /// <returns></returns>
         public static async Task ButtonHandlerAsync(string buttonText,long chatId)
         {
-  
-            switch (buttonText.Substring(3))
+
+            if (buttonText.StartsWith('#'))
             {
-                case "Авто":
+                await ActivatePromocode(chatId, buttonText);
+                return;
+            }
+                            
+  
+            switch (buttonText)
+            {
+                case "🚘 Авто":
                     await ShowGarageToClient(chatId);
                     break;
 
-                case "Баланс":
+                case "💰 Баланс":
                     await ShowBalanceToClient(chatId);
                     break;
 
-                case "Адрес":
+                case "📍 Адрес":
                     await WorkerBot.SendTextMessageAsync(chatId, "Мы находимся по адресу:\n" +
                                                                  "Проспект Раиса Беляева, \n" +
                                                                  "ГСК Чайка 2Г \n" +
@@ -46,11 +54,14 @@ namespace RialDataBase_2._0.Services.TgBot
 
                     break;
 
-                case "Промокод":
-                    break;
-
+                case "💎 Промокод":
+                    await HelloPromoCode(chatId);
+                    break;         
+         
                 default:
                     break;
+
+                 
             }
       
         }
@@ -154,6 +165,72 @@ namespace RialDataBase_2._0.Services.TgBot
                     $"Ваш кешбек - {_balance.CashBack}₽\n" +
                     $"Ваш статус - {_balance.Status}");
             };
+        }
+
+
+        private static async Task HelloPromoCode(long chatId)
+        {
+            await WorkerBot.SendTextMessageAsync(chatId,
+                "Введите промокод :");
+        }
+
+        private static async Task ActivatePromocode(long chatId,string promocodeName)
+        {
+            using (Context context = new Context())
+            {
+                Promocode promocode = context.Promocodes.First();
+
+                var client = (from b in context.Bots
+                              where b.ChatId == chatId
+
+                              from c in context.Clients
+                              where b.ClientId == c.Id
+
+                              from cba in context.ClientBankAccouts
+                              where cba.ClientId == c.Id
+
+                              select new
+                              {
+                                  Name = c.Fname,
+                                  CashBack = cba.CashBack
+                              }).Single();
+                             
+                             
+                             
+
+                if (promocode is null || promocode.Name != promocodeName)
+                {
+                    await WorkerBot.SendTextMessageAsync(chatId,
+                                                         $"Уважаемый {client.Name}\n" +
+                                                         $"Вы ввели неверный промокод или его срок уже истек\n" +
+                                                         $"Попробуйте еще раз или обратитесь к нам в магазин за помощью");
+                    return;
+                }
+
+                ClientBankAccout bankAccount = (from b in context.Bots
+                                                where b.ChatId == chatId
+
+                                                from c in context.Clients
+                                                where b.ClientId == c.Id
+
+                                                from cba in context.ClientBankAccouts
+                                                where cba.ClientId == c.Id
+
+                                                select cba).Single();
+
+                bankAccount.CashBack += promocode.Sum;
+
+                await WorkerBot.SendTextMessageAsync(chatId,
+                                                         $"Уважаемый {client.Name}\n" +
+                                                         $"Промокод введен верно\n" +
+                                                         $"На ваш баланс было добавлено {promocode.Sum} рублей\n" +
+                                                         $"Текущий баланс составляет: {bankAccount.CashBack} рублей\n" +
+                                                         $"Ждем Вас к нам с нетерпением!");
+
+                context.SaveChanges();
+
+            }
+
         }
 
     }

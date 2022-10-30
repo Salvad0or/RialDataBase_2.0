@@ -73,6 +73,7 @@ namespace RialDataBase_2._0.Services.TgBot
                 {
                     ResizeKeyboard = true,          
                 };
+  
 
                 await WorkerBot.SendTextMessageAsync(_chatId, _message, replyMarkup: _keyboard);
 
