@@ -92,15 +92,22 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
             {
                 Promocode promocode = context.Promocodes.First();
 
-                if (promocode.Name == promocodeName)
+                if (promocode.Name == promocodeName || !promocodeName.StartsWith('#'))
                 {
-                    MessageBox.Show("Промокод с таким названием уже существует");
+                    MessageBox.Show("Промокод с таким названием уже существует или отсутствует #");
                     return;
                 }
 
-                promocode.Name = promocodeName;
-                promocode.Sum = promocodeSum;
+                context.Promocodes.Remove(promocode);
 
+                Promocode newPromocode = new Promocode()
+                {
+                    Name = promocodeName,
+                    Sum = promocodeSum
+                };
+
+                context.Promocodes.Add(newPromocode);
+           
                 context.SaveChanges();                 
             }
 

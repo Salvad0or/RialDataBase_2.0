@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RialDataBase_2._0.EntityClasses.BaseConnectClass;
 
@@ -11,9 +12,10 @@ using RialDataBase_2._0.EntityClasses.BaseConnectClass;
 namespace RialDataBase_2._0.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20221101185118_PromocodeId_for_Bot")]
+    partial class PromocodeId_for_Bot
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -240,9 +242,8 @@ namespace RialDataBase_2._0.Migrations
                         .IsRequired();
 
                     b.HasOne("RialDataBase_2._0.EntityClasses.Objects.Promocode", "Promocode")
-                        .WithMany("Bots")
-                        .HasForeignKey("PromocodeId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .WithMany()
+                        .HasForeignKey("PromocodeId");
 
                     b.Navigation("Cient");
 
@@ -308,11 +309,6 @@ namespace RialDataBase_2._0.Migrations
             modelBuilder.Entity("RialDataBase_2._0.EntityClasses.Objects.ClientStatus", b =>
                 {
                     b.Navigation("Clients");
-                });
-
-            modelBuilder.Entity("RialDataBase_2._0.EntityClasses.Objects.Promocode", b =>
-                {
-                    b.Navigation("Bots");
                 });
 #pragma warning restore 612, 618
         }

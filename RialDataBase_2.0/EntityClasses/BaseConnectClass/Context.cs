@@ -136,6 +136,11 @@ namespace RialDataBase_2._0.EntityClasses.BaseConnectClass
 
                 entity.Property(e => e.Status).HasMaxLength(30);
             });
+
+            modelBuilder.Entity<Bot>(entity =>
+            {
+                entity.HasOne(d => d.Promocode).WithMany(p => p.Bots).HasForeignKey(dd => dd.PromocodeId).OnDelete(DeleteBehavior.SetNull);
+            });
       
         }
 
