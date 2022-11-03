@@ -12,8 +12,8 @@ using RialDataBase_2._0.EntityClasses.BaseConnectClass;
 namespace RialDataBase_2._0.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20221101185118_PromocodeId_for_Bot")]
-    partial class PromocodeId_for_Bot
+    [Migration("20221103184153_First")]
+    partial class First
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -242,7 +242,7 @@ namespace RialDataBase_2._0.Migrations
                         .IsRequired();
 
                     b.HasOne("RialDataBase_2._0.EntityClasses.Objects.Promocode", "Promocode")
-                        .WithMany()
+                        .WithMany("Bots")
                         .HasForeignKey("PromocodeId");
 
                     b.Navigation("Cient");
@@ -309,6 +309,11 @@ namespace RialDataBase_2._0.Migrations
             modelBuilder.Entity("RialDataBase_2._0.EntityClasses.Objects.ClientStatus", b =>
                 {
                     b.Navigation("Clients");
+                });
+
+            modelBuilder.Entity("RialDataBase_2._0.EntityClasses.Objects.Promocode", b =>
+                {
+                    b.Navigation("Bots");
                 });
 #pragma warning restore 612, 618
         }

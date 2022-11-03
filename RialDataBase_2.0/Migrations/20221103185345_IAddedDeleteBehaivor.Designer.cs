@@ -12,18 +12,44 @@ using RialDataBase_2._0.EntityClasses.BaseConnectClass;
 namespace RialDataBase_2._0.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20220907183424_Comment")]
-    partial class Comment
+    [Migration("20221103185345_IAddedDeleteBehaivor")]
+    partial class IAddedDeleteBehaivor
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .UseCollation("Cyrillic_General_CI_AS")
-                .HasAnnotation("ProductVersion", "6.0.8")
+                .HasAnnotation("ProductVersion", "6.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("RialDataBase_2._0.EntityClasses.Objects.Bot", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<long>("ChatId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("ClientId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PromocodeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ClientId");
+
+                    b.HasIndex("PromocodeId");
+
+                    b.ToTable("Bots");
+                });
 
             modelBuilder.Entity("RialDataBase_2._0.EntityClasses.Objects.Car", b =>
                 {
@@ -187,6 +213,44 @@ namespace RialDataBase_2._0.Migrations
                     b.ToTable("ClientStatus", (string)null);
                 });
 
+            modelBuilder.Entity("RialDataBase_2._0.EntityClasses.Objects.Promocode", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Sum")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Promocodes");
+                });
+
+            modelBuilder.Entity("RialDataBase_2._0.EntityClasses.Objects.Bot", b =>
+                {
+                    b.HasOne("RialDataBase_2._0.EntityClasses.Objects.Client", "Cient")
+                        .WithMany()
+                        .HasForeignKey("ClientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RialDataBase_2._0.EntityClasses.Objects.Promocode", "Promocode")
+                        .WithMany("Bots")
+                        .HasForeignKey("PromocodeId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Cient");
+
+                    b.Navigation("Promocode");
+                });
+
             modelBuilder.Entity("RialDataBase_2._0.EntityClasses.Objects.Car", b =>
                 {
                     b.HasOne("RialDataBase_2._0.EntityClasses.Objects.Client", "Client")
@@ -246,6 +310,11 @@ namespace RialDataBase_2._0.Migrations
             modelBuilder.Entity("RialDataBase_2._0.EntityClasses.Objects.ClientStatus", b =>
                 {
                     b.Navigation("Clients");
+                });
+
+            modelBuilder.Entity("RialDataBase_2._0.EntityClasses.Objects.Promocode", b =>
+                {
+                    b.Navigation("Bots");
                 });
 #pragma warning restore 612, 618
         }

@@ -61,7 +61,7 @@ namespace RialDataBase_2._0.Services.TgBot
 
                     if (lastChek is not null)
                     {
-                        await WorkerBot.SendTextMessageAsync(ChatId, $"Уважемый {client.Fname},\n" +
+                        await WorkerBot.SendTextMessageAsync(ChatId, $"Уважемый(ая) {client.Fname},\n" +
                                                                      $"По каким-то причинам Вы уже числитесь в базе данных\n" +
                                                                      $"Обратитесь к нам в магазин по адресу :\n" +
                                                                      $"Проспект Раиса Беляева, ГСК Чайка 2Г. Магазин Риальный, Вам помогут");
@@ -82,65 +82,12 @@ namespace RialDataBase_2._0.Services.TgBot
 
                     await context.SaveChangesAsync();
 
-                    await WorkerBot.SendTextMessageAsync(ChatId, $"Уважаемый {client.Fname},\n" +
+                    await WorkerBot.SendTextMessageAsync(ChatId, $"Уважаемый(ая) {client.Fname},\n" +
                                                                  $"Вы были успешно добавлены в базу данных.\n" +
                                                                  $"Приветственный бонус в размере 100 рублей был зачислен.");
 
-                    
                 }
             }
-
-
-
-        }
-
-        public async static Task WorkWithExistClientAsync(Bot clientFromChatBot, long chatId)
-        {
-
-
-            await using (Context contex = new Context())
-            {
-                var ExistClient = from c in contex.Clients
-                                  where c.Id == clientFromChatBot.ClientId
-
-                                  join status in contex.ClientStatuses
-                                  on c.StatusId equals status.Id
-
-                                  join cba in contex.ClientBankAccouts
-                                  on c.Id equals cba.ClientId
-
-                                  join car in contex.Cars
-                                  on c.Id equals car.ClientId
-
-                                  join carCh in contex.CarCharacteristics
-                                  on car.Id equals carCh.CarId
-
-                                  select new
-                                  {
-                                      Name = c.Fname ?? "Не было указано",
-                                      Status = status.Status,
-                                      CashBack = cba.CashBack,
-                                      Total = cba.TotalPurchaseAmount,
-                                      Oil = carCh.Oil ?? "Не было указано",
-                                      Vin = car.Vin ?? "Не было указано",
-                                  };
-
-
-                foreach (var exist in ExistClient)
-                {
-                    await WorkerBot.SendTextMessageAsync(chatId, $"Ваш кешбек составляет: {exist.CashBack}\n" +
-                                                                 $"Ваше имя: {exist.Name}\n" +
-                                                                 $"Всего вы потратили у нас: {exist.Total}\n" +
-                                                                 $"Ваш клиентский статус: {exist.Status}\n" +
-                                                                 $"Вы заливаете масло: {exist.Oil}\n" +
-                                                                 $"Вин номер вашего авто: {exist.Vin}\n");
-                }
-
-
-            }
-
-        }
-
-        
+        }           
     }
 }

@@ -42,15 +42,14 @@ namespace RialDataBase_2._0.Services.TgBot
 
                 case "📍 Адрес":
                     await WorkerBot.SendTextMessageAsync(chatId, "Мы находимся по адресу:\n" +
-                                                                 "Проспект Раиса Беляева, \n" +
-                                                                 "ГСК Чайка 2Г \n" +
+                                                                 "Проспект Раиса Беляева,2Г \n" +
+                                                                 "ГСК Чайка\n" +
                                                                  "Магазин - Риальный");
                     await WorkerBot.SendPhotoAsync(chatId,
                         photo: "https://vk.com/photo-47211478_457241338",
                         caption: "<b>Навигатор</b>: " +
                         "<a href=\"https://2gis.ru/nabchelny/firm/70000001007478750?m=52.417085%2C55.726752%2F16\">2ГИС</a>",
                         parseMode: ParseMode.Html);
-                        
 
                     break;
 
@@ -171,7 +170,7 @@ namespace RialDataBase_2._0.Services.TgBot
         private static async Task HelloPromoCode(long chatId)
         {
             await WorkerBot.SendTextMessageAsync(chatId,
-                "Введите промокод :");
+                "Введите промокод: ");
         }
 
         /// <summary>
@@ -185,6 +184,20 @@ namespace RialDataBase_2._0.Services.TgBot
             using (Context context = new Context())
             {
                 Promocode promocode = context.Promocodes.First();
+
+                Bot chatClient = (from b in context.Bots
+                                  where b.ChatId == chatId
+                                  select b).Single();
+
+                if (chatClient.PromocodeId is not null)
+                {
+                    await WorkerBot.SendTextMessageAsync(chatId,
+                                                        $"Бонус за промокод <strong>{promocode.Name}</strong> уже\n" +
+                                                        $"был зачислен.\n" +
+                                                        $"Дождитесь нового промокода, он будет скоро 🙂",
+                                                        parseMode: ParseMode.Html);
+                    return;
+                }
 
                 var client = (from b in context.Bots
                               where b.ChatId == chatId
@@ -226,9 +239,7 @@ namespace RialDataBase_2._0.Services.TgBot
 
                 bankAccount.CashBack += promocode.Sum;
 
-                Bot chatClient = (from b in context.Bots
-                                  where b.ChatId == chatId
-                                  select b).Single();
+                
 
 
                 chatClient.PromocodeId = promocode.Id;

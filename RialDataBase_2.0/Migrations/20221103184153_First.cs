@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RialDataBase_2._0.Migrations
 {
-    public partial class Init : Migration
+    public partial class First : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -23,6 +23,20 @@ namespace RialDataBase_2._0.Migrations
             //    });
 
             //migrationBuilder.CreateTable(
+            //    name: "Promocodes",
+            //    columns: table => new
+            //    {
+            //        Id = table.Column<int>(type: "int", nullable: false)
+            //            .Annotation("SqlServer:Identity", "1, 1"),
+            //        Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+            //        Sum = table.Column<int>(type: "int", nullable: false)
+            //    },
+            //    constraints: table =>
+            //    {
+            //        table.PrimaryKey("PK_Promocodes", x => x.Id);
+            //    });
+
+            //migrationBuilder.CreateTable(
             //    name: "Client",
             //    columns: table => new
             //    {
@@ -31,6 +45,7 @@ namespace RialDataBase_2._0.Migrations
             //        Fname = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
             //        Phone = table.Column<string>(type: "varchar(11)", unicode: false, maxLength: 11, nullable: false),
             //        Date = table.Column<DateTime>(type: "date", nullable: true, defaultValueSql: "(getdate())"),
+            //        Comment = table.Column<string>(type: "nvarchar(max)", nullable: true),
             //        StatusID = table.Column<byte>(type: "tinyint", nullable: true)
             //    },
             //    constraints: table =>
@@ -42,6 +57,32 @@ namespace RialDataBase_2._0.Migrations
             //            principalTable: "ClientStatus",
             //            principalColumn: "Id",
             //            onDelete: ReferentialAction.Cascade);
+            //    });
+
+            //migrationBuilder.CreateTable(
+            //    name: "Bots",
+            //    columns: table => new
+            //    {
+            //        Id = table.Column<int>(type: "int", nullable: false)
+            //            .Annotation("SqlServer:Identity", "1, 1"),
+            //        ClientId = table.Column<int>(type: "int", nullable: false),
+            //        ChatId = table.Column<long>(type: "bigint", nullable: false),
+            //        PromocodeId = table.Column<int>(type: "int", nullable: true)
+            //    },
+            //    constraints: table =>
+            //    {
+            //        table.PrimaryKey("PK_Bots", x => x.Id);
+            //        table.ForeignKey(
+            //            name: "FK_Bots_Client_ClientId",
+            //            column: x => x.ClientId,
+            //            principalTable: "Client",
+            //            principalColumn: "Id",
+            //            onDelete: ReferentialAction.Cascade);
+            //        table.ForeignKey(
+            //            name: "FK_Bots_Promocodes_PromocodeId",
+            //            column: x => x.PromocodeId,
+            //            principalTable: "Promocodes",
+            //            principalColumn: "Id");
             //    });
 
             //migrationBuilder.CreateTable(
@@ -114,6 +155,16 @@ namespace RialDataBase_2._0.Migrations
             //    });
 
             //migrationBuilder.CreateIndex(
+            //    name: "IX_Bots_ClientId",
+            //    table: "Bots",
+            //    column: "ClientId");
+
+            //migrationBuilder.CreateIndex(
+            //    name: "IX_Bots_PromocodeId",
+            //    table: "Bots",
+            //    column: "PromocodeId");
+
+            //migrationBuilder.CreateIndex(
             //    name: "IX_Car_ClientId",
             //    table: "Car",
             //    column: "ClientId");
@@ -147,10 +198,16 @@ namespace RialDataBase_2._0.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             //migrationBuilder.DropTable(
+            //    name: "Bots");
+
+            //migrationBuilder.DropTable(
             //    name: "CarCharacteristics");
 
             //migrationBuilder.DropTable(
             //    name: "ClientBankAccout");
+
+            //migrationBuilder.DropTable(
+            //    name: "Promocodes");
 
             //migrationBuilder.DropTable(
             //    name: "Car");

@@ -54,8 +54,8 @@ namespace RialDataBase_2._0.Services.TgBot
                 if (registerFlag)
                 {
                     await botClient.SendTextMessageAsync(_chatId, "Кажется вы обратились ко мне впервые.\n" +
-                                                                 "Давайте вас зарегестрируем - это не долго.\n" +
-                                                                 "Введите номер телефона: ");
+                                                                  "Давайте вас зарегестрируем - это не долго.\n" +
+                                                                  "Введите номер телефона: ");
                     registerFlag = false;
                     return;
                 }

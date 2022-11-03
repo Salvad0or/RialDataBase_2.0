@@ -12,6 +12,6 @@ namespace RialDataBase_2._0.EntityClasses.Objects
         public string Name { get; set; }
         public int Sum { get; set; }
 
-        public virtual ICollection<Bot> Bots { get; set; }
+        public virtual List<Bot> Bots { get; set; }
     }
 }

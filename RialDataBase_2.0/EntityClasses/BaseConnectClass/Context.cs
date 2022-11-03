@@ -139,9 +139,24 @@ namespace RialDataBase_2._0.EntityClasses.BaseConnectClass
 
             modelBuilder.Entity<Bot>(entity =>
             {
-                entity.HasOne(d => d.Promocode).WithMany(p => p.Bots).HasForeignKey(dd => dd.PromocodeId).OnDelete(DeleteBehavior.SetNull);
-            });
-      
+                entity.HasOne(d => d.Promocode)
+                .WithMany(p => p.Bots)
+                .HasForeignKey(d => d.PromocodeId)
+                .OnDelete(DeleteBehavior.SetNull);
+            }
+
+            );
+
+
+            //entity.HasOne(d => d.Car)
+            //        .WithOne(p => p.CarCharacteristic)
+            //        .HasForeignKey<CarCharacteristic>(d => d.CarId)
+            //        .OnDelete(DeleteBehavior.Cascade)
+            //        .HasConstraintName("FK__CarCharac__CarId__10E07F16");
+
+
+
+
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
