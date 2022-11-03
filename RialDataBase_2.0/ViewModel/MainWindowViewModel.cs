@@ -1,7 +1,6 @@
 ﻿using RialDataBase_2._0.EntityClasses.SqlCommands;
 using RialDataBase_2._0.HelperClasses;
 using RialDataBase_2._0.Infrasrtucture;
-using RialDataBase_2._0.Migrations;
 using RialDataBase_2._0.Model;
 using RialDataBase_2._0.Services;
 using RialDataBase_2._0.Services.TgBot;
