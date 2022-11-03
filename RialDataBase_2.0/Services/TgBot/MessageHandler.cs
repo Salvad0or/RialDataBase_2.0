@@ -20,13 +20,14 @@ namespace RialDataBase_2._0.Services.TgBot
         /// <param name="ChatId"></param>
         /// <param name="ClientBot"></param>
         /// <returns></returns>
-        public async static Task AddToBaseAsync(string message, long ChatId, TheWorkerBot theWorkerbot)
+        public static async Task AddToBaseAsync(string message, long ChatId)
         {
-            bool flag = int.TryParse(message, out int phone);
+            bool flag = long.TryParse(message, out long phone);
 
-            if (!flag && message.Length != 11)
+            if (!flag || message.Length != 11)
             {
-                await WorkerBot.SendTextMessageAsync(ChatId, "Пожалуйста проверьте ввод и попробуйте еще раз");
+                await WorkerBot.SendTextMessageAsync(ChatId, "Я не смог распознать номер телефона.\n" +
+                                                             "Попробуйте еще раз.");
                 return;
             }
 
@@ -38,10 +39,10 @@ namespace RialDataBase_2._0.Services.TgBot
 
                 if (client is null)
                 {
-                    await WorkerBot.SendTextMessageAsync(ChatId, "Номер был введен корректно,но я не нашел Вас в нашей базе данных,\n " +
+                    await WorkerBot.SendTextMessageAsync(ChatId, "Номер был введен корректно,но я не нашел Вас в нашей базе данных,\n" +
                                                                  "Пожалуйста обратитесь за помощью в наш магазин по адресу: \n" +
-                                                                 "Проспект Раиса Беляева, ГСК Чайка 2Г. Магазин Риальный, Вам помогут\n " +
-                                                                 "Номер нашего телефона: 89270482078\n " +
+                                                                 "Проспект Раиса Беляева, ГСК Чайка 2Г. Магазин Риальный, Вам помогут\n" +
+                                                                 "Номер нашего телефона: 89270482078\n" +
                                                                  "Или попробуйте еще раз.");
                     return;
                 }
@@ -86,6 +87,8 @@ namespace RialDataBase_2._0.Services.TgBot
                                                                  $"Вы были успешно добавлены в базу данных.\n" +
                                                                  $"Приветственный бонус в размере 100 рублей был зачислен.");
 
+                    await WriteMessageToAdmin($"Был добавлен новый клиент " +
+                                              $"{client.Fname}");
                 }
             }
         }           

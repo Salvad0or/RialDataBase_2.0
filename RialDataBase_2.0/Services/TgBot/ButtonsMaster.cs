@@ -255,6 +255,8 @@ namespace RialDataBase_2._0.Services.TgBot
 
                 context.SaveChanges();
 
+                WriteMessageToAdmin($"{client.Name} ввел промокод {promocodeName}");
+
             }
 
         }

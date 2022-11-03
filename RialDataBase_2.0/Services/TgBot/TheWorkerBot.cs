@@ -22,6 +22,9 @@ namespace RialDataBase_2._0.Services.TgBot
 
         const string ApiToken = "5156177003:AAFGMepLTciboz5oG6Yglm2usY3EchASwRc";
 
+        private const long _adminId = 343199959;
+
+
         protected ReplyKeyboardMarkup _keyboard { get; set; }
 
         #endregion
@@ -30,7 +33,7 @@ namespace RialDataBase_2._0.Services.TgBot
         {
             WorkerBot = new TelegramBotClient(ApiToken);
             _cts = new CancellationTokenSource();
-
+            
             CancellationToken cancellationToken = _cts.Token;
 
             WorkerBot.StartReceiving(UpdateHandler, PoolingHandleError);
@@ -60,7 +63,7 @@ namespace RialDataBase_2._0.Services.TgBot
                     return;
                 }
 
-                await MessageHandler.AddToBaseAsync(_message, _chatId, this);
+                MessageHandler.AddToBaseAsync(_message, _chatId);
 
             }
             else
@@ -88,9 +91,16 @@ namespace RialDataBase_2._0.Services.TgBot
 
         }
 
-        public async void SendInformationAboutCashBack(string message, long chatId)
+        public async Task SendInformationAboutCashBack(string message, long chatId)
             =>
             await WorkerBot.SendTextMessageAsync(chatId, message);
+
+        protected static async Task WriteMessageToAdmin(string message)
+        {
+            await WorkerBot.SendTextMessageAsync(_adminId, message);
+        }
+
+
 
 
     }
