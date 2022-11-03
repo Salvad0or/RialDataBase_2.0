@@ -174,6 +174,12 @@ namespace RialDataBase_2._0.Services.TgBot
                 "Введите промокод :");
         }
 
+        /// <summary>
+        /// Метод работающий с промокодом
+        /// </summary>
+        /// <param name="chatId"></param>
+        /// <param name="promocodeName"></param>
+        /// <returns></returns>
         private static async Task ActivatePromocode(long chatId,string promocodeName)
         {
             using (Context context = new Context())
@@ -219,6 +225,15 @@ namespace RialDataBase_2._0.Services.TgBot
                                                 select cba).Single();
 
                 bankAccount.CashBack += promocode.Sum;
+
+                Bot chatClient = (from b in context.Bots
+                                  where b.ChatId == chatId
+                                  select b).Single();
+
+
+                chatClient.PromocodeId = promocode.Id;
+
+
 
                 await WorkerBot.SendTextMessageAsync(chatId,
                                                          $"Уважаемый {client.Name}\n" +
