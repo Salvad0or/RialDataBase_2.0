@@ -48,7 +48,8 @@ namespace RialDataBase_2._0.Services.TgBot
                     await WorkerBot.SendPhotoAsync(chatId,
                         photo: "https://vk.com/photo-47211478_457241338",
                         caption: "<b>Навигатор</b>: " +
-                        "<a href=\"https://2gis.ru/nabchelny/firm/70000001007478750?m=52.417085%2C55.726752%2F16\">2ГИС</a>",
+                        "<a href=\"https://2gis.ru/nabchelny/firm/70000001007478750?m=52.417085%2C55.726752%2F16\">2ГИС</a> \n" +
+                        "<a href=\"https://yandex.ru/navi/?whatshere%5Bpoint%5D=52.417271%2C55.726727&whatshere%5Bzoom%5D=18\">                      Yandex навигатор</a>",
                         parseMode: ParseMode.Html);
 
                     break;

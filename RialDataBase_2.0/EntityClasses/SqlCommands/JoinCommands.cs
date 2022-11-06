@@ -77,5 +77,7 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
 
             return returnClient;
         }
+
+
     }
 }

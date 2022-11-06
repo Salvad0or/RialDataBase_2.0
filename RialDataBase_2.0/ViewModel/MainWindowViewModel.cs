@@ -179,6 +179,18 @@ namespace RialDataBase_2._0.ViewModel
             
         }
 
+        private string _currentPromocode;
+        public string CurrentPromocode
+        {
+            get => _currentPromocode;
+            set
+            {
+                _currentPromocode = value;
+
+                OnPropertyChanged();
+            }
+        }
+
         #endregion
 
         #region Свойства окна добавления промокода
@@ -190,6 +202,8 @@ namespace RialDataBase_2._0.ViewModel
             set 
             {
                 _promocodName = value;
+                _promocodName = _promocodName.Replace(" ","");
+
                 OnPropertyChanged();
             }
         }
@@ -322,7 +336,6 @@ namespace RialDataBase_2._0.ViewModel
 
         #endregion
 
-
         #region Команда добавления промокода
 
         public ICommand ActivatePromocodeCommand { get; }
@@ -335,8 +348,17 @@ namespace RialDataBase_2._0.ViewModel
         }
 
         public void OnActivatePromocodeExecute(object p)
-        {
-           Insert.AddNewPromoCode(_promocodName, _promocodSum);
+        {     
+            bool flag = Insert.AddNewPromoCodeAsync(_promocodName, _promocodSum).Result;
+
+            if(flag)
+            {
+                CurrentPromocode = SelectCommands.FindCurrentPromocodeAsync().Result;
+
+                PromocodName = String.Empty;
+                PromocodSum = default;
+            }
+            
         }
 
         #endregion  
@@ -367,7 +389,9 @@ namespace RialDataBase_2._0.ViewModel
             Insert = new InsertCommands();
            
             Task.Factory.StartNew(PrepareAllClientTablesAsync);
-            
+
+            CurrentPromocode = SelectCommands.FindCurrentPromocodeAsync().Result;
+
         }
 
         void PrepareAllClientTablesAsync()

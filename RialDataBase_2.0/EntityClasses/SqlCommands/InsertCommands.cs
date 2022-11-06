@@ -81,12 +81,7 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
 
         #region Команда добавления кешбека
 
-        public void AddNewPromoCode( string promocodeName,  int promocodeSum)
-        {        
-            Task.Run(() => AddNewPromoCodeAsync(promocodeName, promocodeSum));    
-        }
-
-        public async Task AddNewPromoCodeAsync(string promocodeName, int promocodeSum)
+        public async Task<bool> AddNewPromoCodeAsync(string promocodeName, int promocodeSum)
         {
             await using (Context context = new Context())
             {
@@ -95,7 +90,7 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
                 if (promocode.Name == promocodeName || !promocodeName.StartsWith('#'))
                 {
                     MessageBox.Show("Промокод с таким названием уже существует или отсутствует #");
-                    return;
+                    return false;
                 }
 
                 context.Promocodes.Remove(promocode);
@@ -109,9 +104,11 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
                 context.Promocodes.Add(newPromocode);
            
                 context.SaveChanges();                 
-            }
+            }        
 
             MessageBox.Show($"Промокод {promocodeName} добавлен");
+
+            return true;
         }
 
         #endregion
