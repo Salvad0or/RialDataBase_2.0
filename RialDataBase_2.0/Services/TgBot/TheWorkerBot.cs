@@ -78,8 +78,7 @@ namespace RialDataBase_2._0.Services.TgBot
                 })
                 {
                     ResizeKeyboard = true,          
-                };
-  
+                };      
 
                 await WorkerBot.SendTextMessageAsync(_chatId, _message, replyMarkup: _keyboard);
 
@@ -88,6 +87,8 @@ namespace RialDataBase_2._0.Services.TgBot
             }
 
         }
+
+       
 
         private async Task PoolingHandleError(ITelegramBotClient Bot, Exception e, CancellationToken token)
         {

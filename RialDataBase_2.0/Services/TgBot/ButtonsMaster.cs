@@ -22,7 +22,6 @@ namespace RialDataBase_2._0.Services.TgBot
         /// <returns></returns>
         public static async Task ButtonHandlerAsync(string buttonText,long chatId)
         {
-            
 
             if (buttonText.StartsWith('#'))
             {
@@ -51,6 +50,7 @@ namespace RialDataBase_2._0.Services.TgBot
                     break;         
          
                 default:
+                    DefaultMessage(chatId);
                     break;
 
                  
@@ -118,7 +118,6 @@ namespace RialDataBase_2._0.Services.TgBot
             }
         }
 
-
         /// <summary>
         /// Метод отправляющий клиенту данные о его балансе
         /// </summary>
@@ -167,7 +166,8 @@ namespace RialDataBase_2._0.Services.TgBot
         private static async Task HelloPromoCode(long chatId)
         {
             await WorkerBot.SendTextMessageAsync(chatId,
-                "Введите промокод: ");
+                "Введите промокод начиная с <b>#</b>: ",
+                ParseMode.Html);
         }
 
         /// <summary>
@@ -180,21 +180,12 @@ namespace RialDataBase_2._0.Services.TgBot
         {
             using (Context context = new Context())
             {
+
                 Promocode promocode = context.Promocodes.First();
 
                 Bot chatClient = (from b in context.Bots
                                   where b.ChatId == chatId
                                   select b).Single();
-
-                if (chatClient.PromocodeId is not null)
-                {
-                    await WorkerBot.SendTextMessageAsync(chatId,
-                                                        $"Бонус за промокод <strong>{promocode.Name}</strong> уже\n" +
-                                                        $"был зачислен.\n" +
-                                                        $"Дождитесь нового промокода, он будет скоро 🙂",
-                                                        parseMode: ParseMode.Html);
-                    return;
-                }
 
                 var client = (from b in context.Bots
                               where b.ChatId == chatId
@@ -210,9 +201,8 @@ namespace RialDataBase_2._0.Services.TgBot
                                   Name = c.Fname,
                                   CashBack = cba.CashBack
                               }).Single();
-                             
-                             
-                             
+
+
 
                 if (promocode is null || !Equals(promocode.Name.ToLower(), promocodeName.ToLower()))
                 {
@@ -220,6 +210,16 @@ namespace RialDataBase_2._0.Services.TgBot
                                                          $"Уважаемый {client.Name}\n" +
                                                          $"Вы ввели неверный промокод или его срок уже истек\n" +
                                                          $"Попробуйте еще раз или обратитесь к нам в магазин за помощью");
+                    return;
+                }
+
+                if (chatClient.PromocodeId is not null)
+                {
+                    await WorkerBot.SendTextMessageAsync(chatId,
+                                                        $"Бонус за промокод <strong>{promocode.Name}</strong> уже\n" +
+                                                        $"был зачислен.\n" +
+                                                        $"Дождитесь нового промокода, он будет скоро 🙂",
+                                                        parseMode: ParseMode.Html);
                     return;
                 }
 
@@ -237,10 +237,7 @@ namespace RialDataBase_2._0.Services.TgBot
                 bankAccount.CashBack += promocode.Sum;
 
                 
-
-
                 chatClient.PromocodeId = promocode.Id;
-
 
 
                 await WorkerBot.SendTextMessageAsync(chatId,
@@ -260,6 +257,11 @@ namespace RialDataBase_2._0.Services.TgBot
 
         }
 
+        /// <summary>
+        /// Метод отправляющий адрес линками
+        /// </summary>
+        /// <param name="chatId"></param>
+        /// <returns></returns>
         private static async Task SendAdress(long chatId)
         {
             await WorkerBot.SendTextMessageAsync(chatId, "Мы находимся по адресу:\n" +
@@ -288,6 +290,15 @@ namespace RialDataBase_2._0.Services.TgBot
 
         }
 
+        private static async Task DefaultMessage(long chatId)
+        {
+            await WorkerBot.SendTextMessageAsync(chatId,
+                "⚙️ <b>Кажется была введена неверная команда</b>\n" +
+                "💰 Если Вы хотели ввести промокод, то он должен начинаться с <b>#</b>\n" +
+                "⤵️ Для навигации используйте кнопки",
+                ParseMode.Html
+                );
+        }
 
     }
 }
