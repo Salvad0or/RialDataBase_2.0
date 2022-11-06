@@ -90,23 +90,28 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
                 
             }
 
+            int messageCashback = 0;
 
             switch (client.Status)
             {
                 case StatusEnum.Standart:
                     client.CashBack += cashback / 100;
+                    messageCashback = cashback / 100;
                     break;
 
                 case StatusEnum.Silver:
                     client.CashBack += cashback / 100 * 2;
+                    messageCashback = cashback / 100 * 2;
                     break;
 
                 case StatusEnum.Gold:
                     client.CashBack += cashback / 100 * 3;
+                    messageCashback = cashback / 100 * 3;
                     break;
 
                 case StatusEnum.Vip:
                     client.CashBack += cashback / 100 * 4;
+                    messageCashback = cashback / 100 * 4;
                     break;
             }
 
@@ -126,10 +131,15 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
 
                 context.SaveChanges();
 
-                string message = $"Кешбек добавлен, " +
-                      $"баланс {client.CashBack} руб.";
+                string message = 
+                      $"🔧 Вы купили запчастей на сумму {cashback} руб.\n" +
+                      $"📥 Кешбек в размере {messageCashback} руб добавлен.\n" +
+                      $"💰 Баланс - {client.CashBack} руб.";
 
-                MessageBox.Show(message);
+                MessageBox.Show
+                    ($"Кешбек на сумму {messageCashback} успешно добавлен\n" +
+                     $"Баланс клиента {client.CashBack} руб.");
+                                        
                       
 
                 var bot = (from b in context.Bots
@@ -165,22 +175,17 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
                     (i => i.ClientId == context.Clients.Single
                     (c => c.Phone == client.Phone).Id);
 
-                //var cba = (from c in context.ClientBankAccouts
-                //          where c.ClientId == (from o in context.Clients
-                //                               where o.Phone == client.Phone
-                //                               select o).Single().Id
-                //           select c).Single();
 
                 cba.CashBack -= cashback;
 
                 context.SaveChanges();
 
 
-                string message = "Кешбек успешно списан, " +
-                   $"баланс равен {cba.CashBack} руб";
+                string message = 
+                    $"📤 Кешбек в размере {cashback} успешно списан.\n" +
+                    $"💰 Текущий баланс - {cba.CashBack} руб";
 
                 MessageBox.Show(message);
-
 
                 var bot = (from b in context.Bots
                            where b.ClientId == (from c in context.Clients
