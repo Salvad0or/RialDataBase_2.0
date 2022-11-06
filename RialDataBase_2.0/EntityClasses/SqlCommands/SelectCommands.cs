@@ -9,6 +9,10 @@ namespace RialDataBase_2._0.EntityClasses.SqlCommands
 {
     internal class SelectCommands
     {
+        /// <summary>
+        /// Команда достает текущий промокод из базы данных
+        /// </summary>
+        /// <returns></returns>
         public static async Task<string> FindCurrentPromocodeAsync()
         {
            await using (Context context = new Context())

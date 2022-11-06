@@ -218,7 +218,7 @@ namespace RialDataBase_2._0.Services.TgBot
                              
                              
 
-                if (promocode is null || promocode.Name != promocodeName)
+                if (promocode is null || !Equals(promocode.Name.ToLower(), promocodeName.ToLower()))
                 {
                     await WorkerBot.SendTextMessageAsync(chatId,
                                                          $"Уважаемый {client.Name}\n" +

@@ -32,6 +32,8 @@ namespace RialDataBase_2._0.ViewModel
         private bool _flag;
         private int _promocodSum;
         private string _promocodName;
+        private string _currentPromocode;
+        private string _messageText;
 
         private EntityClient _newClient;
         private EntityClient _clientfromsecondwindow;
@@ -179,7 +181,7 @@ namespace RialDataBase_2._0.ViewModel
             
         }
 
-        private string _currentPromocode;
+        
         public string CurrentPromocode
         {
             get => _currentPromocode;
@@ -218,6 +220,23 @@ namespace RialDataBase_2._0.ViewModel
             }
         }
 
+
+
+        #endregion
+
+        #region Свойства окна рассылки массовых сообщений
+
+
+
+        public string MessageText 
+        {
+            get { return _messageText; }
+            set
+            { 
+                _messageText = value;
+                OnPropertyChanged();
+            }
+        }
 
 
         #endregion
@@ -361,7 +380,24 @@ namespace RialDataBase_2._0.ViewModel
             
         }
 
-        #endregion  
+        #endregion
+
+        #region Команда рассылки массовых сообщений
+
+        public ICommand SendMessageToClientsCommand { get; }
+
+        public bool CanSendMessageToClientsExecuted(object p)
+        {
+            return MessageText.Length > 0;
+        }
+
+        public void OnSendMessageToClientsExecuted(object p)
+        {
+            MessageHandler.SendTextMessageToClient(MessageText);
+            MessageText = String.Empty;
+        }
+
+        #endregion
 
         #endregion
 
@@ -378,19 +414,27 @@ namespace RialDataBase_2._0.ViewModel
             EditClientDataCommand = new LambaCommand(OnEditClientDataExecute, CanEditClientDataExecuted);
             SearchEditClientDataCommand = new LambaCommand(OnSearchEditClientDataExecuted, CanSearchEditClientDataExecuted);
             ActivatePromocodeCommand = new LambaCommand(OnActivatePromocodeExecute, CanActivatePromocodeExecuted);
+            SendMessageToClientsCommand = new LambaCommand(OnSendMessageToClientsExecuted, CanSendMessageToClientsExecuted);
 
             #endregion
 
-            BotClient = new TheWorkerBot();            
+            #region Свойства
+
+            MessageText = String.Empty;
+
+            BotClient = new TheWorkerBot();
             NewClient = new EntityClient();
 
             ClientFromSecondWindow = new EntityClient();
             ThirtyWindowClient = new EntityClient();
             Insert = new InsertCommands();
-           
+
             Task.Factory.StartNew(PrepareAllClientTablesAsync);
 
             CurrentPromocode = SelectCommands.FindCurrentPromocodeAsync().Result;
+
+
+            #endregion
 
         }
 

@@ -92,5 +92,22 @@ namespace RialDataBase_2._0.Services.TgBot
                 }
             }
         }           
+
+
+        public static async Task SendTextMessageToClient(string message)
+        {
+            List<Bot> listChatId = new List<Bot>();
+
+            await using (Context context = new Context())
+            {
+                listChatId = (from b in context.Bots
+                              select b).ToList();
+            }
+
+            for (int i = 0; i < listChatId.Count; i++)
+            {
+                await WorkerBot.SendTextMessageAsync(listChatId[i].ChatId, message);
+            }
+        }
     }
 }
