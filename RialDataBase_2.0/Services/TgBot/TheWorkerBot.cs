@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Telegram.Bot;
+using Telegram.Bot.Types.Enums;
 using Telegram.Bot.Types.ReplyMarkups;
 
 namespace RialDataBase_2._0.Services.TgBot
@@ -42,6 +43,7 @@ namespace RialDataBase_2._0.Services.TgBot
 
         private async Task UpdateHandler(ITelegramBotClient botClient, Telegram.Bot.Types.Update update, CancellationToken cancellationToken)
         {
+          
             long _chatId = update.Message.Chat.Id;
             string _message = update.Message.Text;
 
@@ -68,6 +70,7 @@ namespace RialDataBase_2._0.Services.TgBot
             }
             else
             {
+
                 _keyboard = new(new[]
                 {
                     new KeyboardButton[] { "🚘 Авто", "💰 Баланс" },
@@ -100,7 +103,11 @@ namespace RialDataBase_2._0.Services.TgBot
             await WorkerBot.SendTextMessageAsync(_adminId, message);
         }
 
+       
 
+
+            
+        
 
 
     }

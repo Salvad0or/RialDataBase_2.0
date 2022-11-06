@@ -22,14 +22,14 @@ namespace RialDataBase_2._0.Services.TgBot
         /// <returns></returns>
         public static async Task ButtonHandlerAsync(string buttonText,long chatId)
         {
+            
 
             if (buttonText.StartsWith('#'))
             {
                 await ActivatePromocode(chatId, buttonText);
                 return;
             }
-                            
-  
+
             switch (buttonText)
             {
                 case "🚘 Авто":
@@ -41,17 +41,9 @@ namespace RialDataBase_2._0.Services.TgBot
                     break;
 
                 case "📍 Адрес":
-                    await WorkerBot.SendTextMessageAsync(chatId, "Мы находимся по адресу:\n" +
-                                                                 "Проспект Раиса Беляева,2Г \n" +
-                                                                 "ГСК Чайка\n" +
-                                                                 "Магазин - Риальный");
-                    await WorkerBot.SendPhotoAsync(chatId,
-                        photo: "https://vk.com/photo-47211478_457241338",
-                        caption: "<b>Навигатор</b>: " +
-                        "<a href=\"https://2gis.ru/nabchelny/firm/70000001007478750?m=52.417085%2C55.726752%2F16\">2ГИС</a> \n" +
-                        "<a href=\"https://yandex.ru/navi/?whatshere%5Bpoint%5D=52.417271%2C55.726727&whatshere%5Bzoom%5D=18\">                      Yandex навигатор</a>",
-                        parseMode: ParseMode.Html);
 
+                    await SendAdress(chatId);
+                    
                     break;
 
                 case "💎 Промокод":
@@ -167,7 +159,11 @@ namespace RialDataBase_2._0.Services.TgBot
             };
         }
 
-
+       /// <summary>
+       /// Метод просто отправляет текст о вводе промокода
+       /// </summary>
+       /// <param name="chatId"></param>
+       /// <returns></returns>
         private static async Task HelloPromoCode(long chatId)
         {
             await WorkerBot.SendTextMessageAsync(chatId,
@@ -260,7 +256,38 @@ namespace RialDataBase_2._0.Services.TgBot
 
             }
 
+
+
         }
+
+        private static async Task SendAdress(long chatId)
+        {
+            await WorkerBot.SendTextMessageAsync(chatId, "Мы находимся по адресу:\n" +
+                                                         "Проспект Раиса Беляева,2Г \n" +
+                                                         "ГСК Чайка\n" +
+                                                         "Магазин - Риальный");
+            await WorkerBot.SendPhotoAsync(chatId,
+                photo: "https://vk.com/photo-47211478_457241338");
+
+            InlineKeyboardMarkup keyBoard = new(new[]
+            {
+                new[]
+                {
+                    InlineKeyboardButton.WithUrl("🚙 2-Гис",url: "https://go.2gis.com/4rh27"),
+
+                    InlineKeyboardButton.WithUrl("🏎 Yandex",
+                                    url: "https://yandex.ru/navi/?whatshere%5Bpoint%5D=52.417271%2C55.726727&whatshere%5Bzoom%5D=18")
+
+                }
+            });
+
+            await WorkerBot.SendTextMessageAsync(chatId, "<b>Навигатор:</b>", 
+                                                 replyMarkup: keyBoard, 
+                                                 parseMode:ParseMode.Html);
+            return;
+
+        }
+
 
     }
 }
