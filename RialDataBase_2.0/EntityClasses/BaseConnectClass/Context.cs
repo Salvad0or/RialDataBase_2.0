@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using RialDataBase_2._0.EntityClasses.Objects;
@@ -29,9 +30,21 @@ namespace RialDataBase_2._0.EntityClasses.BaseConnectClass
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            SqlConnectionStringBuilder sqlConnection = new SqlConnectionStringBuilder()
+            {
+                DataSource = "192.168.1.43, 1994",
+                InitialCatalog = "RialShop",
+                IntegratedSecurity = false,
+                UserID = "sa",
+                Password = "rnjcerfkjvftN1",
+                TrustServerCertificate = true
+            };
+
+           // Data Source = "192.168.1.43, 1994"; Initial Catalog = RialShop; User ID = sa; Password = ***********
+
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server = (LocalDB)\\MSSQLLocalDB; DataBase = ITVDN2db");
+                optionsBuilder.UseSqlServer(sqlConnection.ConnectionString);
             }
         }
 

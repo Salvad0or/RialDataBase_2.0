@@ -345,7 +345,7 @@
                                                 <TextBox Text="{Binding AddCashBack, UpdateSourceTrigger=PropertyChanged}"/>
                                                 <Button Content="Добавить" 
                                                         Margin="0 5"
-                                                        Command="{Binding AddCashBackCommand}"/>
+                                                        Command="{Binding AddCashBackCommand}" Cursor="Hand"/>
 
                                             </StackPanel>
 
@@ -701,7 +701,7 @@
                         <DataGridTextColumn IsReadOnly="True" Header="Топливный" Binding="{Binding Fuelfilter}" Width="80 "/>
                         <DataGridTextColumn IsReadOnly="True" Header="Кешбек" Binding="{Binding CashBack}" Width="80"/>
                         <DataGridTextColumn IsReadOnly="True" Header="Общая сумма покупок" Binding="{Binding TotalPurchaseAmount}" Width="80"/>
-                        <DataGridTextColumn IsReadOnly="True" Header="Cтатус" Binding="{Binding Statuss}" Width="*"/>
+                        <DataGridTextColumn IsReadOnly="True" Header="Cтатус" Binding="{Binding Status}" Width="*"/>
                     </DataGrid.Columns>
                 </DataGrid>
 
