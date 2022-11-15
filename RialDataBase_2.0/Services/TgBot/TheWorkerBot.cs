@@ -21,7 +21,7 @@ namespace RialDataBase_2._0.Services.TgBot
         private Bot _bot { get; set; }
         private bool registerFlag { get; set; } = true;
 
-        const string ApiToken = "5156177003:AAFGMepLTciboz5oG6Yglm2usY3EchASwRc";
+        const string ApiToken = "5482868909:AAGGxVz2ajREzHz5tWX5Nr2TSNOKLz6b400";
 
         private const long _adminId = 343199959;
 
