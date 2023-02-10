@@ -32,7 +32,7 @@ namespace RialDataBase_2._0.EntityClasses.BaseConnectClass
         {
             SqlConnectionStringBuilder sqlConnection = new SqlConnectionStringBuilder()
             {
-                DataSource = "192.168.1.43, 1994",
+                DataSource = "192.168.1.36, 1994",
                 InitialCatalog = "RialShop",
                 IntegratedSecurity = false,
                 UserID = "sa",

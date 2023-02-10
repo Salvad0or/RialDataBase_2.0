@@ -6,11 +6,11 @@
     <RootNamespace>RialDataBase_2._0</RootNamespace>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>bin\Debug\net6.0-windows\Rialicon.ico</ApplicationIcon>
+    <ApplicationIcon>bin\Debug\net6.0-windows\Rialicon (1).ico</ApplicationIcon>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="bin\Debug\net6.0-windows\Rialicon.ico" />
+    <Content Include="bin\Debug\net6.0-windows\Rialicon (1).ico" />
   </ItemGroup>
 
   <ItemGroup>
